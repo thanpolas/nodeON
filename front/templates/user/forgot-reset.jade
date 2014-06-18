@@ -1,0 +1,33 @@
+//- Forgot
+//- @param {boolean=} credentials Wrong credentials error.
+//- @param {boolean=} error If an error occured.
+//- @param {string=} errorMsg The error message.
+//- @param {Object=} udo The UDO.
+
+extends ../layout/default
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container.forgot-reset
+    - if (error)
+        mixin alertMessage('danger', errorMsg)
+
+    .forgot-password-wrapper
+      .container
+        .row
+          .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form-wrapper
+            h2 Reset Password
+            form.col-xs-12(method="post", action="/forgot", id="new-password-form")
+              .row
+                .col-xs-12
+                  label(for="new-password") Enter New Password
+                  input(type="password", maxlength="120", placeholder="enter new password", name="password", id="new-password")
+              .row
+                .col-xs-12
+                  label(for="confirm-new-password") Confirm New Password
+                  input(type="password", maxlength="120", placeholder="confirm new password", id="confirm-new-password")
+                  .alert.alert-danger.hidden Passwords Doesn't Match
+              .row
+                .col-xs-12
+                  input(type="hidden", value="#{_csrf}", name="_csrf")
+                  button.btn.btn-success.btn-lg.btn-block(type="submit", id="save-new-password") Save my password!

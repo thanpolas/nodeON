@@ -1,0 +1,26 @@
+//- Forgot
+//- @param {boolean=} error If an error occured.
+//- @param {string=} errorMsg
+
+extends ../layout/default
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container.forgot
+    - if (error)
+        mixin alertMessage('danger', errorMsg)
+
+  .forgot-password-wrapper
+    .container
+      .row
+        .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.form-wrapper
+          h2 Reset Password
+          form.col-xs-12(method="post", action="/forgot")
+            .row
+              .col-xs-12
+                label(for="forgot-email") Type Your Email
+                input(type="email", maxlength="120", placeholder="your email", name="email", id="forgot-email")
+            .row
+              .col-xs-12
+                input(type="hidden", value="#{_csrf}", name="_csrf")
+                button.btn.btn-success.btn-lg.btn-block(type="submit") Reset my password!

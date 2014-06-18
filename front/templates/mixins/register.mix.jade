@@ -1,0 +1,26 @@
+
+mixin userRegistration
+  form.col-xs-12.col-md-12(action="/register", method="post")
+    .row
+      .col-xs-12.col-sm-6
+        label Firstname
+        input(type="text", name="firstName", placeholder="Enter your firstname")
+      .col-xs-12.col-sm-6
+        label Lastname
+        input(type="text", name="lastName", placeholder="Enter your lastname")
+    .row
+      .col-xs-12
+        label Company Name ( Optional)
+        input(type="text", name="companyName", placeholder="Enter Company name")
+    .row
+      .col-xs-12
+        label Email
+        input(type="email", name="email", placeholder="Enter your email")
+    .row
+      .col-xs-12
+        label Password
+        input(type="password", name="password", placeholder="Enter password")
+    .row
+      .col-xs-12
+        input(type="hidden", value="#{_csrf}", name="_csrf")
+        button.btn.btn-success.btn-lg.btn-block(type="submit") Register

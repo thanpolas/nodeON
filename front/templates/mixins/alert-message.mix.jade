@@ -1,0 +1,8 @@
+//- mixin for alert messages
+//- @param {string} alertType The message type, one of: 'danger', 'warning', 'info', 'success'.
+//- @param {string} message The message to display.
+mixin alertMessage(alertType, message)
+    .row
+      .col-xs-12.col-sm-10.col-sm-offset-1.alert(class="alert-#{alertType}")
+        button.close(type="button",data-dismiss="alert") &times;
+        strong #{message}

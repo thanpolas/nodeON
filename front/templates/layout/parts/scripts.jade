@@ -1,0 +1,44 @@
+script(type="text/javascript").
+  window.JSON || document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.min.js"><\/script>');
+  var _csrf = '#{_csrf}';
+
+//
+// facebook
+//
+div#fb-root
+script(type="text/javascript").
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=309825832497899";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+
+//
+// Google+
+//
+script(type="text/javascript").
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+
+
+//- script(src='/components/angular/angular.js')
+//- script(src='components/angular-resource/angular-resource.js')
+
+script(src="http://sdk.netscan.co/netscan.js", type="text/javascript")
+
+if glob.env == "development"
+  script.
+    var DEV = true;
+  script(data-require="ccw.Core", data-debug="true", src="/components/mantri/dist/mantri.web.js")
+else
+  script(type="text/javascript").
+    var DEV = false;
+  script(src="/frontapp.min.js", type="text/javascript")
+
+

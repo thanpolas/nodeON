@@ -1,0 +1,90 @@
+//- Profile edit form
+//
+//- @param {Object} udo The UDO.
+//- @param {boolean=} error If an error occured.
+//- @param {string=} errorMessage the error message.
+
+
+extends ../layout/default
+include ../mixins/country.mix.jade
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container
+    .row
+      .col-xs-12.col-sm-8.col-sm-offset-2.form-wrapper
+        .hidden
+          mixin alertMessage('error', 'Passwords Do not match')
+        h1 Profile Edit
+
+        - if (error)
+            mixin alertMessage('danger', errorMessage)
+
+      .row
+        form.col-xs-12.col-sm-10.col-sm-offset-1.profile-edit-wrapper#profile-edit-form(action="/profile", method="POST")
+          h3 Personal Info
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="first-name") First Name
+              input(type="text", name="firstName", placeholder="Your Firstname", id="first-name", value="#{udo.firstName}")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="last-name") Last Name
+              input(type="text", name="lastName", placeholder="Your Lastname", id="last-name", value="#{udo.lastName}")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="profile-email") Email
+              input(type="text", name="profile-email", placeholder="Your email", id="profile-email", value="#{udo.email}")
+
+          h3 Security
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="profile-password") Password
+              input(type="password", name="profile-password", placeholder="Your password", id="profile-password")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="re-enter-password") Re-enter password
+              input(type="password", placeholder="re-enter your password", id="re-enter-password")
+
+          h3 Billing
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="company-name") Company Name
+              input(type="text", name="companyName", placeholder="Your company name", id="company-name", value="#{udo.companyName}")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="address") Address
+              input(type="text", name="address", placeholder="Your Address", id="address")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="address-2") Second Address (Optional)
+              input(type="text", name="address2", placeholder="Your Second Address", id="address-2")
+
+          mixin countryList
+
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="state") State / Province
+              input(type="text", name="state", placeholder="Your State or Province", id="state")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="city") City
+              input(type="text", name="city", placeholder="Your City", id="city")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="postal-code") Postal Code
+              input(type="number", name="postalCode", placeholder="Your Postal Code", id="postal-code")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="phone") Phone
+              input(type="number", name="phoneNumber", placeholder="Your Phonenumber", id="phone")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              label(for="vat-number") Vat No (Optional)
+              input(type="text", name="vatNumber", placeholder="Vat Number", id="var-number")
+          .row
+            .col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+              input(type="hidden", value="#{_csrf}", name="_csrf")
+              button.btn.btn-success.btn-lg.btn-block(type="submit") Update my profile
+
+

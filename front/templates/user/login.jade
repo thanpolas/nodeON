@@ -1,0 +1,30 @@
+//- login
+//- @param {boolean=} error If an error occured.
+//- @param {string=} errorMsg
+//- @param {Object|Error=} errorObj
+//- @param {boolean=} logout If user just logged out
+
+extends ../layout/default
+include ../mixins/login.mix.jade
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container
+    .user-login
+      - if (error)
+          mixin alertMessage('danger', errorMsg)
+
+      - if (logout)
+          mixin alertMessage('success', 'Successfully Logged out!')
+
+      .container.login-wrapper
+        .row
+          .col-sm-12.col-md-6.col-md-offset-3.form-wrapper
+            h1 Log in
+
+          mixin userLogin
+
+          .col-xs-12.not-signedup
+            p
+              span Need an account ?
+              a(href="/register") Register!

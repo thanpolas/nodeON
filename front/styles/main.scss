@@ -1,0 +1,104 @@
+// Core Styles
+body, h1, h2, h3, h4 {
+  font-family: 'PT Sans', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+}
+
+.right {
+  float: right;
+}
+
+
+/* Header */
+.masthead {
+  h3 {
+    color: $color-1st;
+  }
+  a {
+    padding: 5px 20px;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  .menu {
+    margin-top: 14px;
+  }
+  @media screen and ( max-width: 480px ) {
+    text-align: center;
+      a, .menu, .menu li {
+        float: initial !important;
+        display: inline-block;
+      }
+      .menu, .menu li {
+        display: block;
+      }
+      .menu {
+        margin-top: 0;
+      }
+  }
+}
+
+/* Custom container */
+.container {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.container > hr {
+  margin: 60px 0;
+}
+
+
+/* Customize the navbar links to be fill the entire space of the .navbar */
+.navbar .navbar-inner {
+  padding: 0;
+}
+.navbar .nav {
+  margin: 0;
+  display: table;
+  width: 100%;
+}
+.navbar .nav li {
+  display: table-cell;
+  width: 1%;
+  float: none;
+}
+.navbar .nav li a {
+  font-weight: bold;
+  text-align: center;
+  border-left: 1px solid rgba(255,255,255,.75);
+  border-right: 1px solid rgba(0,0,0,.1);
+}
+.navbar .nav li:first-child a {
+  border-left: 0;
+  border-radius: 3px 0 0 3px;
+}
+.navbar .nav li:last-child a {
+  border-right: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+
+//
+//
+// Footer
+//
+footer.footer {
+  height: 200px;
+  padding-top: 100px;
+  color: #999;
+
+  span {
+    float: right;
+    line-height: 2.25;
+    padding-right: 10px;
+  }
+  span.copy {
+    padding-right: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}

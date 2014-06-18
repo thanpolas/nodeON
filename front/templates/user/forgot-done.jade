@@ -1,0 +1,9 @@
+//- Forgot done
+//- @param {string=} email The email the reset token was sent to.
+
+extends ../layout/default
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container.forgot-done
+    mixin alertMessage('success', 'Password reset The reset password link has been sent to your email' + email + 'please wait a few seconds before it arives. When you open the email follow the provided link to reset your password.')

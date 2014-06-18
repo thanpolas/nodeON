@@ -1,0 +1,17 @@
+// main wrapper for registration page
+.registration-wrapper {
+  input {
+    margin-bottom: 15px;
+  }
+}
+
+.already-signedup,
+.not-signedup {
+  font-size: 15px;
+  padding: 5px;
+  text-align: center;
+
+  a {
+    margin-left: 4px;
+  }
+}

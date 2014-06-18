@@ -1,0 +1,48 @@
+input.email {
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid $color-form-border;
+  border-radius: 0;
+  box-shadow: none;
+  text-indent: 8px;
+  font-size: 15px;
+}
+.label {
+  color: #555;
+}
+
+form {
+  label {
+    font-size: 17px;
+  }
+}
+.form-wrapper {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    padding: 5px;
+    text-align: center;
+  }
+}
+
+select.form-control {
+  height: 45px;
+  border: 1px solid $color-form-border;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 12px 8px;
+
+  &:focus {
+    border-color: $color-form-border;
+    box-shadow: none;
+  }
+}

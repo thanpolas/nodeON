@@ -1,0 +1,25 @@
+//- Registration form
+//- @param {boolean=} error If an error occured
+//- @param {string=} errorMessage the error message
+
+extends ../layout/parts/header-main
+extends ../layout/default
+include ../mixins/register.mix.jade
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container
+    .row
+      .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.registration-wrapper.form-wrapper
+        h1 netscan.co API
+        p Signing up allows you to provide netscan.co's services from your own domain. You can also use the SDK to embed netscan.co reports in your support forms.
+
+        - if (error)
+            mixin alertMessage('danger', errorMessage)
+
+        mixin userRegistration
+
+        .row
+          .col-xs-12.already-signedup
+            small If you already have an account then
+            a.login(href="/login") login.

@@ -1,0 +1,20 @@
+webserver:
+  port: 80
+
+# Google Analytics key
+ga: "UA-xxxxxx-2"
+
+logger:
+  # Log Levels:
+  # SEVERE: 1000
+  # WARN:   800
+  # INFO:   600
+  # FINE:   400
+  # FINER:  200
+  # FINEST: 100
+  level: 600
+  syslog: false
+  file: false
+  console: true
+  filename: "./logs/app.log"
+

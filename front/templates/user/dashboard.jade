@@ -1,0 +1,30 @@
+//- dashboard
+//- @param {Object} udo the UDO
+//- @param {boolean=} success If a success event occured landing from a form.
+//- @param {Object} successObj Contains success items.
+  //- @param {boolean=} verified If set means user landed from email verification.
+  //- @param {boolean=} profileDone True when coming from a successful profile edit.
+  //- @param {boolean=} newUser New user registration
+extends ../layout/default
+include ../mixins/alert-message.mix.jade
+
+block content
+  //- angular temporary script
+  script(src="../../mng.src.js")
+
+  .container(ng-app="DashboardApp")
+    .row(ng-controller="HomeController")
+      .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.registration-wrapper.form-wrapper(ng-view)
+        h2 The Dashboard
+        if (success)
+          if (successObj.verified)
+            mixin alertMessage('success', 'Email verified successfully! Welcome aboard.')
+          if (successObj.newUser)
+            mixin alertMessage('success', 'Welcome to netscan.co ' +  udo.firstName + '! An email has been dispatched to ' + udo.email + ' please check it out and verify your account.')
+          if (successObj.profileDone)
+            mixin alertMessage('success', 'Your profile was updated')
+
+
+        .form-token-create.js-token-create
+          form(action="/token", method="post")
+            button.btn(type="submit") Create New Token

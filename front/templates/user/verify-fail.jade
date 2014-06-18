@@ -1,0 +1,9 @@
+//- Verify Fail
+//- @param {string} errorMsg Error message
+
+extends ../layout/default
+include ..mixins/alert-message.mix.jade
+
+block content
+  .container
+    mixin alertMessage('danger', errorMsg)

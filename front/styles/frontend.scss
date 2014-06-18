@@ -1,0 +1,79 @@
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: $color-1st;
+  color: $color-1st-inv;
+}
+body > .jumbotron {
+  box-shadow: inset 0 0 150px 20px rgba(0,0,0,0.1);
+}
+.jumbotron {
+  h1 {
+    font-size: 3.35em;
+    line-height: 1;
+    text-shadow: 3px 0 3px rgba(0, 0, 0, 0.1), 2px 0 2px rgba(0, 0, 0, 0.1), 1px 0 1px rgba(0, 0, 0, 0.1);
+    @media screen and( max-width: 480px) {
+      font-size: 2em;
+    }
+    @media screen and(max-width: 280px) {
+      font-size: 1.5em;
+    }
+  }
+  .lead {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  small {
+    font-size: 55%;
+  }
+
+  .glyphicon {
+    &:empty {
+      width: 2em;
+    }
+
+    font-size: 4em;
+    text-shadow: 1px 1px rgba(0,0,0,0.2);
+  }
+}
+
+.glyphicon {
+  &.glyphicon-ok {
+    color: $color-positive-light;
+  }
+  &.glyphicon-remove {
+    color: $color-bad-light;
+  }
+}
+
+ul.installed li {
+  list-style: none;
+}
+
+table {
+  width: 100%;
+}
+.table-striped > tbody > tr > th {
+  text-transform: capitalize;
+}
+
+.modal {
+  width: 550px;
+}
+
+.cclegacy {
+  p {
+    text-align: center;
+  }
+}
+
+.mc-embed-signup {
+  input {
+    width: 55%;
+  }
+}

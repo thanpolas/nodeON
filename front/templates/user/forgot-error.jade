@@ -1,0 +1,8 @@
+//- Forgot error
+
+extends ../layout/default
+include ../mixins/alert-message.mix.jade
+
+block content
+  .container.forgot-error
+    mixin alertMessage('danger', 'Don\'t panic! Nope, that\'s not the page you\'re looking for...')

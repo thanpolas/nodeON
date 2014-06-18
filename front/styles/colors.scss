@@ -1,0 +1,15 @@
+a {
+	color: $color-1st;
+}
+
+.btn {
+	border: none;
+	border-radius: 0;
+}
+
+.btn-success {
+	background-color: $color-positive;
+	&:hover {
+		background-color: darken($color-positive, 16%);
+	}
+}
