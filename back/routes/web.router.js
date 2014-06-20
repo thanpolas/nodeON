@@ -54,11 +54,6 @@ router.init = function(app , opts) {
     });
   }
 
-  // blanket middleware for manage ops
-  var manageMiddleware = [
-    featureMidd.has('user'),
-    manageSecurity,
-  ];
 
   app.get('/', homeCtrl.use);
 
@@ -68,21 +63,28 @@ router.init = function(app , opts) {
     res.render('tpl/' + tplBare);
   });
 
+
+  // blanket middleware for User API ops
+  var userMiddleware = [
+    featureMidd.has('user'),
+    manageSecurity,
+  ];
+
   // user related routes
-  app.post('/register', manageMiddleware.concat(registerCtrl.use));
-  app.get('/register', manageMiddleware.concat([registerCtrl.use]));
+  app.post('/register', userMiddleware.concat(registerCtrl.use));
+  app.get('/register', userMiddleware.concat([registerCtrl.use]));
 
-  app.post('/login', manageMiddleware.concat(loginCtrl.login));
-  app.get('/logout', manageMiddleware.concat(loginCtrl.logout));
-  app.get('/login', manageMiddleware.concat([loginCtrl.use]));
+  app.post('/login', userMiddleware.concat(loginCtrl.login));
+  app.get('/logout', userMiddleware.concat(loginCtrl.logout));
+  app.get('/login', userMiddleware.concat([loginCtrl.use]));
 
-  app.get('/verify/:verifyToken/:uid?', manageMiddleware.concat(verifyCtrl.use));
+  app.get('/verify/:verifyToken/:uid?', userMiddleware.concat(verifyCtrl.use));
 
-  app.get('/profile', manageMiddleware.concat([profileCtrl.use]));
-  app.post('/profile', manageMiddleware.concat(profileCtrl.post));
+  app.get('/profile', userMiddleware.concat([profileCtrl.use]));
+  app.post('/profile', userMiddleware.concat(profileCtrl.post));
 
-  app.get('/forgot', manageMiddleware.concat([forgotCtrl.use]));
-  app.post('/forgot', manageMiddleware.concat(forgotCtrl.post));
-  app.get('/forgot/:resetToken/:uid', manageMiddleware.concat([forgotCtrl.resetView]));
-  app.post('/forgot/:resetToken/:uid', manageMiddleware.concat(forgotCtrl.resetSubmit));
+  app.get('/forgot', userMiddleware.concat([forgotCtrl.use]));
+  app.post('/forgot', userMiddleware.concat(forgotCtrl.post));
+  app.get('/forgot/:resetToken/:uid', userMiddleware.concat([forgotCtrl.resetView]));
+  app.post('/forgot/:resetToken/:uid', userMiddleware.concat(forgotCtrl.resetSubmit));
 };
