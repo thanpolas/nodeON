@@ -2,7 +2,7 @@
  * @fileOverview Main testing helper lib, exporting fixtures, helper functions
  *   etc. All UNIT tests must require it.
  */
-var cc = require('../..');
+var app = require('../..');
 
 // var logger = require('../../backend/util/logger');
 // var db = require('../../backend/core/database').getInstance();
@@ -32,7 +32,7 @@ tester.init = function(role) {
   tester.setup(function(done) {
     if (init) {return done();}
     init = true;
-    cc.init({
+    app.init({
       role: role,
       nolog: false,
       stubMail: true,
