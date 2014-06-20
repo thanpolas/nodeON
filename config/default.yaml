@@ -1,5 +1,6 @@
 webserver:
   port: 3000
+  url: "http://localhost:3000"
 
 # Google Analytics key
 ga: "UA-XXXXX-X"
@@ -56,7 +57,6 @@ cookies:
       secret: "zzz"
       maxAge: null
 
-webserverUrl: "http://localhost:3000"
 
 users:
   # Durations in milliseconds:
