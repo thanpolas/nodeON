@@ -163,8 +163,9 @@ helpers.urlify = function(token, optRandLen) {
  * @return {Function} The function to use.
  * @cudos Petka Antonov
  */
-helpers.truncateArgs = function (fn, count) {
+helpers.truncateArgs = function (fn, count, optThisArg) {
+  var thisArg = optThisArg || null;
   return function() {
-    return fn.apply(this, [].slice.call(arguments, count));
+    return fn.apply(thisArg, [].slice.call(arguments,0, count));
   };
 };
