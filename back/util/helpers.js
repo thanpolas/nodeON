@@ -154,3 +154,17 @@ helpers.urlify = function(token, optRandLen) {
   out += slug(token).toLowerCase();
   return out;
 };
+
+/**
+ * Truncates the argument number the function is invoked with.
+ *
+ * @param {Function} fn The function which arguments needs truncating.
+ * @param {number} count
+ * @return {Function} The function to use.
+ * @cudos Petka Antonov
+ */
+helpers.truncateArgs = function (fn, count) {
+  return function() {
+    return fn.apply(this, [].slice.call(arguments, count));
+  };
+};
