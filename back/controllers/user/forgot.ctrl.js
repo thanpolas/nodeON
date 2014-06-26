@@ -7,7 +7,7 @@ var log = require('logg').getLogger('app.ctrl.Forgot');
 
 var ControllerBase = require('../controller-base');
 var ForgotEnt = require('../../entities/user/user-forgot.ent');
-var ccError = require('../../util/error');
+var appError = require('../../util/error');
 
 /**
  * The forgot password controller
@@ -115,7 +115,7 @@ Forgot.prototype._resetSubmit = function(req, res) {
       self.addFlashSuccess(req, {resetPassword: true});
       res.redirect('/login');
     }).catch(function(err) {
-      if (err instanceof ccError.Authentication) {
+      if (err instanceof appError.Authentication) {
         res.status(401).render('user/forgot-error');
         return;
       }

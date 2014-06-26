@@ -12,7 +12,7 @@ var EntityBase = require('../entity-base');
 var UserModel = require('../../models/user.model');
 var userModel = UserModel.getInstance();
 var Email = require('../../modules/email');
-var ccError = require('../../util/error');
+var appError = require('../../util/error');
 var helpers = require('../../util/helpers');
 
 /**
@@ -158,8 +158,8 @@ User.prototype._checkProfilePassword = Promise.method(function(params, udo) {
           params.password = params.newPassword;
         })
         .catch(function() {
-          var error = new ccError.Authentication('Old Password is wrong.');
-          error.type = ccError.Authentication.Type.PASSWORD;
+          var error = new appError.Authentication('Old Password is wrong.');
+          error.type = appError.Authentication.Type.PASSWORD;
           throw error;
         });
     });

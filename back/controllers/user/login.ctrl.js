@@ -11,7 +11,7 @@ var log = require('logg').getLogger('app.ctrl.Login');
 
 var authMidd = require('../../middleware/auth.midd').getInstance();
 var ControllerBase = require('../controller-base');
-var ccError = require('../../util/error');
+var appError = require('../../util/error');
 
 /**
  * The authentication controller.
@@ -148,17 +148,17 @@ Login.prototype.loginGetError = function(err) {
 
   if (err instanceof passportLocal.BadRequestError) {
     log.fine('loginGetError() :: Empty fields.');
-    normErr = new ccError.Validation();
-    var validItem = new ccError.ValidationItem('A field was empty');
+    normErr = new appError.Validation();
+    var validItem = new appError.ValidationItem('A field was empty');
     validItem.type = 'required';
     normErr.errors.push(validItem);
-  } else if (err instanceof ccError.Authentication) {
+  } else if (err instanceof appError.Authentication) {
     log.fine('loginGetError() :: Auth middleware error:', err.message,
       'type:', err.type);
     normErr = err;
   } else {
     log.warn('loginGetError() :: Unknown error type', util.inspect(err));
-    normErr = new ccError.Unknown(err);
+    normErr = new appError.Unknown(err);
     normErr.message = errMsg;
   }
 
