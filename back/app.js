@@ -38,7 +38,7 @@ globals.isStandAlone = require.main === module;
 var initialized = false;
 
 /**
- * Master bootstrap for Check Connectivity backend.
+ * Master bootstrap module.
  *
  * Available options to pass on the first arg:
  * {
@@ -49,7 +49,7 @@ var initialized = false;
  *   noEmail: false,
  *
  *   // don't log to console
- *   // Env: NETSCAN_NOLOG
+ *   // Env: APP_NOLOG
  *   nolog: true,
  *
  *   // don't run initdb
@@ -57,11 +57,11 @@ var initialized = false;
  *   noInitDb: false,
  *
  *   // Stub email facilities
- *   // Env: NETSCAN_STUBMAIL
+ *   // Env: APP_STUBMAIL
  *   stubMail: false,
  *
  *   // Do not use security (CSRF, XSS) middleware.
- *   // Env: NETSCAN_NOSECURITY
+ *   // Env: APP_NOSECURITY
  *   noSecurity: false,
  *
  *   // The role to assume, trumps environment variable.
