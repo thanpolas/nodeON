@@ -12,4 +12,7 @@ var Model = require('./model');
 module.exports = Model.extend(function() {
   /** @type {?mongoose.Schema} Instance of mongoose Schema */
   this.schema = null;
+
+  /** @type {?mongoose.Model} The mongoose Model ctor */
+  this.Model = null;
 });
