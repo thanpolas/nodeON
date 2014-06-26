@@ -3,10 +3,10 @@
  */
 var __ = require('lodash');
 
-var EntityCrudSequelize = require('node-entity').Mongoose;
+var EntityCrudMongoose = require('node-entity').Mongoose;
 var log = require('logg').getLogger('app.ent.Base');
 
-var ccError = require('../util/error');
+var appError = require('../util/error');
 
 /**
  * The base Entity Class all entities extend from.
@@ -14,7 +14,7 @@ var ccError = require('../util/error');
  * @constructor
  * @extends {crude.Entity}
  */
-var Entity = module.exports = EntityCrudSequelize.extend();
+var Entity = module.exports = EntityCrudMongoose.extend();
 
 /**
  * Wrap the default "create" method,
@@ -26,7 +26,7 @@ var Entity = module.exports = EntityCrudSequelize.extend();
  */
 Entity.prototype._create = function(itemData) {
   // stub to default for now until Mongoose is normalized
-  return EntityCrudSequelize.prototype._create.call(this, itemData)
+  return EntityCrudMongoose.prototype._create.call(this, itemData)
     .catch(this._normalizeErrors.bind(this));
 };
 
@@ -40,7 +40,7 @@ Entity.prototype._create = function(itemData) {
  */
 Entity.prototype._normalizeErrors = function(err) {
   log.fine('_normalizeErrors() :: Error intercepted:', err.message);
-  var error = new ccError.Validation(err);
+  var error = new appError.Validation(err);
   switch(err.code) {
   case 11000:
     error.message = 'This email is already registered';
