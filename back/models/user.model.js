@@ -1,9 +1,6 @@
 /**
  * @fileOverview The base user model.
  */
-
-var util = require('util');
-
 var __ = require('lodash');
 var Promise = require('bluebird');
 var config = require('config');
