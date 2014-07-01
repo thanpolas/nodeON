@@ -70,7 +70,7 @@ Login.prototype._login = function(req, res, next) {
  * Handle an error on login operation
  *
  * @param {Object} res The response Object.
- * @param {cc.error.Abstract} err The error object
+ * @param {app.error.Abstract} err The error object
  * @private
  */
 Login.prototype._loginError = function(res, err) {
@@ -84,7 +84,7 @@ Login.prototype._loginError = function(res, err) {
  * Handle no returned UDO on login (wrong credentials?)
  *
  * @param {Object} res The response Object.
- * @param {cc.error.Abstract} err The error object
+ * @param {app.error.Abstract} err The error object
  * @private
  */
 Login.prototype._loginNoUser = function(res, err) {
@@ -139,7 +139,7 @@ Login.prototype._showLogin = function(req, res) {
  * Normalize login errors.
  *
  * @param {Error} err any error object
- * @return {cc.error.Abstract} A child of cc errors.
+ * @return {app.error.Abstract} A child of cc errors.
  * @static
  */
 Login.prototype.loginGetError = function(err) {

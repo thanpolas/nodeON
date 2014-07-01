@@ -18,7 +18,7 @@ var helpers = require('../../util/helpers');
  *
  * @param {Object=} optUdo Optionally define the current handling user.
  * @constructor
- * @extends {cc.ent.UserEnt}
+ * @extends {app.ent.UserEnt}
  */
 var Forgot = module.exports = UserEnt.extendSingleton();
 

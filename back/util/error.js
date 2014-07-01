@@ -61,7 +61,7 @@ appError.Abstract.prototype.toApi = function() {
  *
  * @param {string=} optMsg the message.
  * @constructor
- * @extends {cc.error.Abstract}
+ * @extends {app.error.Abstract}
  */
 appError.Error = function(optMsg) {
   appError.Error.super_.call(this, optMsg, this.constructor);
@@ -79,7 +79,7 @@ util.inherits(appError.Error, appError.Abstract);
  *
  * @param {string|Error=} optMsg the message or an Error Object.
  * @constructor
- * @extends {cc.error.Abstract}
+ * @extends {app.error.Abstract}
  */
 appError.Unknown = function(optMsg) {
   var msg = (optMsg && optMsg.length) ? optMsg : 'Unknown Error';
@@ -93,7 +93,7 @@ util.inherits(appError.Unknown, appError.Abstract);
  *
  * @param {string|Error=} optMsg the message or an Error Object.
  * @constructor
- * @extends {cc.error.Abstract}
+ * @extends {app.error.Abstract}
  */
 appError.Database = function (optMsg) {
   appError.Database.super_.call(this, optMsg, this.constructor);
@@ -102,7 +102,7 @@ appError.Database = function (optMsg) {
   this.message = msg;
 
   /**
-   * @type {cc.error.Database.Type} The type of error.
+   * @type {app.error.Database.Type} The type of error.
    */
   this.type = appError.Database.Type.UNKNOWN;
 
@@ -127,7 +127,7 @@ appError.Database.Type = {
  *
  * @param {string=} optMsg the message.
  * @constructor
- * @extends {cc.error.Database}
+ * @extends {app.error.Database}
  * @see http://mongoosejs.com/docs/validation.html
  * @see https://github.com/LearnBoost/mongoose/blob/3.6.11/lib/errors/validation.js
  */
@@ -137,7 +137,7 @@ appError.Validation = function(optMsg) {
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Validation Error';
   this.message = msg;
 
-  /** @type {Array.<cc.Error.ValidationItem>} An array of validation errors */
+  /** @type {Array.<app.Error.ValidationItem>} An array of validation errors */
   this.errors = [];
 
 };
@@ -183,7 +183,7 @@ appError.ValidationItem = function(message, optPath, optType, optValue) {
  *
  * @param {string=} optMsg the message.
  * @constructor
- * @extends {cc.error.Abstract}
+ * @extends {app.error.Abstract}
  */
 appError.Authentication = function(optMsg) {
   appError.Authentication.super_.call(this, optMsg, this.constructor);
@@ -193,7 +193,7 @@ appError.Authentication = function(optMsg) {
   this.message = msg;
 
 
-  /** @type {cc.error.Authentication.Type} */
+  /** @type {app.error.Authentication.Type} */
   this.type = appError.Authentication.Type.UNKNOWN;
 };
 util.inherits(appError.Authentication, appError.Abstract);
@@ -218,7 +218,7 @@ appError.Authentication.Type = {
  * JSON encoding of data failed.
  *
  * @param {Error} ex the JSON exception
- * @extends {cc.error.Abstract}
+ * @extends {app.error.Abstract}
  */
 appError.JSON = function (ex) {
   appError.JSON.super_.call(this, (ex + ''), this.constructor);

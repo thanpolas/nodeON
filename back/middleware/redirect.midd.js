@@ -13,7 +13,7 @@ var helpers = require('../util/helpers');
  * The Redirect middleware, forces usage of a single host.
  *
  * @contructor
- * @extends {cc.Middleware}
+ * @extends {app.Middleware}
  */
 var Redirect = module.exports = function(){
   Middleware.apply(this, arguments);
