@@ -15,11 +15,7 @@ describe('Frontpage', function() {
 
   tester.init('web');
 
-  beforeEach(function(done) {
-    var web = new Web('web');
-    this.req = web.req;
-    done();
-  });
+  Web.setup();
 
   it('Will get a 200 on the frontpage', function(done) {
     this.req.get('/')
