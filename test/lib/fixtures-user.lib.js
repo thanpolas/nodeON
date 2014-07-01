@@ -65,7 +65,7 @@ fixtures.login = function() {
       .end(function(err, res) {
         if (err) { return done(err); }
         self.cookie = res.headers['set-cookie'][0];
-        self.cookieObj = fixtures._splitCookie(self.cookie);
+        self.cookieObj = Web.splitCookie(self.cookie);
         done();
       });
   });
