@@ -52,12 +52,13 @@ describe('User Register endpoint', function() {
       .expect(400, done);
   });
   it('It will not register a duplicate user', function(done) {
+    var self = this;
     this.req.post('/register')
       .send({email: userfix.one.email, password:  userfix.one.password})
       .expect(302)
       .end(function(err) {
         if (err) return done(err);
-        this.req.post('/register')
+        self.req.post('/register')
           .send({email: userfix.one.email, password:  userfix.one.password})
           .expect(400, done);
       });

@@ -15,18 +15,14 @@ var UserEnt = require('../../back/entities/user/user.ent');
 
 describe('User Verification', function() {
   this.timeout(8000);
-  var req, userEnt, udo;
+  var userEnt, udo;
 
   tester.init('api');
 
   before(function() {
     userEnt = UserEnt.getInstance();
   });
-  beforeEach(function(done) {
-    var web = new Web('api');
-    req = web.req;
-    done();
-  });
+  Web.setup();
 
   beforeEach(function(done) {
     userEnt.delete({email: userfix.one.email})
@@ -34,7 +30,7 @@ describe('User Verification', function() {
   });
 
   beforeEach(function(done) {
-    req.post('/register')
+    this.req.post('/register')
       .send({email: userfix.one.email, password:  userfix.one.password})
       .expect(302, done);
   });
@@ -62,12 +58,12 @@ describe('User Verification', function() {
     expect(udo.isVerified).to.be.false;
   });
   it('Will accept our verification and redirect us to index', function(done) {
-    req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)
+    this.req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)
       .expect(302)
       .expect('location', '/', done);
   });
   it('Will turn the "isVerified" switch to true after verification', function(done) {
-    req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)
+    this.req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)
       .end(function() {
         userEnt.readOne({email: userfix.one.email})
           .then(function(resudo) {
