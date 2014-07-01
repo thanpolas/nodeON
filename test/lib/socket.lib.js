@@ -49,7 +49,7 @@ Sock.setupAuth = function() {
     this.sock.socket.on('authorized', done);
   });
 
-  tester.teardown(function(done) {
+  afterEach(function(done) {
     this.sock.close().then(done, done);
   });
 
