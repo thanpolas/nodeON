@@ -5,7 +5,6 @@ var Promise = require('bluebird');
 
 var tester = require('./tester.lib');
 var UserEnt = require('../../back/entities/user/user.ent');
-var DomainEnt = require('../../back/entities/custom-domain.ent');
 var Web = require('./web.lib');
 var userfix = require('../fixtures/user.fix');
 
@@ -24,10 +23,9 @@ fixtures.createUser = function() {
 
   tester.setup(function() {
     this.userEnt = UserEnt.getInstance();
-
-    var web = new Web('api');
-    this.req = web.req;
   });
+
+  Web.setup();
 
   tester.setup(function(done) {
     Promise.all([
@@ -83,62 +81,3 @@ fixtures.login = function() {
   });
 };
 
-/**
- * Setup custom domains.
- *
- */
-fixtures.domains = function() {
-  tester.setup(function(done) {
-    this.domainEnt = DomainEnt.getInstance();
-    Promise.all([
-      this.domainEnt.delete({name: 'one'}),
-      this.domainEnt.delete({name: 'two'}),
-      this.domainEnt.delete({name: 'three'}),
-    ]).then(done.bind(null, null), done);
-  });
-  tester.setup(function(done) {
-    var self = this;
-    this.domainEnt.create({
-      name: 'one',
-      user: this.udo.id,
-      hostname: '',
-    }).then(function(domainItem) {
-      self.domainItem = domainItem;
-    }).then(done, done);
-  });
-  tester.setup(function(done) {
-    var self = this;
-    this.domainEnt.create({
-      name: 'two',
-      hostname: 'twotwo',
-      user: this.udo.id,
-    }).then(function(domainItem) {
-      self.domainItemTwo = domainItem;
-    }).then(done, done);
-  });
-};
-
-/**
- * Helper for spliting the cookie into its' values.
- *
- * @param {string} cookie The cookie in full.
- * @return {Object} The cookie broken out in pieces
- */
-fixtures._splitCookie = function(cookie) {
-  // connect.sid=s%3Ar0K8rj5TjBgff9lF0HIwkuzA.NIml5SjWE0TMTGhHm6cKwDisNWmY7tG4NNcoPZroMGY; Path=/
-
-  var equalPos = cookie.indexOf('=');
-  var semicolonPos = cookie.indexOf(';');
-  var finalPart = cookie.substr(semicolonPos + 2);
-  var cookieValue = cookie.substr(equalPos + 1, semicolonPos - (equalPos + 1));
-
-  return {
-    name: cookie.substr(0, equalPos),
-    value: cookieValue,
-
-    // The session id starts at char 4 (after "s%3A") and ends at the
-    // first dot.
-    sessionId: cookieValue.substr(4).split('.')[0],
-    path: finalPart.split('=')[1],
-  };
-};
