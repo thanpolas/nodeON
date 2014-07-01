@@ -17,12 +17,12 @@ describe('Profile Edit', function() {
   setupFix.createUser();
   setupFix.login();
 
-  it('should get a redirect to dashboard', function(done) {
+  it('should get a redirect to ', function(done) {
     this.req.post('/profile')
       .set('cookie', this.cookie)
       .send({firstName: 'new'})
       .expect(302)
-      .expect('location', '/dashboard', done);
+      .expect('location', '/', done);
   });
   it('should perform the edit', function(done) {
     var self = this;
@@ -30,7 +30,7 @@ describe('Profile Edit', function() {
       .set('cookie', this.cookie)
       .send({firstName: 'new'})
       .expect(302)
-      .expect('location', '/dashboard')
+      .expect('location', '/')
       .end(function(err) {
         if (err) { return done(err); }
         self.userEnt.readOne({email: userfix.one.email}).then(function(udo) {
@@ -44,7 +44,7 @@ describe('Profile Edit', function() {
       .set('cookie', this.cookie)
       .send({email: 'new@demo.com'})
       .expect(302)
-      .expect('location', '/dashboard')
+      .expect('location', '/')
       .end(function(err) {
         if (err) { return done(err); }
         self.userEnt.readOne({_id: self.udo._id}).then(function(udo) {
