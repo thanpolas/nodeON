@@ -32,6 +32,7 @@ tester.init = function(role) {
   tester.setup(function(done) {
     if (init) {return done();}
     init = true;
+
     app.init({
       role: role,
       nolog: false,
