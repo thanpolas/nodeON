@@ -36,12 +36,12 @@ var Sock = module.exports = function() {
 Sock.setupAuth = function() {
   setupFix.createUser();
   setupFix.login();
-  tester.setup(function (done) {
+  beforeEach(function (done) {
     this.sock = new Sock();
     this.sock.connect();
     this.sock.socket.on('connect', done);
   });
-  tester.setup(function (done) {
+  beforeEach(function (done) {
     var self = this;
     this.sock.socket.on('challenge', function(data, cb) {
       cb(self.cookieObj.sessionId);

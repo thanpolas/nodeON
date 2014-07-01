@@ -13,7 +13,6 @@ var config = require('config');
 var Web = module.exports = function(optHostname) {
   var port = config.webserver.port;
   var hostname = optHostname || 'http://localhost:' + port;
-  console.log('hostname:', hostname);
   // expose the supertest request object with the webserver's url predefined.
   this.req = req(hostname);
   this.hasAuthorized = false;

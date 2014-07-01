@@ -21,13 +21,13 @@ var fixtures = module.exports = {};
 fixtures.createUser = function() {
   tester.init('api');
 
-  tester.setup(function() {
+  beforeEach(function() {
     this.userEnt = UserEnt.getInstance();
   });
 
   Web.setup();
 
-  tester.setup(function(done) {
+  beforeEach(function(done) {
     Promise.all([
       this.userEnt.delete({email: userfix.one.email}),
       this.userEnt.delete({email: 'new@demo.com'}),
@@ -35,14 +35,14 @@ fixtures.createUser = function() {
     ]).then(done.bind(null, null), done);
   });
 
-  tester.setup(function(done) {
+  beforeEach(function(done) {
     var self = this;
     this.userEnt.create(userfix.oneFull)
       .then(function(userDataObject) {
         self.udo = userDataObject;
       }).then(done, done);
   });
-  tester.setup(function(done) {
+  beforeEach(function(done) {
     var self = this;
     this.userEnt.create(userfix.three)
       .then(function(userDataObject) {
@@ -58,7 +58,7 @@ fixtures.createUser = function() {
  *
  */
 fixtures.login = function() {
-  tester.setup(function(done) {
+  beforeEach(function(done) {
     var self = this;
     this.req.post('/login')
       .send({email: this.udo.email, password:  userfix.oneFull.password})
@@ -69,7 +69,7 @@ fixtures.login = function() {
         done();
       });
   });
-  tester.setup(function(done) {
+  beforeEach(function(done) {
     var self = this;
     this.req.post('/login')
       .send({email: userfix.three.email, password:  userfix.three.password})
