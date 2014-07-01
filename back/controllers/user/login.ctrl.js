@@ -6,7 +6,6 @@ var util = require('util');
 
 var __ = require('lodash');
 var passport = require('passport');
-var passportLocal = require('passport-local');
 var log = require('logg').getLogger('app.ctrl.Login');
 
 var authMidd = require('../../middleware/auth.midd').getInstance();
