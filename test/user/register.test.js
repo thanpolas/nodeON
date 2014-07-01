@@ -15,18 +15,15 @@ var UserEnt = require('../../back/entities/user/user.ent');
 
 describe('User Register endpoint', function() {
   this.timeout(8000);
-  var req, userEnt;
+  var userEnt;
 
   tester.init('api');
 
   before(function() {
     userEnt = UserEnt.getInstance();
   });
-  beforeEach(function(done) {
-    var web = new Web('api');
-    req = web.req;
-    done();
-  });
+
+  Web.setup();
 
   beforeEach(function(done) {
     userEnt.delete({email: userfix.one.email})
@@ -38,7 +35,7 @@ describe('User Register endpoint', function() {
   });
 
   it('Registers a valid user with minimum required fields', function(done) {
-    req.post('/register')
+    this.req.post('/register')
       .send({email: userfix.one.email, password:  userfix.one.password})
       .expect(302)
       .end(function(err) {
@@ -50,17 +47,17 @@ describe('User Register endpoint', function() {
       });
   });
   it('Does not Register an invalid email', function(done) {
-    req.post('/register')
+    this.req.post('/register')
       .send({email: 'invalid', password: userfix.one.password})
       .expect(400, done);
   });
   it('It will not register a duplicate user', function(done) {
-    req.post('/register')
+    this.req.post('/register')
       .send({email: userfix.one.email, password:  userfix.one.password})
       .expect(302)
       .end(function(err) {
         if (err) return done(err);
-        req.post('/register')
+        this.req.post('/register')
           .send({email: userfix.one.email, password:  userfix.one.password})
           .expect(400, done);
       });
@@ -71,7 +68,7 @@ describe('User Register endpoint', function() {
     var lowerEnd = Date.now() + (3600000 * 24 * 85);
     var higherEnd = Date.now() + (3600000 * 24 * 95);
     beforeEach(function(done) {
-      req.post('/register')
+      this.req.post('/register')
         .send({
           _id: '507f191e810c19729de860ea',
           email: userfix.one.email,

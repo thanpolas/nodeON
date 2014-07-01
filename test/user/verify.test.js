@@ -61,10 +61,10 @@ describe('User Verification', function() {
   it('does not have the verified flag on', function() {
     expect(udo.isVerified).to.be.false;
   });
-  it('Will accept our verification and redirect us to dashboard', function(done) {
+  it('Will accept our verification and redirect us to index', function(done) {
     req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)
       .expect(302)
-      .expect('location', '/dashboard', done);
+      .expect('location', '/', done);
   });
   it('Will turn the "isVerified" switch to true after verification', function(done) {
     req.get('/verify/' + udo.emailConfirmation.key + '/' + udo._id)

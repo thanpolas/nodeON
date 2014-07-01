@@ -145,14 +145,7 @@ Login.prototype._showLogin = function(req, res) {
 Login.prototype.loginGetError = function(err) {
   var errMsg = 'An error occured, please try again';
   var normErr;
-
-  if (err instanceof passportLocal.BadRequestError) {
-    log.fine('loginGetError() :: Empty fields.');
-    normErr = new appError.Validation();
-    var validItem = new appError.ValidationItem('A field was empty');
-    validItem.type = 'required';
-    normErr.errors.push(validItem);
-  } else if (err instanceof appError.Authentication) {
+  if (err instanceof appError.Authentication) {
     log.fine('loginGetError() :: Auth middleware error:', err.message,
       'type:', err.type);
     normErr = err;

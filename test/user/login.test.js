@@ -66,6 +66,6 @@ describe('User Login', function() {
     this.req.post('/login')
       .send({email: userfix.one.email, password:  userfix.one.password})
       .expect(302)
-      .expect('location', '/dashboard', done);
+      .expect('location', '/', done);
   });
 });
