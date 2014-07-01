@@ -64,7 +64,7 @@ expressApp.init = Promise.method(function(opts) {
   app.use(corsMidd.allowCrossDomain.bind(corsMidd));
 
   app.use(cookieParser());
-  app.use(bodyParser());
+  app.use(bodyParser.json());
 
   // Session store
   var sessConnectPromise = session.connect();
