@@ -76,6 +76,8 @@ Session.prototype.use = function() {
     secret: this.params.cookie.session.secret,
     store: this.sessionStore,
     name: this.params.cookie.name,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
       // enable on SSL
       // secure: true,
