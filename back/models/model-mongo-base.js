@@ -1,7 +1,7 @@
 /**
  * @fileOverview The base Model Class mongo models extend from.
  */
-var Model = require('./model');
+var Model = require('./model-base');
 
 /**
  * The base Model Class mongo models extend from.

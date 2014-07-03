@@ -8,7 +8,7 @@ var config = require('config');
 
 var log = require('logg').getLogger('app.model.Redis');
 
-var Model = require('./model');
+var Model = require('./model-base');
 
 var persistentClient = null;
 var clients = [];

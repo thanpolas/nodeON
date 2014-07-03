@@ -1,7 +1,7 @@
 /**
  * @fileOverview The base Model Class for all PostGres models to extend from.
  */
-var Model = require('./model');
+var Model = require('./model-base');
 
 /**
  * The sequelize instance is only available through
