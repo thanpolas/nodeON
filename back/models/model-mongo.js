@@ -9,10 +9,21 @@ var Model = require('./model');
  * @constructor
  * @extends {app.Model}
  */
-module.exports = Model.extend(function() {
+var ModelMongo = module.exports = Model.extend(function() {
   /** @type {?mongoose.Schema} Instance of mongoose Schema */
   this.schema = null;
 
   /** @type {?mongoose.Model} The mongoose Model ctor */
   this.Model = null;
 });
+
+/**
+ * Helper for default value of date types.
+ *
+ * @param  {number} plusTime
+ * @return {number} The JS timestamp the future.
+ * @static
+ */
+ModelMongo.defaultDate = function(plusTime) {
+  return Date.now() + plusTime;
+};

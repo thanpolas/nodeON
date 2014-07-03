@@ -4,11 +4,11 @@
 var __ = require('lodash');
 var Promise = require('bluebird');
 var config = require('config');
+var mongoose = require('mongoose');
 var log = require('logg').getLogger('app.model.User');
 
 var Model = require('./model');
 var ModelMongo = require('./model-mongo');
-var orm = require('./orm-mongo');
 var helpers = require('../util/helpers');
 var appError = require('../util/error');
 var userValid = require('./validators/user.valid');
@@ -53,7 +53,7 @@ User.Schema = {
     key: {type: String, default: helpers.generateRandomString},
     expires: {
       type: Date,
-      default: __.partial(orm.defaultDate, config.users.emailConfirmationExpires)
+      default: __.partial(ModelMongo.defaultDate, config.users.emailConfirmationExpires)
     }
   },
   resetPassword: {
@@ -78,7 +78,7 @@ User.Schema = {
 User.prototype.init = Promise.method(function() {
   log.fine('init() :: initializing User Model...');
 
-  this.schema = new orm.Schema(User.Schema);
+  this.schema = new mongoose.Schema(User.Schema);
 
   // define indexes
   this.schema.index({email: 1}, {unique: true});
@@ -96,7 +96,7 @@ User.prototype.init = Promise.method(function() {
   this.schema.methods.verifyPassword = this._verifyPassword;
 
   // initialize model
-  this.Model = orm.model(Model.Collection.USER, this.schema);
+  this.Model = mongoose.model(Model.Collection.USER, this.schema);
 
 });
 
