@@ -7,8 +7,8 @@ var config = require('config');
 var mongoose = require('mongoose');
 var log = require('logg').getLogger('app.model.User');
 
-var Model = require('./model');
-var ModelMongo = require('./model-mongo');
+var Model = require('./model-base');
+var ModelMongo = require('./model-mongo-base');
 var helpers = require('../util/helpers');
 var appError = require('../util/error');
 var userValid = require('./validators/user.valid');
