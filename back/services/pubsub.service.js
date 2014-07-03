@@ -8,7 +8,7 @@ var log = require('logg').getLogger('app.service.PubSub');
 var cip = require('cip');
 var config = require('config');
 
-var ModelRedis = require('./model-redis');
+var ModelRedis = require('../models/model-redis-base');
 
 var CEventEmitter = cip.cast(EventEmitter);
 // var __ = require('lodash');
