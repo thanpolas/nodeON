@@ -3,9 +3,9 @@
  */
 var path = require('path');
 
+var cip = require('cip');
 var express = require('express');
 var flash = require('connect-flash');
-var errorhandler = require('errorhandler');
 var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.api');
@@ -17,29 +17,24 @@ var authMidd = require('../middleware/auth.midd').getInstance();
 var corsMidd = require('../middleware/cors.midd').getInstance();
 var webRouter = require('../routes/web.router');
 var globals = require('./globals');
-var ExpressApp = require('./base.express.js');
 
-var ApiExpress = module.exports = ExpressApp.extendSingleton(function () {
+var ApiExpress = module.exports = cip.extendSingleton(function () {
+  /** @type {express} The express instance */
+  this.app = express();
+
+  /** @type {?app.core.SessionStore} Instance of Session Store */
+  this.sessionStore = null;
 
 });
 
 /**
- * Kick off the webserver...
+ * Initialize the API express instance.
  *
  * @param {Object} opts Options as defined in app.init().
  * @return {Promise(express)} a promise with the express instance.
  */
 ApiExpress.prototype.init = Promise.method(function(opts) {
   log.info('init() :: Initializing webserver...');
-
-  if (this.app !== null) {
-    return this.app;
-  }
-
-  this.app = express();
-
-  // Setup express
-  this.baseSetup();
 
   this.app.set('views', __dirname + '/../../front/templates');
   this.app.set('view engine', 'jade');
@@ -58,25 +53,16 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
   // initialize authentication
   authMidd.init(this.app);
 
-  // initialize webserver
-  webserver.init(this.app);
-
   // add the routes
   webRouter.init(this.app, opts);
 
   // Init websockets
   socketServer.init(webserver.http);
 
-  // development only
-  if (globals.isDev) {
-    this.app.use(errorhandler());
-  }
-
   // setup view globals
   this.app.locals.glob = globals.viewGlobals;
 
   return Promise.all([
-    webserver.start(this.app),
     sessConnectPromise,
   ]);
 });

@@ -1,49 +1,80 @@
 /**
- * @fileOverview Base Ctor for express instances, provides helpers, wrappers.
+ * @fileOverview The core express instance, requires all others.
  */
-var cip = require('cip');
 var config = require('config');
+var cip = require('cip');
 var Promise = require('bluebird');
+var express = require('express');
+var vhost = require('vhost');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var errorhandler = require('errorhandler');
+
+var webserver = require('../webserver.core');
+var ExpressApi = require('./api.express');
+var ExpressWebsite = require('./website.express');
 
 // var log = require('logg').getLogger('app.base.express');
 
 var globals = require('./globals');
 
 /**
- * Base Ctor for express instances, provides helpers, wrappers.
+ * The core express instance, requires all others.
  *
  * @constructor
  */
-var ExpressApp = module.exports = cip.extend(function() {
-  /** @type {?express} The express instance */
-  this.app = null;
+var ExpressApp = module.exports = cip.extendSingleton(function() {
+  /** @type {express} The express instance */
+  this.app = express();
 
-  /** @type {?app.core.SessionStore} Instance of Session Store */
-  this.sessionStore = null;
+  this.expressApi = ExpressApi.getInstance();
+  this.expressWebsite = ExpressWebsite.getInstance();
 });
 
 
 /**
- * Basic setup of express instance.
+ * Kick off the webserver...
  *
+ * @param {Object} opts Options as defined in app.init().
  * @return {Promise} a promise.
  */
-ExpressApp.prototype.baseSetup = Promise.method(function() {
-  // Discover proper port, Heroku exports it in an env
-  var port;
-  if (globals.isHeroku) {
-    port = process.env.PORT;
-  } else {
-    port = config.webserver.port;
-  }
+ExpressApp.prototype.init = Promise.method(function(opts) {
+  return Promise.all([
+    this.expressApi.init(opts),
+    this.expressWebsite.init(opts),
+  ])
+  .then(function (res) {
+    // body...
+    var appApi = res[0];
+    var appWebserver = res[1];
 
-  // Setup express
-  this.app.set('port', port);
-  // remove x-powered-by header
-  this.app.set('x-powered-by', false);
+    // Discover proper port, Heroku exports it in an env
+    var port;
+    if (globals.isHeroku) {
+      port = process.env.PORT;
+    } else {
+      port = config.webserver.port;
+    }
 
-  this.app.use(cookieParser());
-  this.app.use(bodyParser.json());
+    // Setup express
+    this.app.set('port', port);
+    // remove x-powered-by header
+    this.app.set('x-powered-by', false);
+
+    // initialize webserver
+    webserver.init(this.app);
+
+    this.app.use(cookieParser());
+    this.app.use(bodyParser.json());
+
+    this.app.use(vhost(config.hostname.api, appApi));
+    this.app.use(vhost(config.hostname.website, appWebserver));
+
+    // development only
+    if (globals.isDev) {
+      this.app.use(errorhandler());
+    }
+
+    return webserver.start(this.app);
+  });
 });
