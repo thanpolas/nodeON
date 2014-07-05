@@ -1,10 +1,10 @@
 /**
- * @fileOverview The main routes of the web app.
+ * @fileOverview Routes for Website.
  */
-var log = require('logg').getLogger('app.router.web');
+var log = require('logg').getLogger('app.router.website');
 
 var HomeCtrl = require('../controllers/index.ctrl');
-var redirectMidd = require('../middleware/redirect.midd').getInstance();
+// var redirectMidd = require('../middleware/redirect.midd').getInstance();
 
 var securityMidd = require('../middleware/security.midd');
 var featureMidd = require('../middleware/feature.midd');
@@ -13,8 +13,6 @@ var LoginCtrl = require('../controllers/user/login.ctrl');
 var VerifyCtrl = require('../controllers/user/verify.ctrl');
 var ProfileCtrl = require('../controllers/user/editProfile.ctrl');
 var ForgotCtrl = require('../controllers/user/forgot.ctrl');
-
-var globals = require('../core/globals');
 
 var router = module.exports = {};
 
@@ -33,10 +31,10 @@ router.init = function(app) {
   var forgotCtrl = ForgotCtrl.getInstance();
 
   // redirect to www if on heroku (production)
-  if (globals.isHeroku) {
-    log.fine('init() :: Adding heroku force redirect to www');
-    app.get('/', redirectMidd.forceWww.bind(redirectMidd));
-  }
+  // if (globals.isHeroku) {
+  //   log.fine('init() :: Adding heroku force redirect to www');
+  //   app.get('/', redirectMidd.forceWww.bind(redirectMidd));
+  // }
 
   app.get('/', homeCtrl.use);
 
