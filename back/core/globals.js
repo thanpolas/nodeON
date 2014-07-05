@@ -10,6 +10,9 @@ var config = require('config');
 var helpers = require('../util/helpers');
 var globals = module.exports = {};
 
+/** @type {?Object} Application Boot options */
+globals.bootOpts = null;
+
 /**
  * The supported environments
  *

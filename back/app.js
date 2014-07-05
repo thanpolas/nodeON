@@ -51,6 +51,9 @@ app.init = function(optOpts) {
   app.boot = AppServices.getInstance();
   app.boot.setup(optOpts);
 
+  // assign to globals the boot options
+  globals.bootOpts = app.boot.options;
+
   // Initialize logging facilities
   logger.init();
 
