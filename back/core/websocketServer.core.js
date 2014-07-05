@@ -2,15 +2,16 @@
  * @fileOverview Websockets API implementation.
  */
 var EventEmitter = require('events').EventEmitter;
-var util = require('util');
 
+var cip = require('cip');
 var socketio = require('socket.io');
 var config = require('config');
 var log = require('logg').getLogger('app.core.socket');
 
 var SockAuth = require('../middleware/websocket/websocket-auth.midd');
 var socketRouter = require('../routes/socket.router');
-var helpers = require('../util/helpers');
+
+var CeventEmitter = cip.cast(EventEmitter);
 
 /**
  *
@@ -19,15 +20,10 @@ var helpers = require('../util/helpers');
  * @constructor
  * @extends {events.EventEmitter}
  */
-var Sock = module.exports = function() {
-  EventEmitter.call(this);
-
+var Sock = module.exports = CeventEmitter.extend(function() {
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
-
-};
-util.inherits(Sock, EventEmitter);
-helpers.addSingletonGetter(Sock);
+});
 
 /**
  * Initialize and configure the websockets server.
