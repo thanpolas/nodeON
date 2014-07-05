@@ -1,7 +1,7 @@
 /**
  * @fileOverview The main routes of the web app.
  */
-var log = require('logg').getLogger('app.webRouter');
+var log = require('logg').getLogger('app.router.web');
 
 var lusca = require('lusca');
 var HomeCtrl = require('../controllers/index.ctrl');
@@ -44,6 +44,7 @@ router.init = function(app , opts) {
   // CSRF, xss, rest
   var manageSecurity = function(req, res, next) {next();};
   if (opts.security) {
+    log.fine('init() :: Applying Security Policies...');
     manageSecurity = lusca({
       csrf: true,
       csp: false,
@@ -54,7 +55,6 @@ router.init = function(app , opts) {
     });
   }
 
-
   app.get('/', homeCtrl.use);
 
   app.get('/tpl/:tpl', function(req, res) {
@@ -62,7 +62,6 @@ router.init = function(app , opts) {
     var tplBare = template.split('.')[0];
     res.render('tpl/' + tplBare);
   });
-
 
   // blanket middleware for User API ops
   var userMiddleware = [

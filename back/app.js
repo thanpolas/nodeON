@@ -48,8 +48,8 @@ app.init = function(optOpts) {
   if (initialized) { return Promise.resolve(); }
   initialized = true;
 
-  app.boot = AppServices.getInstance(optOpts);
-
+  app.boot = AppServices.getInstance();
+  app.boot.setup(optOpts);
 
   // Initialize logging facilities
   logger.init();
@@ -61,7 +61,7 @@ app.init = function(optOpts) {
   log.info('Initializing... standAlone:', globals.isStandAlone,
     ':: System NODE_ENV:', process.env.NODE_ENV, ':: App Environment:', globals.env,
     ':: Server ID:', globals.serverId, ':: On Heroku:', globals.isHeroku,
-    ':: Security:', !app.boot.options.security);
+    ':: Security:', app.boot.options.security);
 
   // Global exception handler
   process.on('uncaughtException', app.onNodeFail);

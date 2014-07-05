@@ -2,6 +2,7 @@
  * @fileOverview The manage panel websocket routes.
  *
  */
+// var log = require('logg').getLogger('app.router.socket');
 
 var router = module.exports = {};
 

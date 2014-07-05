@@ -21,19 +21,13 @@ var database = require('./core/database.core').getInstance();
 /**
  * Boot the services of the application.
  *
- * @param {Object=} optOptions Options for booting.
  * @constructor
  */
-var AppServices = module.exports = cip.extendSingleton(function (optOptions) {
-  this.options = this.setOptions(optOptions);
+var AppServices = module.exports = cip.extendSingleton(function () {
+  this.options = {};
 
   /** @type {null|Express} The express instance */
   this.express = null;
-
-  if (this.options.stubMail || process.env.NODE_STUBMAIL) {
-    config.mandrill.apikey = config.mandrill.apikeyStub;
-  }
-
 });
 
 /**
@@ -42,14 +36,14 @@ var AppServices = module.exports = cip.extendSingleton(function (optOptions) {
  * @param {Object=} optOptions User defined options.
  * @return {Object} Default options or user preferences.
  */
-AppServices.prototype.setOptions = function(optOptions) {
+AppServices.prototype.setup = function(optOptions) {
   var userOpts = {};
   if (__.isObject(optOptions)) {
     userOpts = optOptions;
   }
 
   /** @type {Object} define default options */
-  return __.defaults(userOpts, {
+  this.options = __.defaults(userOpts, {
     // launch webserver
     webserver: true,
 
@@ -74,8 +68,6 @@ AppServices.prototype.setOptions = function(optOptions) {
   });
 };
 
-
-
 /**
  * Triggers after all databases are connected.
  *
@@ -83,7 +75,11 @@ AppServices.prototype.setOptions = function(optOptions) {
  */
 AppServices.prototype.initServices = function() {
   log.info('initServices() :: Init...');
+
   var email = Email.getInstance();
+  if (this.options.stubMail || process.env.NODE_STUBMAIL) {
+    config.mandrill.apikey = config.mandrill.apikeyStub;
+  }
 
   var boot = [
     database.init.bind(database),
