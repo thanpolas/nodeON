@@ -6,27 +6,28 @@ var cip = require('cip');
 var Promise = require('bluebird');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
-var log = require('logg').getLogger('app.core.SessionStore');
+var log = require('logg').getLogger('app.core.sessionStore');
 
 var globals = require('./globals');
 
 /**
  * A Session store implementation using redis.
  *
+ * @param {app.core.globals.Roles} role The role to assume, can be 'api', 'website'.
  * @constructor
  */
-var Session = module.exports = cip.extendSingleton(function() {
+var Session = module.exports = cip.extend(function(role) {
   /** @type {?RedisStore} Will contain an instance of RedisStore */
-  this.sessionStore = null;
+  this.redisStore = null;
 
   /** @type {Object} Container for runtime configuration */
   this.params = {};
 
   // setup the config parameters
-  switch (globals.role) {
-  case globals.Roles.WEB:
-    this.params.cookie = config.cookies.web;
-    this.params.redis = config.redis.sessionWeb;
+  switch (role) {
+  case globals.Roles.WEBSITE:
+    this.params.cookie = config.cookies.website;
+    this.params.redis = config.redis.sessionWebsite;
     break;
   case globals.Roles.API:
     this.params.cookie = config.cookies.api;
@@ -44,11 +45,11 @@ Session.prototype.connect = function() {
   var self = this;
   return new Promise(function(resolve, reject) {
     // Sessions stored in redis
-    self.sessionStore = new RedisStore(self.params.redis);
+    self.redisStore = new RedisStore(self.params.redis);
 
     function clearListeners() {
-      self.sessionStore.removeListener('connect', onRedisSuccess);
-      self.sessionStore.removeListener('disconnect', onRedisError);
+      self.redisStore.removeListener('connect', onRedisSuccess);
+      self.redisStore.removeListener('disconnect', onRedisError);
     }
     function onRedisError(err) {
       log.warn('init() :: Session Redis store disconnected. Error:', err);
@@ -61,8 +62,8 @@ Session.prototype.connect = function() {
       clearListeners();
     }
 
-    self.sessionStore.on('disconnect', onRedisError);
-    self.sessionStore.on('connect', onRedisSuccess);
+    self.redisStore.on('disconnect', onRedisError);
+    self.redisStore.on('connect', onRedisSuccess);
   });
 };
 
@@ -74,7 +75,7 @@ Session.prototype.connect = function() {
 Session.prototype.use = function() {
   return session({
     secret: this.params.cookie.session.secret,
-    store: this.sessionStore,
+    store: this.redisStore,
     name: this.params.cookie.name,
     resave: true,
     saveUninitialized: true,

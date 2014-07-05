@@ -32,7 +32,7 @@ globals.Environments = {
  */
 globals.Roles = {
   API: 'api',
-  WEB: 'web',
+  WEBSITE: 'website',
 };
 
 /** @type {boolean} If application runs directly from shell, gets set on app */
