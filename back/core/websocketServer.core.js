@@ -9,7 +9,9 @@ var config = require('config');
 var log = require('logg').getLogger('app.core.socket');
 
 var SockAuth = require('../middleware/websocket/websocket-auth.midd');
-var socketRouter = require('../routes/socket.router');
+var webRouter = require('../routes/web-socket.router');
+var apiRouter = require('../routes/api-socket.router');
+var globals = require('./globals');
 
 var CeventEmitter = cip.cast(EventEmitter);
 
@@ -17,12 +19,24 @@ var CeventEmitter = cip.cast(EventEmitter);
  *
  * This module is an instance of EventEmitter.
  *
+ * @param {app.core.globals.Roles} role The role to assume, can be 'api', 'website'.
  * @constructor
  * @extends {events.EventEmitter}
  */
-var Sock = module.exports = CeventEmitter.extend(function() {
+var Sock = module.exports = CeventEmitter.extend(function(role) {
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
+
+  // setup the config parameters
+  switch (role) {
+  case globals.Roles.WEBSITE:
+    this.socketRouter = webRouter;
+    break;
+  case globals.Roles.API:
+    this.socketRouter = apiRouter;
+    break;
+  }
+
 });
 
 /**

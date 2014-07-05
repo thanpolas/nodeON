@@ -1,11 +1,11 @@
 /**
- * @fileOverview Website Socket 'version' call, returns API version.
+ * @fileOverview API Socket 'version' call, returns API version.
  */
 
 var ControllerBase = require('../controller-base');
 
 /**
- * The Website Socket 'version' call, returns API version.
+ * The API Socket 'version' call, returns API version.
  *
  * @contructor
  * @extends {app.ControllerBase}
@@ -20,5 +20,5 @@ var Version = module.exports = ControllerBase.extendSingleton();
  * @param {Function} resp Callback with response to client.
  */
 Version.prototype.get = function(socket, data, resp) {
-  resp('0.1');
+  resp('api-0.1');
 };

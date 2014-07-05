@@ -1,8 +1,8 @@
 /**
- * @fileOverview The manage panel websocket routes.
+ * @fileOverview Website websocket routes.
  *
  */
-// var log = require('logg').getLogger('app.router.socket');
+// var log = require('logg').getLogger('app.router.socket.web');
 
 var router = module.exports = {};
 
