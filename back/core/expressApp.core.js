@@ -28,7 +28,6 @@ expressApp.app = null;
 /** @type {app.core.SessionStore} Instance of Session Store */
 expressApp.sessionStore = null;
 
-
 /**
  * Kick off the webserver...
  *
