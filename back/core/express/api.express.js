@@ -24,7 +24,6 @@ var ApiExpress = module.exports = cip.extendSingleton(function () {
 
   /** @type {?app.core.SessionStore} Instance of Session Store */
   this.sessionStore = null;
-
 });
 
 /**
@@ -36,7 +35,7 @@ var ApiExpress = module.exports = cip.extendSingleton(function () {
 ApiExpress.prototype.init = Promise.method(function(opts) {
   log.info('init() :: Initializing webserver...');
 
-  this.app.set('views', __dirname + '/../../front/templates');
+  this.app.set('views', __dirname + '/../../front/templates/');
   this.app.set('view engine', 'jade');
 
   // enable CORS for current development flow.
