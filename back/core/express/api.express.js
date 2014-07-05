@@ -15,7 +15,7 @@ var socketServer = require('./websocketServer.core').getInstance();
 var SessionStore = require('./session-store.core');
 var authMidd = require('../middleware/auth.midd').getInstance();
 var corsMidd = require('../middleware/cors.midd').getInstance();
-var webRouter = require('../routes/web.router');
+var apiRouter = require('../routes/api.router');
 var globals = require('./globals');
 
 var ApiExpress = module.exports = cip.extendSingleton(function () {
@@ -54,7 +54,7 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
   authMidd.init(this.app);
 
   // add the routes
-  webRouter.init(this.app, opts);
+  apiRouter.init(this.app, opts);
 
   // Init websockets
   socketServer.init(webserver.http);
