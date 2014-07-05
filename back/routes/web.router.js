@@ -39,22 +39,6 @@ router.init = function(app , opts) {
     app.get('/', redirectMidd.forceWww.bind(redirectMidd));
   }
 
-  //
-  // Security Policies
-  // CSRF, xss, rest
-  var manageSecurity = function(req, res, next) {next();};
-  if (opts.security) {
-    log.fine('init() :: Applying Security Policies...');
-    manageSecurity = lusca({
-      csrf: true,
-      csp: false,
-      xframe: 'DENY',
-      p3p: false,
-      hsts: false,
-      xssProtection: true
-    });
-  }
-
   app.get('/', homeCtrl.use);
 
   app.get('/tpl/:tpl', function(req, res) {
