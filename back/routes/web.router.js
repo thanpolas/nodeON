@@ -43,7 +43,7 @@ router.init = function(app , opts) {
   // Security Policies
   // CSRF, xss, rest
   var manageSecurity = function(req, res, next) {next();};
-  if (!opts.nosecurity) {
+  if (opts.security) {
     manageSecurity = lusca({
       csrf: true,
       csp: false,

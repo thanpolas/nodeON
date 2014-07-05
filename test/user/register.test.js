@@ -17,7 +17,7 @@ describe('User Register endpoint', function() {
   this.timeout(8000);
   var userEnt;
 
-  tester.init('api');
+  tester.init();
 
   before(function() {
     userEnt = UserEnt.getInstance();

@@ -13,7 +13,7 @@ var Web = require('../lib/web.lib');
 describe('Frontpage', function() {
   this.timeout(10000);
 
-  tester.init('web');
+  tester.init();
 
   Web.setup();
 

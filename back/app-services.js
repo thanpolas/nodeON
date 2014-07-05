@@ -79,28 +79,27 @@ AppServices.prototype.setOptions = function(optOptions) {
 /**
  * Triggers after all databases are connected.
  *
- * @param {Object} opts Options as defined in app.init().
  * @return {Promise} a promise.
  */
-AppServices.prototype.initServices = function(opts) {
+AppServices.prototype.initServices = function() {
   log.info('initServices() :: Init...');
   var email = Email.getInstance();
 
   var boot = [
-    database.init(),
+    database.init.bind(database),
   ];
-  if (opts.initdb && !process.env.NOINITDB) {
+  if (this.options.initdb && !process.env.NOINITDB) {
     boot.push(initdb.start.bind(initdb));
   }
-  if (opts.webserver) {
-    boot.push(expressApp.init.bind(null, opts));
+  if (this.options.webserver) {
+    boot.push(expressApp.init.bind(null, this.options));
   }
-  if (opts.email) {
+  if (this.options.email) {
     boot.push(email.init);
   }
 
   var self = this;
-  return sequence(boot, opts).then(function() {
+  return sequence(boot, this.options).then(function() {
     log.info('initServices() :: Init finish.');
     self.express = expressApp.app;
 

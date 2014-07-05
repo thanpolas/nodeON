@@ -13,7 +13,7 @@ var Sock = require('../lib/socket.lib');
 describe('Websockets Manage Panel Tests', function() {
   this.timeout(7000);
 
-  tester.init('api');
+  tester.init();
 
   describe('Surface Tests', function() {
     beforeEach(function() {
