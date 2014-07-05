@@ -15,7 +15,7 @@ require('./core/feature-toggle.core');
 
 var Email = require('./modules/email');
 var initdb = require('../tasks/initdb.task');
-var expressApp = require('./core/expressApp.core');
+var expressApp = require('./core/express/core.express').getInstance();
 var database = require('./core/database.core').getInstance();
 
 /**

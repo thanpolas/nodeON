@@ -14,7 +14,7 @@ var webserver = require('../webserver.core');
 var ExpressApi = require('./api.express');
 var ExpressWebsite = require('./website.express');
 
-// var log = require('logg').getLogger('app.base.express');
+var log = require('logg').getLogger('app.core.express');
 
 var globals = require('./globals');
 
@@ -44,6 +44,7 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
     this.expressWebsite.init(opts),
   ])
   .then(function (res) {
+    log.fine('init() :: All express instances initialized, moving on with main');
     // body...
     var appApi = res[0];
     var appWebserver = res[1];
