@@ -38,7 +38,7 @@ var ApiExpress = module.exports = cip.extendSingleton(function () {
 ApiExpress.prototype.init = Promise.method(function(opts) {
   log.info('init() :: Initializing webserver...');
 
-  this.app.set('views', __dirname + '/../../front/templates/');
+  this.app.set('views', path.join(__dirname + '/../../../front/templates/'));
   this.app.set('view engine', 'jade');
 
   // enable CORS for current development flow.
