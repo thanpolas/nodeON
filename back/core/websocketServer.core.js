@@ -6,7 +6,7 @@ var EventEmitter = require('events').EventEmitter;
 var cip = require('cip');
 var socketio = require('socket.io');
 var config = require('config');
-var log = require('logg').getLogger('app.core.socket');
+var log = require('logg').getLogger('app.core.Socket');
 
 var SockAuth = require('../middleware/websocket/websocket-auth.midd');
 var webRouter = require('../routes/web-socket.router');
@@ -14,6 +14,9 @@ var apiRouter = require('../routes/api-socket.router');
 var globals = require('./globals');
 
 var CeventEmitter = cip.cast(EventEmitter);
+
+/** @type {Object.<app.core.Socket} Socket Server instances. */
+var singletons = {};
 
 /**
  *
@@ -24,6 +27,12 @@ var CeventEmitter = cip.cast(EventEmitter);
  * @extends {events.EventEmitter}
  */
 var Sock = module.exports = CeventEmitter.extend(function(role) {
+  if (singletons[role]) {
+    return singletons[role];
+  }
+
+  singletons[role] = this;
+
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
 
@@ -36,7 +45,6 @@ var Sock = module.exports = CeventEmitter.extend(function(role) {
     this.socketRouter = apiRouter;
     break;
   }
-
 });
 
 /**
@@ -48,7 +56,7 @@ Sock.prototype.init = function(http) {
   log.info('init() :: Initializing websocket server...');
 
   // initialize router
-  socketRouter.init();
+  this.socketRouter.init();
 
   var io = this.io = socketio(http, {
     // allow all transports
@@ -67,7 +75,7 @@ Sock.prototype.init = function(http) {
   io.on('connection', function(socket) {
     log.finer('onConnection() :: New websocket connection:', socket.id);
     SockAuth.challenge(socket)
-      .then(socketRouter.addRoutes.bind(null, socket))
+      .then(this.socketRouter.addRoutes.bind(null, socket))
       .catch(function(err) {
         log.warn('onConnection() :: Challenge failed:', err.message);
         socket.disconnect();

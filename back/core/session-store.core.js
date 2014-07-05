@@ -10,6 +10,9 @@ var log = require('logg').getLogger('app.core.sessionStore');
 
 var globals = require('./globals');
 
+/** @type {Object.<app.core.Socket} Socket Server instances. */
+var singletons = {};
+
 /**
  * A Session store implementation using redis.
  *
@@ -17,6 +20,11 @@ var globals = require('./globals');
  * @constructor
  */
 var Session = module.exports = cip.extend(function(role) {
+  if (singletons[role]) {
+    return singletons[role];
+  }
+  singletons[role] = this;
+
   /** @type {?RedisStore} Will contain an instance of RedisStore */
   this.redisStore = null;
 

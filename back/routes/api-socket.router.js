@@ -3,10 +3,9 @@
  *
  */
 // var log = require('logg').getLogger('app.router.socket.api');
+var SocketVersionApi = require('../controllers/socket/api-version.ctrl');
 
 var router = module.exports = {};
-
-var SocketVersionApi = require('../controllers/socket/api-version.ctrl');
 
 var socketVersionApi;
 

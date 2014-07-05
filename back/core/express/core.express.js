@@ -11,12 +11,12 @@ var bodyParser = require('body-parser');
 var errorhandler = require('errorhandler');
 
 var webserver = require('../webserver.core');
+var globals = require('../globals');
 var ExpressApi = require('./api.express');
 var ExpressWebsite = require('./website.express');
 
 var log = require('logg').getLogger('app.core.express');
 
-var globals = require('./globals');
 
 /**
  * The core express instance, requires all others.
@@ -39,10 +39,14 @@ var ExpressApp = module.exports = cip.extendSingleton(function() {
  * @return {Promise} a promise.
  */
 ExpressApp.prototype.init = Promise.method(function(opts) {
+  // initialize webserver
+  webserver.init(this.app);
+
   return Promise.all([
     this.expressApi.init(opts),
     this.expressWebsite.init(opts),
   ])
+  .bind(this)
   .then(function (res) {
     log.fine('init() :: All express instances initialized, moving on with main');
     // body...
@@ -61,9 +65,6 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
     this.app.set('port', port);
     // remove x-powered-by header
     this.app.set('x-powered-by', false);
-
-    // initialize webserver
-    webserver.init(this.app);
 
     this.app.use(cookieParser());
     this.app.use(bodyParser.json());

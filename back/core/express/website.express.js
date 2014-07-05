@@ -10,20 +10,20 @@ var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.website');
 
-var webserver = require('./webserver.core');
-var SocketServer = require('./websocketServer.core');
-var SessionStore = require('./session-store.core');
-var authMidd = require('../middleware/auth.midd').getInstance();
-var corsMidd = require('../middleware/cors.midd').getInstance();
-var webRouter = require('../routes/web.router');
-var globals = require('./globals');
+var webserver = require('../webserver.core');
+var SocketServer = require('../websocketServer.core');
+var SessionStore = require('../session-store.core');
+var authMidd = require('../../middleware/auth.midd').getInstance();
+var corsMidd = require('../../middleware/cors.midd').getInstance();
+var webRouter = require('../../routes/web.router');
+var globals = require('../globals');
 
 var ApiExpress = module.exports = cip.extendSingleton(function () {
   /** @type {express} The express instance */
   this.app = express();
 
   /** @type {app.core.SocketServer} A Socker Server instance */
-  this.socketServer = new SocketServer();
+  this.socketServer = new SocketServer(globals.Roles.WEBSITE);
 
   /** @type {?app.core.SessionStore} Instance of Session Store */
   this.sessionStore = null;
@@ -51,7 +51,7 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
 
   // use flashing for passing messages to next page view
   this.app.use(flash());
-  this.app.use(express.static(path.join(__dirname, '/../../front/static')));
+  this.app.use(express.static(path.join(__dirname, '/../../../front/static')));
 
   // initialize authentication
   authMidd.init(this.app);
@@ -67,5 +67,10 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
 
   return Promise.all([
     sessConnectPromise,
-  ]);
+  ])
+  .bind(this)
+  .then(function () {
+    return this.app;
+  });
+
 });

@@ -88,7 +88,7 @@ AppServices.prototype.initServices = function() {
     boot.push(initdb.start.bind(initdb));
   }
   if (this.options.webserver) {
-    boot.push(expressApp.init.bind(null, this.options));
+    boot.push(expressApp.init.bind(expressApp, this.options));
   }
   if (this.options.email) {
     boot.push(email.init);

@@ -9,7 +9,7 @@ var log = require('logg').getLogger('app.ctrl.websocket.main');
 var config = require('config');
 
 var appError = require('../../util/error');
-var sessionStore = require('../../core/session-store.core').getInstance();
+var SessionStore = require('../../core/session-store.core');
 
 /**
  * Websockets authentication mechanism, determine if the socket
@@ -18,12 +18,14 @@ var sessionStore = require('../../core/session-store.core').getInstance();
  * @param {socket.io} socket The socket instance.
  * @contructor
  */
-var SockAuth = module.exports = cip.extend(function(socket) {
+var SockAuth = module.exports = cip.extend(function(socket, role) {
   this.socket = socket;
 
   this.defer = Promise.defer();
 
   this.decided = false;
+
+  this.sessionStore = new SessionStore(role);
 
   /** @type {?Object} The setTimeout resource */
   this._challengeTimeout = null;
@@ -80,7 +82,7 @@ SockAuth.prototype._onChallengeReply = function(clientResponse) {
   }
 
   var self = this;
-  sessionStore.sessionStore.get(clientResponse, function(err, res) {
+  this.sessionStore.redisStore.get(clientResponse, function(err, res) {
     if (err) {
       log.warn('_onChallengeReply() :: Redis query error:', err.message,
         'SockId:', self.socket.id);
