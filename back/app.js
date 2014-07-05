@@ -100,7 +100,7 @@ app.init = function(optOpts) {
   log.info('Initializing... standAlone:', globals.isStandAlone,
     ':: System NODE_ENV:', process.env.NODE_ENV, ':: App Environment:', globals.env,
     ':: Server ID:', globals.serverId, ':: On Heroku:', globals.isHeroku,
-    ':: Echo ServeR:', config.echoServer, ':: CSRF:', !opts.noSecurity);
+    ':: CSRF:', !opts.noSecurity);
 
   // Global exception handler
   process.on('uncaughtException', app.onNodeFail);
