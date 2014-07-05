@@ -1,15 +1,13 @@
 /**
  * @fileOverview Base Ctor for express instances, provides helpers, wrappers.
  */
-var path = require('path');
-
 var cip = require('cip');
 var config = require('config');
 var Promise = require('bluebird');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// var log = require('logg').getLogger('app.core.express');
+// var log = require('logg').getLogger('app.base.express');
 
 var globals = require('./globals');
 
@@ -22,7 +20,7 @@ var ExpressApp = module.exports = cip.extend(function() {
   /** @type {?express} The express instance */
   this.app = null;
 
-  /** @type {app.core.SessionStore} Instance of Session Store */
+  /** @type {?app.core.SessionStore} Instance of Session Store */
   this.sessionStore = null;
 });
 
