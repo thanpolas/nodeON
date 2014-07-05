@@ -3,10 +3,10 @@
  */
 var log = require('logg').getLogger('app.router.web');
 
-var lusca = require('lusca');
 var HomeCtrl = require('../controllers/index.ctrl');
 var redirectMidd = require('../middleware/redirect.midd').getInstance();
 
+var securityMidd = require('../middleware/security.midd');
 var featureMidd = require('../middleware/feature.midd');
 var RegisterCtrl = require('../controllers/user/register.ctrl');
 var LoginCtrl = require('../controllers/user/login.ctrl');
@@ -22,9 +22,8 @@ var router = module.exports = {};
  * Initialize routes.
  *
  * @param {express} app Express instance.
- * @param {Object} opts Options as defined in app.init().
  */
-router.init = function(app , opts) {
+router.init = function(app) {
   log.fine('init() :: initializing routes...');
   var homeCtrl = HomeCtrl.getInstance();
   var registerCtrl = RegisterCtrl.getInstance();
@@ -46,6 +45,8 @@ router.init = function(app , opts) {
     var tplBare = template.split('.')[0];
     res.render('tpl/' + tplBare);
   });
+
+  var manageSecurity = securityMidd();
 
   // blanket middleware for User API ops
   var userMiddleware = [
