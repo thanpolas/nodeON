@@ -72,10 +72,11 @@ Sock.prototype.init = function(http) {
     'browser client': true,
   });
 
+  var self = this;
   io.on('connection', function(socket) {
     log.finer('onConnection() :: New websocket connection:', socket.id);
     SockAuth.challenge(socket)
-      .then(this.socketRouter.addRoutes.bind(null, socket))
+      .then(self.socketRouter.addRoutes.bind(null, socket))
       .catch(function(err) {
         log.warn('onConnection() :: Challenge failed:', err.message);
         socket.disconnect();
