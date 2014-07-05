@@ -43,7 +43,8 @@
     "errorhandler": "^1.1.1",
     "connect-redis": "^2.0.0",
     "body-parser": "^1.4.3",
-    "passport": "^0.2.0"
+    "passport": "^0.2.0",
+    "vhost": "^2.0.0"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",
