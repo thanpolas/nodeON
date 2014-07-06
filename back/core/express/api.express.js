@@ -35,6 +35,8 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
 
   this.app.set('views', path.join(__dirname + '/../../../front/templates/'));
   this.app.set('view engine', 'jade');
+  // remove x-powered-by header
+  this.app.set('x-powered-by', false);
 
   // enable CORS for current development flow.
   this.app.use(corsMidd.allowCrossDomain.bind(corsMidd));
