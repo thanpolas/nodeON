@@ -10,22 +10,24 @@ var config = require('config');
 
 var appError = require('../../util/error');
 var SessionStore = require('../../core/session-store.core');
+var globals = require('../../core/globals');
 
 /**
  * Websockets authentication mechanism, determine if the socket
  *   comes from a reliable source and figure out who is the user.
  *
  * @param {socket.io} socket The socket instance.
+ * @param {app.core.Socket.Namespace} namespace Define a namespace
  * @contructor
  */
-var SockAuth = module.exports = cip.extend(function(socket, role) {
+var SockAuth = module.exports = cip.extend(function(socket, namespace) {
   this.socket = socket;
 
   this.defer = Promise.defer();
 
   this.decided = false;
 
-  this.sessionStore = new SessionStore(role);
+  this.sessionStore = new SessionStore(globals.getRoleFromNS(namespace));
 
   /** @type {?Object} The setTimeout resource */
   this._challengeTimeout = null;

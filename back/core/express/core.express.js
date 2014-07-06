@@ -72,8 +72,8 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
     // Init websockets
     socketServer.init(webserver.http);
     // listen for websocket connections
-    socketServer.listen(SocketServer.Namespace.WEBSITE);
-    socketServer.listen(SocketServer.Namespace.API);
+    socketServer.listen(globals.WebsocketNamespace.WEBSITE);
+    socketServer.listen(globals.WebsocketNamespace.API);
 
     this.app.use(vhost(config.hostname.api, appApi));
     this.app.use(vhost(config.hostname.website, appWebserver));

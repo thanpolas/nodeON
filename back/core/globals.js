@@ -35,6 +35,14 @@ globals.Roles = {
   WEBSITE: 'website',
 };
 
+/** @enum {string} Websocket namespaces */
+globals.WebsocketNamespace = {
+  ROOT: '/',
+  WEBSITE: '/website',
+  API: '/api',
+};
+
+
 /** @type {boolean} If application runs directly from shell, gets set on app */
 globals.isStandAlone = true;
 
@@ -113,4 +121,21 @@ if ([
 globals.viewGlobals = {
   ga: config.ga,
   env: globals.env,
+};
+
+globals.getRoleFromNS = function (namespace) {
+  var role;
+  switch(namespace) {
+  case globals.WebsocketNamespace.WEBSITE:
+    role = globals.Roles.WEBSITE;
+    break;
+  case globals.WebsocketNamespace.API:
+    role = globals.Roles.API;
+    break;
+  default:
+    role = globals.Roles.WEBSITE;
+    break;
+  }
+
+  return role;
 };

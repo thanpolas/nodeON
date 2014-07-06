@@ -11,6 +11,7 @@ var log = require('logg').getLogger('app.core.Socket');
 var SockAuth = require('../middleware/websocket/websocket-auth.midd');
 var webRouter = require('../routes/web-socket.router');
 var apiRouter = require('../routes/api-socket.router');
+var globals = require('./globals');
 
 var CeventEmitter = cip.cast(EventEmitter);
 
@@ -25,13 +26,6 @@ var Sock = module.exports = CeventEmitter.extendSingleton(function() {
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
 });
-
-/** @enum {string} An enumeration of namespaces */
-Sock.Namespace = {
-  ROOT: '/',
-  WEBSITE: '/website',
-  API: '/api',
-};
 
 /**
  * Initialize and configure the websockets server.
@@ -63,7 +57,7 @@ Sock.prototype.init = function(http) {
 /**
  * Bind connection listeners on websocket server.
  *
- * @param {app.core.Socket.Namespace=} optNamespace Define a namespace
+ * @param {app.core.globals.WebsocketNamespace=} optNamespace Define a namespace
  *    @see http://socket.io/docs/rooms-and-namespaces/
  */
 Sock.prototype.listen = function(optNamespace) {
@@ -72,11 +66,11 @@ Sock.prototype.listen = function(optNamespace) {
   var socketRouter;
 
   switch(ns) {
-  case Sock.Namespace.WEBSITE:
+  case globals.WebsocketNamespace.WEBSITE:
     io = this.io.of(ns);
     socketRouter = webRouter;
     break;
-  case Sock.Namespace.API:
+  case globals.WebsocketNamespace.API:
     io = this.io.of(ns);
     socketRouter = apiRouter;
     break;
@@ -87,11 +81,10 @@ Sock.prototype.listen = function(optNamespace) {
 
   log.fine('listen() :: Websocket listening for connections on Namespace:', ns);
 
-  var self = this;
   io.on('connection', function(socket) {
     log.finer('onConnection() :: New websocket connection. NS:', ns,
       'socketId:', socket.id);
-    var sockAuth = new SockAuth(socket, self.role);
+    var sockAuth = new SockAuth(socket, ns);
     sockAuth.challenge(socket)
       .then(socketRouter.addRoutes.bind(null, socket))
       .catch(function(err) {
@@ -105,5 +98,4 @@ Sock.prototype.listen = function(optNamespace) {
         'socketId:', socket.id);
     });
   });
-
 };

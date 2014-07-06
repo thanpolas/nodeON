@@ -44,7 +44,6 @@ describe('Websockets Manage Panel Tests', function() {
     });
   });
 
-
   describe('Challenge', function () {
     setupFix.createUser();
     setupFix.login();
