@@ -85,6 +85,8 @@ Sock.prototype.listen = function(optNamespace) {
     socketRouter = webRouter;
   }
 
+  log.fine('listen() :: Websocket listening for connections on Namespace:', ns);
+
   var self = this;
   io.on('connection', function(socket) {
     log.finer('onConnection() :: New websocket connection. NS:', ns,

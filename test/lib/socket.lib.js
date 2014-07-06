@@ -10,12 +10,15 @@ var setupFix = require('./fixtures-user.lib');
 /**
  * Provides connectivity and network helpers for websocket connections.
  *
+ * @param {string=} optNamespace optionally define a namespace.
  * @constructor
  */
-var Sock = module.exports = function() {
+var Sock = module.exports = function(optNamespace) {
+  var namespace = optNamespace || '';
+
   // expose the websocket server url
-  this.sockurl = 'ws://' + config.test.hostname + '/website:' + config.test.port;
-  this.sockurl = '/website';
+  this.sockurl = 'http://' + config.test.hostname + ':' + config.test.port +
+    '/' + namespace;
 
   // expose required socket options
   this.sockopts = {
@@ -52,9 +55,7 @@ Sock.setupAuth = function() {
   afterEach(function(done) {
     this.sock.close().then(done, done);
   });
-
 };
-
 
 /**
  * Perform a connection
@@ -62,6 +63,7 @@ Sock.setupAuth = function() {
  */
 Sock.prototype.connect = function() {
   // perform connection...
+  console.log('connecting to:', this.sockurl);
   this.socket = ioc(this.sockurl, this.sockopts);
 };
 

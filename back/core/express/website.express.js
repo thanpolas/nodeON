@@ -10,8 +10,6 @@ var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.website');
 
-var SocketServer = require('../websocketServer.core');
-var socketServer = SocketServer.getInstance();
 var SessionStore = require('../session-store.core');
 var authMidd = require('../../middleware/auth.midd').getInstance();
 var corsMidd = require('../../middleware/cors.midd').getInstance();
@@ -58,9 +56,6 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
 
   // setup view globals
   this.app.locals.glob = globals.viewGlobals;
-
-  // listen for websocket connections
-  socketServer.listen(SocketServer.Namespace.WEBSITE);
 
   return Promise.all([
     sessConnectPromise,

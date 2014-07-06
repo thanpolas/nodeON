@@ -42,9 +42,6 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
   // initialize webserver
   webserver.init(this.app);
 
-  // Init websockets
-  socketServer.init(webserver.http);
-
   return Promise.all([
     this.expressApi.init(opts),
     this.expressWebsite.init(opts),
@@ -71,6 +68,12 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
 
     this.app.use(cookieParser());
     this.app.use(bodyParser.json());
+
+    // Init websockets
+    socketServer.init(webserver.http);
+    // listen for websocket connections
+    socketServer.listen(SocketServer.Namespace.WEBSITE);
+    socketServer.listen(SocketServer.Namespace.API);
 
     this.app.use(vhost(config.hostname.api, appApi));
     this.app.use(vhost(config.hostname.website, appWebserver));
