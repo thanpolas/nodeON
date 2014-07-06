@@ -56,7 +56,7 @@ PubSub.prototype.init = function() {
  * Publish a message.
  *
  * @param {string} channel The channel to publish to.
- * @param {string} message The message to publish.
+ * @param {*} message The message to publish.
  */
 PubSub.prototype.pub = function(channel, message) {
   log.fine('pub() :: Channel:', channel, ' :: Message:', message, ' :: MULTI :',
