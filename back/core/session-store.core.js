@@ -20,9 +20,7 @@ var singletons = {};
  * @constructor
  */
 var Session = module.exports = cip.extend(function(role) {
-  console.log('Session Store Ctor:', role);
   if (singletons[role]) {
-    console.log('HAS!!!!');
     singletons[role].zit = 1;
     return singletons[role];
   }

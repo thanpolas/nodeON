@@ -24,10 +24,8 @@ var SockAuth = module.exports = cip.extend(function(socket, role) {
   this.defer = Promise.defer();
 
   this.decided = false;
-  console.log('websocket auth Ctor:', role);
 
   this.sessionStore = new SessionStore(role);
-  console.log('SESSIONSTORE:', this.sessionStore);
 
   /** @type {?Object} The setTimeout resource */
   this._challengeTimeout = null;

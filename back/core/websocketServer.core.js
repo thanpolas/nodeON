@@ -11,42 +11,27 @@ var log = require('logg').getLogger('app.core.Socket');
 var SockAuth = require('../middleware/websocket/websocket-auth.midd');
 var webRouter = require('../routes/web-socket.router');
 var apiRouter = require('../routes/api-socket.router');
-var globals = require('./globals');
 
 var CeventEmitter = cip.cast(EventEmitter);
-
-/** @type {Object.<app.core.Socket} Socket Server instances. */
-var singletons = {};
 
 /**
  *
  * This module is an instance of EventEmitter.
  *
- * @param {app.core.globals.Roles} role The role to assume, can be 'api', 'website'.
  * @constructor
  * @extends {events.EventEmitter}
  */
-var Sock = module.exports = CeventEmitter.extend(function(role) {
-  if (singletons[role]) {
-    return singletons[role];
-  }
-  singletons[role] = this;
-
-  this.role = role;
-
+var Sock = module.exports = CeventEmitter.extendSingleton(function() {
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
-
-  // setup the config parameters
-  switch (role) {
-  case globals.Roles.WEBSITE:
-    this.socketRouter = webRouter;
-    break;
-  case globals.Roles.API:
-    this.socketRouter = apiRouter;
-    break;
-  }
 });
+
+/** @enum {string} An enumeration of namespaces */
+Sock.Namespace = {
+  ROOT: '/',
+  WEBSITE: '/website',
+  API: '/api',
+};
 
 /**
  * Initialize and configure the websockets server.
@@ -56,10 +41,11 @@ var Sock = module.exports = CeventEmitter.extend(function(role) {
 Sock.prototype.init = function(http) {
   log.info('init() :: Initializing websocket server...');
 
-  // initialize router
-  this.socketRouter.init();
+  // initialize routers
+  webRouter.init();
+  apiRouter.init();
 
-  var io = this.io = socketio(http, {
+  this.io = socketio(http, {
     // allow all transports
     // 'transports': ['websocket'],
 
@@ -72,20 +58,50 @@ Sock.prototype.init = function(http) {
     // WebSocketMain.swf etc.
     'browser client': true,
   });
+};
+
+/**
+ * Bind connection listeners on websocket server.
+ *
+ * @param {app.core.Socket.Namespace=} optNamespace Define a namespace
+ *    @see http://socket.io/docs/rooms-and-namespaces/
+ */
+Sock.prototype.listen = function(optNamespace) {
+  var ns = optNamespace || '/';
+  var io;
+  var socketRouter;
+
+  switch(ns) {
+  case Sock.Namespace.WEBSITE:
+    io = this.io.of(ns);
+    socketRouter = webRouter;
+    break;
+  case Sock.Namespace.API:
+    io = this.io.of(ns);
+    socketRouter = apiRouter;
+    break;
+  default:
+    io = this.io;
+    socketRouter = webRouter;
+  }
 
   var self = this;
   io.on('connection', function(socket) {
-    log.finer('onConnection() :: New websocket connection:', socket.id);
+    log.finer('onConnection() :: New websocket connection. NS:', ns,
+      'socketId:', socket.id);
     var sockAuth = new SockAuth(socket, self.role);
     sockAuth.challenge(socket)
-      .then(self.socketRouter.addRoutes.bind(null, socket))
+      .then(socketRouter.addRoutes.bind(null, socket))
       .catch(function(err) {
-        log.warn('onConnection() :: Challenge failed:', err.message);
+        log.warn('onConnection() :: Challenge failed. NS:', ns, 'Error:',
+          err.message);
         socket.disconnect();
       });
 
     socket.on('disconnect', function() {
-      log.finer('onDisconnect() :: Websocket disconnected:', socket.id);
+      log.finer('onDisconnect() :: Websocket disconnected. NS:', ns,
+        'socketId:', socket.id);
     });
   });
+
 };

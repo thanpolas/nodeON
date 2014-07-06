@@ -10,8 +10,8 @@ var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.api');
 
-var webserver = require('../webserver.core');
 var SocketServer = require('../websocketServer.core');
+var socketServer = SocketServer.getInstance();
 var SessionStore = require('../session-store.core');
 var authMidd = require('../../middleware/auth.midd').getInstance();
 var corsMidd = require('../../middleware/cors.midd').getInstance();
@@ -21,9 +21,6 @@ var globals = require('../globals');
 var ApiExpress = module.exports = cip.extendSingleton(function () {
   /** @type {express} The express instance */
   this.app = express();
-
-  /** @type {app.core.SocketServer} A Socker Server instance */
-  this.socketServer = new SocketServer(globals.Roles.API);
 
   /** @type {?app.core.SessionStore} Instance of Session Store */
   this.sessionStore = null;
@@ -59,11 +56,11 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
   // add the routes
   apiRouter.init(this.app, opts);
 
-  // Init websockets
-  this.socketServer.init(webserver.http);
-
   // setup view globals
   this.app.locals.glob = globals.viewGlobals;
+
+  // listen for websocket connections
+  socketServer.listen(SocketServer.Namespace.API);
 
   return Promise.all([
     sessConnectPromise,

@@ -11,6 +11,8 @@ var bodyParser = require('body-parser');
 var errorhandler = require('errorhandler');
 
 var webserver = require('../webserver.core');
+var SocketServer = require('../websocketServer.core');
+var socketServer = SocketServer.getInstance();
 var globals = require('../globals');
 var ExpressApi = require('./api.express');
 var ExpressWebsite = require('./website.express');
@@ -41,6 +43,9 @@ var ExpressApp = module.exports = cip.extendSingleton(function() {
 ExpressApp.prototype.init = Promise.method(function(opts) {
   // initialize webserver
   webserver.init(this.app);
+
+  // Init websockets
+  socketServer.init(webserver.http);
 
   return Promise.all([
     this.expressApi.init(opts),
