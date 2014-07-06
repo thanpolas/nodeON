@@ -63,7 +63,6 @@ Sock.setupAuth = function() {
  */
 Sock.prototype.connect = function() {
   // perform connection...
-  console.log('connecting to:', this.sockurl);
   this.socket = ioc(this.sockurl, this.sockopts);
 };
 
