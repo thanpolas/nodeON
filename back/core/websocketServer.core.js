@@ -30,8 +30,9 @@ var Sock = module.exports = CeventEmitter.extend(function(role) {
   if (singletons[role]) {
     return singletons[role];
   }
-
   singletons[role] = this;
+
+  this.role = role;
 
   /** @type {?socketio.Server} The socket.io server */
   this.io = null;
@@ -75,7 +76,8 @@ Sock.prototype.init = function(http) {
   var self = this;
   io.on('connection', function(socket) {
     log.finer('onConnection() :: New websocket connection:', socket.id);
-    SockAuth.challenge(socket)
+    var sockAuth = new SockAuth(socket, self.role);
+    sockAuth.challenge(socket)
       .then(self.socketRouter.addRoutes.bind(null, socket))
       .catch(function(err) {
         log.warn('onConnection() :: Challenge failed:', err.message);

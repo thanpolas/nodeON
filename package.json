@@ -31,7 +31,7 @@
     "passport-local": "^1.0.0",
     "connect-flash": "~0.1.1",
     "node-entity": "~0.2.7",
-    "cip": "~0.2.4",
+    "cip": "^0.2.5",
     "feature-toggles": "~1.2.0",
     "lusca": "~1.0.1",
     "crude": "^0.5.2",
