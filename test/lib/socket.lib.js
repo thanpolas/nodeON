@@ -5,7 +5,6 @@ var config = require('config');
 var ioc = require('socket.io-client');
 var Promise = require('bluebird');
 
-var tester = require('./tester.lib');
 var setupFix = require('./fixtures-user.lib');
 
 /**
@@ -15,7 +14,8 @@ var setupFix = require('./fixtures-user.lib');
  */
 var Sock = module.exports = function() {
   // expose the websocket server url
-  this.sockurl = 'ws://' + config.test.hostname + ':' + config.test.port;
+  this.sockurl = 'ws://' + config.test.hostname + '/website:' + config.test.port;
+  this.sockurl = '/website';
 
   // expose required socket options
   this.sockopts = {
@@ -62,7 +62,7 @@ Sock.setupAuth = function() {
  */
 Sock.prototype.connect = function() {
   // perform connection...
-  this.socket = ioc.connect(this.sockurl, this.sockopts);
+  this.socket = ioc(this.sockurl, this.sockopts);
 };
 
 /**
