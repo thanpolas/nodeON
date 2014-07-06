@@ -8,7 +8,10 @@ var __ = require('lodash');
 var passport = require('passport');
 var log = require('logg').getLogger('app.ctrl.Login');
 
-var authMidd = require('../../middleware/auth.midd').getInstance();
+var globals = require('../../core/globals');
+var AuthMidd = require('../../middleware/auth.midd');
+var authMidd = new AuthMidd(globals.Roles.WEBSITE);
+
 var ControllerBase = require('../controller-base');
 var appError = require('../../util/error');
 

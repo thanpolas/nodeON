@@ -13,16 +13,25 @@ var appError = require('../util/error');
 var Middleware = require('./middleware');
 var ControllerBase = require('../controllers/controller-base');
 
+/** @type {Object.<app.midd.Auth} Auth middleware instances. */
+var singletons = {};
+
 /**
  * The Auth Middleware.
  *
  * @event `login`: A Login happened, the `udo` is provided.
  *
+ * @param {app.core.globals.Roles} role The role to assume, can be 'api', 'website'.
  * @contructor
  * @extends {app.Middleware}
  */
-var Auth = module.exports = Middleware.extend();
-
+var Auth = module.exports = Middleware.extend(function (role) {
+  if (singletons[role]) {
+    singletons[role].zit = 1;
+    return singletons[role];
+  }
+  singletons[role] = this;
+});
 
 /**
  * Initialize Authentication Middleware.

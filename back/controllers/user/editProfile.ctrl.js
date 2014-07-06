@@ -4,9 +4,11 @@
 var validator = require('validator');
 var log = require('logg').getLogger('app.ctrl.EditProfile');
 
+var globals = require('../../core/globals');
 var ControllerBase = require('../controller-base');
 var UserEntity = require('../../entities/user/user.ent');
-var authMidd = require('../../middleware/auth.midd').getInstance();
+var AuthMidd = require('../../middleware/auth.midd');
+var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 
 /**
  * User Profile Editing.

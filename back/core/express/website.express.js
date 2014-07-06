@@ -10,12 +10,12 @@ var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.website');
 
+var globals = require('../globals');
 var SessionStore = require('../session-store.core');
 var AuthMidd = require('../../middleware/auth.midd');
-var authMidd = new AuthMidd();
+var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 var corsMidd = require('../../middleware/cors.midd').getInstance();
 var webRouter = require('../../routes/web.router');
-var globals = require('../globals');
 
 var ApiExpress = module.exports = cip.extendSingleton(function () {
   /** @type {express} The express instance */
