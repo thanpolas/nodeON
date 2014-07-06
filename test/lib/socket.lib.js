@@ -40,7 +40,7 @@ Sock.setupAuth = function() {
   setupFix.createUser();
   setupFix.login();
   beforeEach(function (done) {
-    this.sock = new Sock();
+    this.sock = new Sock('website');
     this.sock.connect();
     this.sock.socket.on('connect', done);
   });
