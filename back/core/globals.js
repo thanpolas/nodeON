@@ -123,6 +123,12 @@ globals.viewGlobals = {
   env: globals.env,
 };
 
+/**
+ * Get the Role from websocket namespace.
+ *
+ * @param {app.core.globals.WebsocketNamespace} namespace The websocket namespace.
+ * @return {app.core.globals.Roles} The role.
+ */
 globals.getRoleFromNS = function (namespace) {
   var role;
   switch(namespace) {
