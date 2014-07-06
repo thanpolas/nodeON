@@ -17,7 +17,7 @@ describe('User Verification', function() {
   this.timeout(8000);
   var userEnt, udo;
 
-  tester.init('api');
+  tester.init();
 
   before(function() {
     userEnt = UserEnt.getInstance();

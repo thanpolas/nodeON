@@ -5,17 +5,20 @@ var config = require('config');
 var ioc = require('socket.io-client');
 var Promise = require('bluebird');
 
-var tester = require('./tester.lib');
 var setupFix = require('./fixtures-user.lib');
 
 /**
  * Provides connectivity and network helpers for websocket connections.
  *
+ * @param {string=} optNamespace optionally define a namespace.
  * @constructor
  */
-var Sock = module.exports = function() {
+var Sock = module.exports = function(optNamespace) {
+  var namespace = optNamespace || '';
+
   // expose the websocket server url
-  this.sockurl = 'ws://' + config.test.hostname + ':' + config.test.port;
+  this.sockurl = 'http://' + config.test.hostname + ':' + config.test.port +
+    '/' + namespace;
 
   // expose required socket options
   this.sockopts = {
@@ -37,7 +40,7 @@ Sock.setupAuth = function() {
   setupFix.createUser();
   setupFix.login();
   beforeEach(function (done) {
-    this.sock = new Sock();
+    this.sock = new Sock('website');
     this.sock.connect();
     this.sock.socket.on('connect', done);
   });
@@ -52,9 +55,7 @@ Sock.setupAuth = function() {
   afterEach(function(done) {
     this.sock.close().then(done, done);
   });
-
 };
-
 
 /**
  * Perform a connection
@@ -62,7 +63,7 @@ Sock.setupAuth = function() {
  */
 Sock.prototype.connect = function() {
   // perform connection...
-  this.socket = ioc.connect(this.sockurl, this.sockopts);
+  this.socket = ioc(this.sockurl, this.sockopts);
 };
 
 /**

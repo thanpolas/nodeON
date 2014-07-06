@@ -1,12 +1,12 @@
 /**
- * @fileOverview The main routes of the web app.
+ * @fileOverview Routes for Website.
  */
-var log = require('logg').getLogger('app.webRouter');
+var log = require('logg').getLogger('app.router.website');
 
-var lusca = require('lusca');
 var HomeCtrl = require('../controllers/index.ctrl');
-var redirectMidd = require('../middleware/redirect.midd').getInstance();
+// var redirectMidd = require('../middleware/redirect.midd').getInstance();
 
+var securityMidd = require('../middleware/security.midd');
 var featureMidd = require('../middleware/feature.midd');
 var RegisterCtrl = require('../controllers/user/register.ctrl');
 var LoginCtrl = require('../controllers/user/login.ctrl');
@@ -14,17 +14,14 @@ var VerifyCtrl = require('../controllers/user/verify.ctrl');
 var ProfileCtrl = require('../controllers/user/editProfile.ctrl');
 var ForgotCtrl = require('../controllers/user/forgot.ctrl');
 
-var globals = require('../core/globals');
-
 var router = module.exports = {};
 
 /**
  * Initialize routes.
  *
  * @param {express} app Express instance.
- * @param {Object} opts Options as defined in app.init().
  */
-router.init = function(app , opts) {
+router.init = function(app) {
   log.fine('init() :: initializing routes...');
   var homeCtrl = HomeCtrl.getInstance();
   var registerCtrl = RegisterCtrl.getInstance();
@@ -34,26 +31,10 @@ router.init = function(app , opts) {
   var forgotCtrl = ForgotCtrl.getInstance();
 
   // redirect to www if on heroku (production)
-  if (globals.isHeroku) {
-    log.fine('init() :: Adding heroku force redirect to www');
-    app.get('/', redirectMidd.forceWww.bind(redirectMidd));
-  }
-
-  //
-  // Security Policies
-  // CSRF, xss, rest
-  var manageSecurity = function(req, res, next) {next();};
-  if (!opts.nosecurity) {
-    manageSecurity = lusca({
-      csrf: true,
-      csp: false,
-      xframe: 'DENY',
-      p3p: false,
-      hsts: false,
-      xssProtection: true
-    });
-  }
-
+  // if (globals.isHeroku) {
+  //   log.fine('init() :: Adding heroku force redirect to www');
+  //   app.get('/', redirectMidd.forceWww.bind(redirectMidd));
+  // }
 
   app.get('/', homeCtrl.use);
 
@@ -63,6 +44,7 @@ router.init = function(app , opts) {
     res.render('tpl/' + tplBare);
   });
 
+  var manageSecurity = securityMidd();
 
   // blanket middleware for User API ops
   var userMiddleware = [

@@ -19,7 +19,7 @@ var fixtures = module.exports = {};
  *   - userEnt
  */
 fixtures.createUser = function() {
-  tester.init('api');
+  tester.init();
 
   beforeEach(function() {
     this.userEnt = UserEnt.getInstance();

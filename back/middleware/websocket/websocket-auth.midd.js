@@ -9,21 +9,25 @@ var log = require('logg').getLogger('app.ctrl.websocket.main');
 var config = require('config');
 
 var appError = require('../../util/error');
-var sessionStore = require('../../core/session-store.core').getInstance();
+var SessionStore = require('../../core/session-store.core');
+var globals = require('../../core/globals');
 
 /**
  * Websockets authentication mechanism, determine if the socket
  *   comes from a reliable source and figure out who is the user.
  *
  * @param {socket.io} socket The socket instance.
+ * @param {app.core.Socket.Namespace} namespace Define a namespace
  * @contructor
  */
-var SockAuth = module.exports = cip.extend(function(socket) {
+var SockAuth = module.exports = cip.extend(function(socket, namespace) {
   this.socket = socket;
 
   this.defer = Promise.defer();
 
   this.decided = false;
+
+  this.sessionStore = new SessionStore(globals.getRoleFromNS(namespace));
 
   /** @type {?Object} The setTimeout resource */
   this._challengeTimeout = null;
@@ -80,7 +84,7 @@ SockAuth.prototype._onChallengeReply = function(clientResponse) {
   }
 
   var self = this;
-  sessionStore.sessionStore.get(clientResponse, function(err, res) {
+  this.sessionStore.redisStore.get(clientResponse, function(err, res) {
     if (err) {
       log.warn('_onChallengeReply() :: Redis query error:', err.message,
         'SockId:', self.socket.id);

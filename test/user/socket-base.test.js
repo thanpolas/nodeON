@@ -13,11 +13,11 @@ var Sock = require('../lib/socket.lib');
 describe('Websockets Manage Panel Tests', function() {
   this.timeout(7000);
 
-  tester.init('api');
+  tester.init();
 
   describe('Surface Tests', function() {
     beforeEach(function() {
-      this.sock = new Sock();
+      this.sock = new Sock('website');
       this.sock.connect();
     });
     afterEach(function(done) {
@@ -44,12 +44,11 @@ describe('Websockets Manage Panel Tests', function() {
     });
   });
 
-
   describe('Challenge', function () {
     setupFix.createUser();
     setupFix.login();
     beforeEach(function() {
-      this.sock = new Sock();
+      this.sock = new Sock('website');
       this.sock.connect();
     });
     afterEach(function(done) {

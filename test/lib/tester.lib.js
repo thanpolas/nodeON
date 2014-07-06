@@ -26,18 +26,16 @@ var init = false;
 /**
  * Boot application.
  *
- * @param {string} role one of: 'api', 'web'.
  */
-tester.init = function(role) {
+tester.init = function() {
   tester.setup(function(done) {
     if (init) {return done();}
     init = true;
 
     app.init({
-      role: role,
-      nolog: false,
+      log: true,
       stubMail: true,
-      nosecurity: true,
+      security: false,
     }).then(done.bind(null, null), done);
   });
 };

@@ -29,6 +29,10 @@ Web.setup = function(optHostname) {
     var web = new Web(optHostname);
     this.req = web.req;
   });
+  beforeEach(function() {
+    var web = new Web('http://api.localhost:3000');
+    this.reqApi = web.req;
+  });
 };
 
 /**

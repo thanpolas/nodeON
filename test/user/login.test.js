@@ -18,7 +18,7 @@ describe('User Login', function() {
   this.timeout(10000);
   var userEnt, udo;
 
-  tester.init('api');
+  tester.init();
 
   before(function() {
     userEnt = UserEnt.getInstance();
