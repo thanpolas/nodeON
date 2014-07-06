@@ -19,7 +19,6 @@ var ExpressWebsite = require('./website.express');
 
 var log = require('logg').getLogger('app.core.express');
 
-
 /**
  * The core express instance, requires all others.
  *
@@ -32,7 +31,6 @@ var ExpressApp = module.exports = cip.extendSingleton(function() {
   this.expressApi = ExpressApi.getInstance();
   this.expressWebsite = ExpressWebsite.getInstance();
 });
-
 
 /**
  * Kick off the webserver...
