@@ -2,10 +2,6 @@
  * @fileOverview Authentication Middleware, using the Passport package.
  * @see http://passportjs.org/guide/
  */
-
-var util = require('util');
-
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -15,7 +11,6 @@ var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
 var appError = require('../util/error');
 var Middleware = require('./middleware');
-var helpers = require('../util/helpers');
 var ControllerBase = require('../controllers/controller-base');
 
 /**
@@ -26,11 +21,7 @@ var ControllerBase = require('../controllers/controller-base');
  * @contructor
  * @extends {app.Middleware}
  */
-var Auth = module.exports = function(){
-  Middleware.apply(this, arguments);
-};
-util.inherits(Auth, Middleware);
-helpers.addSingletonGetter(Auth);
+var Auth = module.exports = Middleware.extend();
 
 
 /**

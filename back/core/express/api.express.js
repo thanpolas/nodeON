@@ -11,7 +11,8 @@ var Promise = require('bluebird');
 var log = require('logg').getLogger('app.core.express.api');
 
 var SessionStore = require('../session-store.core');
-var authMidd = require('../../middleware/auth.midd').getInstance();
+var AuthMidd = require('../../middleware/auth.midd');
+var authMidd = new AuthMidd();
 var corsMidd = require('../../middleware/cors.midd').getInstance();
 var apiRouter = require('../../routes/api.router');
 var globals = require('../globals');
