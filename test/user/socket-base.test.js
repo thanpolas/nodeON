@@ -55,7 +55,7 @@ describe('Websockets Manage Panel Tests', function() {
       this.sock.close().then(done, done);
     });
 
-    it.only('should pass the challenge using session id', function(done) {
+    it('should pass the challenge using session id', function(done) {
       var self = this;
       this.sock.socket.on('challenge', function(data, cb) {
         cb(self.cookieObj.sessionId);
