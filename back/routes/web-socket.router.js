@@ -21,7 +21,10 @@ router.init = function() {
  * Apply routes to an authorized socket.
  *
  * @param {socketio.Socket} socket The socket.io socket object.
+ * @return {socketio.Socket} Return the socket.
  */
 router.addRoutes = function(socket) {
   socket.on('version', socketVersion.get.bind(socketVersion, socket));
+
+  return socket;
 };

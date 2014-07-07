@@ -38,7 +38,7 @@ var SockAuth = module.exports = cip.extend(function(socket, namespace) {
  *
  * @param {socket.io} socket The socket instance.
  * @param {Function} next Pass control.
- * @return {Promise} A Promise.
+ * @return {Promise(socket)} A Promise with the websocket.
  * @static
  */
 SockAuth.challenge = function(socket, next) {
@@ -50,7 +50,7 @@ SockAuth.challenge = function(socket, next) {
 /**
  * Start the after-connection handshake to authenticate the client and user.
  *
- * @return {Promise} a promise.
+ * @return {Promise(socket)} A Promise with the websocket.
  */
 SockAuth.prototype.challenge = function() {
   // challenge the client
@@ -102,7 +102,7 @@ SockAuth.prototype._onChallengeReply = function(clientResponse) {
 
     self.socket.emit('authorized');
 
-    self.defer.resolve();
+    self.defer.resolve(self.socket);
   });
 
 };

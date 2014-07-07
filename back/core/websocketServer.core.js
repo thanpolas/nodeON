@@ -86,7 +86,8 @@ Sock.prototype.listen = function(optNamespace) {
       'socketId:', socket.id);
     var sockAuth = new SockAuth(socket, ns);
     sockAuth.challenge(socket)
-      .then(socketRouter.addRoutes.bind(null, socket))
+      .then(socketRouter.addRoutes)
+      .then(socketRouter.registerPubsub)
       .catch(function(err) {
         log.warn('onConnection() :: Challenge failed. NS:', ns, 'Error:',
           err.message);
