@@ -45,7 +45,8 @@
     "body-parser": "^1.4.3",
     "passport": "^0.2.0",
     "vhost": "^2.0.0",
-    "collections": "^1.1.0"
+    "collections": "^1.1.0",
+    "redis": "^0.10.3"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",
