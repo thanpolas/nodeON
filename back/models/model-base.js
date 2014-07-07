@@ -22,30 +22,3 @@ var Model = module.exports = CeventEmitter.extend();
 Model.Collection = {
   USER: 'user',
 };
-
-/**
- * Helper for default value of date types.
- *
- * @param  {number} plusTime
- * @return {number} The JS timestamp in the future.
- * @static
- */
-Model.defaultDate = function(plusTime) {
-  return new Date(Date.now() + plusTime);
-};
-
-/**
- * Return a properly formated and sanitized object.
- *
- * @this {mongoose.Schema} Mongoose context.
- * @return {Object} Properly formated Domain object.
- * @protected
- */
-Model.prototype._toPublic = function() {
-  var res = this.toObject({getters: true});
-
-  delete res.__v;
-  delete res._id;
-
-  return res;
-};

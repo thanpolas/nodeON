@@ -27,3 +27,19 @@ var ModelMongo = module.exports = Model.extend(function() {
 ModelMongo.defaultDate = function(plusTime) {
   return Date.now() + plusTime;
 };
+
+/**
+ * Return a properly formated and sanitized object.
+ *
+ * @this {mongoose.Schema} Mongoose context.
+ * @return {Object} Properly formated Domain object.
+ * @protected
+ */
+Model.prototype._toPublic = function() {
+  var res = this.toObject({getters: true});
+
+  delete res.__v;
+  delete res._id;
+
+  return res;
+};
