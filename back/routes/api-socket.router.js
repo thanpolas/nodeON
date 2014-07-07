@@ -5,6 +5,7 @@
 // var log = require('logg').getLogger('app.router.socket.api');
 var SocketVersionApi = require('../controllers/socket/api-version.ctrl');
 var socketPubsubCtrl = require('../controllers/socket/socket-pubsub.ctrl');
+var psutil = require('../services/pubsub-util.service');
 
 var router = module.exports = {};
 
@@ -36,5 +37,5 @@ router.addRoutes = function(socket) {
  * @return {socketio.Socket} Return the socket.
  */
 router.registerPubsub = function (socket) {
-  socketPubsubCtrl.register();
+  socketPubsubCtrl.register(psutil.Channel.DUMMY, socket);
 };
