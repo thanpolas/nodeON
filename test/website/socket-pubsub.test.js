@@ -19,7 +19,7 @@ describe('Websockets pubsub tests', function() {
   describe('Surface Tests', function() {
     Sock.setupAuth();
 
-    it.only('Should receive the published message', function(done) {
+    it('Should receive the published message', function(done) {
       var obj = {
         a: 1,
         b: '2',
