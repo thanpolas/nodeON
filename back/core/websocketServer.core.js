@@ -90,7 +90,7 @@ Sock.prototype.listen = function(optNamespace) {
       .then(socketRouter.registerPubsub)
       .catch(function(err) {
         log.warn('onConnection() :: Challenge failed. NS:', ns, 'Error:',
-          err.message);
+          err);
         socket.disconnect();
       });
 

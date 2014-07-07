@@ -7,7 +7,7 @@
 var router = module.exports = {};
 
 var SocketVersion = require('../controllers/socket/version.ctrl');
-var socketPubsubCtrl = require('../controllers/socket/socket-pubsub.ctrl');
+var socketPubsubCtrl = require('../controllers/socket/socket-pubsub.ctrl').getInstance();
 var psutil = require('../services/pubsub-util.service');
 
 var socketVersion;

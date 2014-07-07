@@ -17,19 +17,9 @@ describe('Websockets pubsub tests', function() {
   tester.init();
 
   describe('Surface Tests', function() {
-    beforeEach(function(done) {
-      this.sock = new Sock('website');
-      this.sock.connect();
-      this.sock.socket.on('connect', function() {
-        done();
-      });
+    Sock.setupAuth();
 
-    });
-    afterEach(function(done) {
-      this.sock.close().then(done, done);
-    });
-
-    it.only('should connect', function(done) {
+    it.only('Should receive the published message', function(done) {
       var obj = {
         a: 1,
         b: '2',
@@ -38,7 +28,7 @@ describe('Websockets pubsub tests', function() {
         f: [1,2,3,4],
       };
       this.sock.socket.on('dummy', function (data) {
-        expect(data).to.deepEqual(obj);
+        expect(data).to.deep.equal(obj);
         done();
       });
 

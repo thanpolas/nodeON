@@ -100,8 +100,8 @@ SockAuth.prototype._onChallengeReply = function(clientResponse) {
       return;
     }
 
+    log.finer('_onChallengeReply() :: Websocket client authorized:', self.socket.id);
     self.socket.emit('authorized');
-
     self.defer.resolve(self.socket);
   });
 

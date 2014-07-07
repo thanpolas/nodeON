@@ -6,6 +6,8 @@ var cip = require('cip');
 /*global -Map*/
 var Map = require('collections/map');
 
+var log = require('logg').getLogger('app.ctrl.socket.pubsub');
+
 var pubsub = require('../../services/pubsub.service').getInstance();
 
 var WsPubSub = module.exports = cip.extendSingleton(function() {
@@ -47,6 +49,8 @@ WsPubSub.prototype.subToChannel = function (channel) {
  * @private
  */
 WsPubSub.prototype._onMessage = function (channel, message) {
+  log.fine('_onMessage() :: Channel:', channel, 'message:', message);
+
   if (!this.registry.has(channel)) {
     return; // bail early
   }

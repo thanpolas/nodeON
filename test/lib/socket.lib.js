@@ -23,7 +23,9 @@ var Sock = module.exports = function(optNamespace) {
   // expose required socket options
   this.sockopts = {
     transport: ['websocket'],
-    multiplex: false,
+    multiplex: true,
+    forceNew: true,
+    reconnection: false,
   };
 };
 
