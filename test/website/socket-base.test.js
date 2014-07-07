@@ -10,7 +10,7 @@ var setupFix = require('../lib/fixtures-user.lib');
 var tester = require('../lib/tester.lib');
 var Sock = require('../lib/socket.lib');
 
-describe('Websockets Manage Panel Tests', function() {
+describe('Websockets Tests', function() {
   this.timeout(7000);
 
   tester.init();
