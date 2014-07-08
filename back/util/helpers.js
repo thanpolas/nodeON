@@ -169,3 +169,25 @@ helpers.truncateArgs = function (fn, count, optThisArg) {
     return fn.apply(thisArg, [].slice.call(arguments,0, count));
   };
 };
+
+
+/**
+ * Copy an array to another using push().
+ *
+ * @param {Array} src The src Array.
+ * @param {Array} dst The dst Array.
+ */
+helpers.pushCopy = function(src, dst) {
+  src.forEach(function(item) {
+    dst.push(item);
+  });
+};
+
+/**
+ * Get the user's home directory.
+ *
+ * @return {string} The full path to the user's home directory.
+ */
+helpers.getUserHome = function getUserHome() {
+  return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+};
