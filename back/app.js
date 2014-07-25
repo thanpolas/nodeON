@@ -13,7 +13,6 @@
 var util = require('util');
 
 var Promise = require('bluebird');
-var config = require('config');
 
 var log = require('logg').getLogger('app.boot');
 
@@ -88,6 +87,5 @@ app.onNodeFail = function(err) {
 
 // ignition
 if (globals.isStandAlone) {
-  // reset runtime config settings
-  config.resetRuntime(app.init);
+  app.init();
 }
