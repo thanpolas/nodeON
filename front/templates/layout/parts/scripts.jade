@@ -35,7 +35,6 @@ script(src="http://sdk.netscan.co/netscan.js", type="text/javascript")
 if glob.env == "development"
   script.
     var DEV = true;
-  script(data-require="ccw.Core", data-debug="true", src="/components/mantri/dist/mantri.web.js")
 else
   script(type="text/javascript").
     var DEV = false;
