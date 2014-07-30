@@ -28,7 +28,13 @@ var ExpressApp = module.exports = cip.extendSingleton(function() {
   /** @type {express} The express instance */
   this.app = express();
 
-  this.expressApi = ExpressApi.getInstance();
+  /** @type {?app.core.ExpressApi} The express API instance */
+  this.expressApi = null;
+
+  if (config.usevhosts) {
+    this.expressApi = ExpressApi.getInstance();
+  }
+
   this.expressWebsite = ExpressWebsite.getInstance();
 });
 
@@ -42,10 +48,15 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
   // initialize webserver
   webserver.init(this.app);
 
-  return Promise.all([
-    this.expressApi.init(opts),
+  var boot = [
     this.expressWebsite.init(opts),
-  ])
+  ];
+
+  if (config.usevhosts) {
+    boot.push(this.expressApi.init(opts));
+  }
+
+  return Promise.all(boot)
   .bind(this)
   .then(function (res) {
     log.fine('init() :: All express instances initialized, moving on with main');
