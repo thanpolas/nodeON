@@ -8,7 +8,7 @@ hostname:
 
 # Use virtual hosts for multiple hostnames, if true the engine will also require
 # an entry in "/etc/hosts" of: 127.0.0.1  api.localhost
-usevhosts: true
+usevhosts: false
 
 # Multiple Nodes running concurently.
 multipleNodes: false
