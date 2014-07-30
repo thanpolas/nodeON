@@ -20,11 +20,7 @@ block content
           if (successObj.verified)
             mixin alertMessage('success', 'Email verified successfully! Welcome aboard.')
           if (successObj.newUser)
-            mixin alertMessage('success', 'Welcome to netscan.co ' +  udo.firstName + '! An email has been dispatched to ' + udo.email + ' please check it out and verify your account.')
+            mixin alertMessage('success', 'Welcome to awesomeapp.com ' +  udo.firstName + '! An email has been dispatched to ' + udo.email + ' please check it out and verify your account.')
           if (successObj.profileDone)
             mixin alertMessage('success', 'Your profile was updated')
 
-
-        .form-token-create.js-token-create
-          form(action="/token", method="post")
-            button.btn(type="submit") Create New Token
