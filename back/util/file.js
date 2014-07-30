@@ -9,11 +9,11 @@
  * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
-'use strict';
-
 // Nodejs libs.
 var fs = require('fs');
 var path = require('path');
+
+var Promise = require('bluebird');
 
 // The module to be exported.
 var file = module.exports = {};
@@ -130,3 +130,20 @@ file.isPathInCwd = function() {
   }
 };
 
+/**
+ * Copies a file
+ *
+ * @param {string} src The full path to the source file.
+ * @param {string} dst The full path to the destination file.
+ * @return {Promise} A promise.
+ * @private
+ */
+file.copy = function(src, dst) {
+  return new Promise(function(resolve, reject) {
+    fs.createReadStream(src)
+      .on('error', reject)
+      .pipe(fs.createWriteStream(dst)
+        .on('finish', resolve)
+        .on('error', reject));
+  });
+};
