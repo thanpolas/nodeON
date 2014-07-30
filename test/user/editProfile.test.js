@@ -17,7 +17,7 @@ describe('Profile Edit', function() {
   setupFix.createUser();
   setupFix.login();
 
-  it('should get a redirect to ', function(done) {
+  it('should get a redirect to "/"', function(done) {
     this.req.post('/profile')
       .set('cookie', this.cookie)
       .send({firstName: 'new'})

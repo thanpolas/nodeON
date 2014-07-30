@@ -17,7 +17,7 @@ var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 var corsMidd = require('../../middleware/cors.midd').getInstance();
 var webRouter = require('../../routes/web.router');
 
-var ApiExpress = module.exports = cip.extendSingleton(function () {
+var WebExpress = module.exports = cip.extendSingleton(function () {
   /** @type {express} The express instance */
   this.app = express();
 
@@ -31,7 +31,7 @@ var ApiExpress = module.exports = cip.extendSingleton(function () {
  * @param {Object} opts Options as defined in app.init().
  * @return {Promise(express)} a promise with the express instance.
  */
-ApiExpress.prototype.init = Promise.method(function(opts) {
+WebExpress.prototype.init = Promise.method(function(opts) {
   log.info('init() :: Initializing webserver...');
 
   this.app.set('views', path.join(__dirname + '/../../../front/templates/'));
@@ -67,5 +67,4 @@ ApiExpress.prototype.init = Promise.method(function(opts) {
   .then(function () {
     return this.app;
   });
-
 });

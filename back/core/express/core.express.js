@@ -61,8 +61,8 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
   .then(function (res) {
     log.fine('init() :: All express instances initialized, moving on with main');
     // body...
-    var appApi = res[0];
-    var appWebserver = res[1];
+    var appApi = res[1];
+    var appWebserver = res[0];
 
     // Discover proper port, Heroku exports it in an env
     var port;
@@ -84,9 +84,12 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
     socketServer.init(webserver.http);
     // listen for websocket connections
     socketServer.listen(globals.WebsocketNamespace.WEBSITE);
-    socketServer.listen(globals.WebsocketNamespace.API);
 
-    this.app.use(vhost(config.hostname.api, appApi));
+    if (config.usevhosts) {
+      socketServer.listen(globals.WebsocketNamespace.API);
+      this.app.use(vhost(config.hostname.api, appApi));
+    }
+
     this.app.use(vhost(config.hostname.website, appWebserver));
 
     // development only
