@@ -16,3 +16,13 @@ var ControllerCrud = module.exports = crude.extend();
 
 // mixin Controller
 ControllerCrud.mixin(ControllerBase);
+
+/**
+ * Helper for stubbing CRUD ops that we don't want executed.
+ *
+ * @param {Object} req The request Object.
+ * @param {Object} res The response Object.
+ */
+ControllerCrud.prototype.show404 = function(req, res) {
+  res.status(404).render('404');
+};
