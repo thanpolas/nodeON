@@ -10,17 +10,20 @@
  */
 
 // Nodejs libs.
-var fs = require('fs');
+var Promise = require('bluebird');
+var fs = Promise.promisifyAll(require('fs'));
 var path = require('path');
 
+var mv = Promise.promisify(require('mv'));
 var iconv = require('iconv-lite');
-var Promise = require('bluebird');
+var yaml = require('js-yaml');
+
+
 var appError = require('./error');
 
 // The module to be exported.
 var file = module.exports = {};
 
-var mv = Promise.promisify(require('mv'));
 
 // The default file encoding to use.
 file.defaultEncoding = 'utf8';
@@ -197,3 +200,14 @@ file.readJSON = function(filepath, options) {
 
 // expose mv
 file.mv = mv;
+
+/**
+ * Read a yaml file and return the data object.
+ *
+ * @param {string} filepath Full path to yaml file.
+ * @return {Promise(Object)} The yaml data object.
+ */
+file.readYaml = Promise.method(function (filepath) {
+  return fs.readFileAsync(filepath, 'utf8')
+    .then(yaml.safeLoad);
+});
