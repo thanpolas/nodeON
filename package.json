@@ -46,7 +46,9 @@
     "passport": "^0.2.0",
     "vhost": "^2.0.0",
     "collections": "^1.2.1",
-    "redis": "^0.11.0"
+    "redis": "^0.11.0",
+    "iconv-lite": "^0.4.4",
+    "mv": "^2.0.3"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",

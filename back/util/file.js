@@ -13,10 +13,14 @@
 var fs = require('fs');
 var path = require('path');
 
+var iconv = require('iconv-lite');
 var Promise = require('bluebird');
+var appError = require('./error');
 
 // The module to be exported.
 var file = module.exports = {};
+
+var mv = Promise.promisify(require('mv'));
 
 // The default file encoding to use.
 file.defaultEncoding = 'utf8';
@@ -75,6 +79,24 @@ file.isLink = function() {
 file.isDir = function() {
   var filepath = path.join.apply(path, arguments);
   return file.exists(filepath) && fs.statSync(filepath).isDirectory();
+};
+
+/**
+ * Checks if the given path is a directory using promises.
+ *
+ * @param {string} directory The full path.
+ * @return {Promise} Rejects if not.
+ */
+file.isDirAsync = function (directory) {
+  return fs.statAsync(directory)
+    .bind(this)
+    .then(function (stat) {
+      if (!stat.isDirectory()) {
+        var err = new appError.Error('Not a directory');
+        err.path = directory;
+        throw err;
+      }
+    });
 };
 
 // True if the path is a file.
@@ -147,3 +169,31 @@ file.copy = function(src, dst) {
         .on('error', reject));
   });
 };
+
+// Read a file, return its contents.
+file.read = function(filepath, options) {
+  if (!options) { options = {}; }
+  var contents;
+  contents = fs.readFileSync(String(filepath));
+  // If encoding is not explicitly null, convert from encoded buffer to a
+  // string. If no encoding was specified, use the default.
+  if (options.encoding !== null) {
+    contents = iconv.decode(contents, options.encoding || file.defaultEncoding);
+    // Strip any BOM that might exist.
+    if (!file.preserveBOM && contents.charCodeAt(0) === 0xFEFF) {
+      contents = contents.substring(1);
+    }
+  }
+  return contents;
+};
+
+// Read a file, parse its contents, return an object.
+file.readJSON = function(filepath, options) {
+  var src = file.read(filepath, options);
+  var result;
+  result = JSON.parse(src);
+  return result;
+};
+
+// expose mv
+file.mv = mv;
