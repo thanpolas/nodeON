@@ -17,9 +17,7 @@ var path = require('path');
 var mv = Promise.promisify(require('mv'));
 var iconv = require('iconv-lite');
 var yaml = require('js-yaml');
-
-
-var appError = require('./error');
+var appError = require('nodeon-error');
 
 // The module to be exported.
 var file = module.exports = {};
