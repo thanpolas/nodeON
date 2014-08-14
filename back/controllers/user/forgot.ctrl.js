@@ -3,11 +3,11 @@
  */
 var __ = require('lodash');
 var validator = require('validator');
+var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.ctrl.Forgot');
 
 var ControllerBase = require('../controller-base');
 var ForgotEnt = require('../../entities/user/user-forgot.ent');
-var appError = require('../../util/error');
 
 /**
  * The forgot password controller

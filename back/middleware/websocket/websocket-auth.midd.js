@@ -7,8 +7,8 @@ var cip = require('cip');
 var Promise = require('bluebird');
 var log = require('logg').getLogger('app.ctrl.websocket.main');
 var config = require('config');
+var appError = require('nodeon-error');
 
-var appError = require('../../util/error');
 var SessionStore = require('../../core/session-store.core');
 var globals = require('../../core/globals');
 

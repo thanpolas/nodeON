@@ -6,6 +6,7 @@ var util = require('util');
 
 var __ = require('lodash');
 var passport = require('passport');
+var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.ctrl.Login');
 
 var globals = require('../../core/globals');
@@ -13,7 +14,6 @@ var AuthMidd = require('../../middleware/auth.midd');
 var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 
 var ControllerBase = require('../controller-base');
-var appError = require('../../util/error');
 
 /**
  * The authentication controller.

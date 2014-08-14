@@ -5,6 +5,7 @@
 var __ = require('lodash');
 var Promise = require('bluebird');
 var config = require('config');
+var appError = require('nodeon-error');
 
 var log = require('logg').getLogger('app.ent.User');
 
@@ -12,7 +13,6 @@ var EntityBase = require('../entity-base');
 var UserModel = require('../../models/user.model');
 var userModel = UserModel.getInstance();
 var Email = require('../../modules/email');
-var appError = require('../../util/error');
 var helpers = require('../../util/helpers');
 
 /**

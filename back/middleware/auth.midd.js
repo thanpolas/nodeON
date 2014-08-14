@@ -4,12 +4,12 @@
  */
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var appError = require('nodeon-error');
 
 var log = require('logg').getLogger('app.midd.Auth');
 
 var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
-var appError = require('../util/error');
 var Middleware = require('./middleware');
 var ControllerBase = require('../controllers/controller-base');
 

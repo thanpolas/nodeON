@@ -4,9 +4,9 @@
 var __ = require('lodash');
 
 var EntityCrudMongoose = require('node-entity').Mongoose;
+var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.ent.Base');
 
-var appError = require('../util/error');
 
 /**
  * The base Entity Class all entities extend from.

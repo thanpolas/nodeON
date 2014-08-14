@@ -5,12 +5,12 @@
 // var __ = require('lodash');
 var Promise = require('bluebird');
 var config = require('config');
+var appError = require('nodeon-error');
 
 var log = require('logg').getLogger('app.ent.UserForgot');
 
 var UserEnt = require('./user.ent');
 var Email = require('../../modules/email');
-var appError = require('../../util/error');
 var helpers = require('../../util/helpers');
 
 /**
