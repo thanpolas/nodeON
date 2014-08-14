@@ -4,10 +4,11 @@
 
 var util = require('util');
 
+var helpers = require('nodeon-helpers');
+
 // var log = require('logg').getLogger('app.midd.Cors');
 
 var Middleware = require('./middleware');
-var helpers = require('../util/helpers');
 
 /**
  * The Cors Middleware.

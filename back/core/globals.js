@@ -5,9 +5,9 @@
 var os = require('os');
 
 var config = require('config');
+var helpers = require('nodeon-helpers');
 // var log = require('logg').getLogger('app.core.globals');
 
-var helpers = require('../util/helpers');
 var globals = module.exports = {};
 
 /** @type {?Object} Application Boot options */

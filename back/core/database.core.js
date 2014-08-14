@@ -10,8 +10,8 @@ var config = require('config');
 var mongoose = require('mongoose');
 var logg = require('logg');
 var log = logg.getLogger('app.core.database');
+var helpers = require('nodeon-helpers');
 
-var helpers = require('../util/helpers');
 
 // models
 var userModel = require('../models/user.model').getInstance();

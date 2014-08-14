@@ -4,10 +4,10 @@
 
 var util = require('util');
 
+var helpers = require('nodeon-helpers');
 // var log = require('logg').getLogger('app.midd.Redirect');
 
 var Middleware = require('./middleware');
-var helpers = require('../util/helpers');
 
 /**
  * The Redirect middleware, forces usage of a single host.

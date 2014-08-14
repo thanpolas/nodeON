@@ -7,10 +7,10 @@ var config = require('config');
 var mongoose = require('mongoose');
 var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.model.User');
+var helpers = require('nodeon-helpers');
 
 var Model = require('./model-base');
 var ModelMongo = require('./model-mongo-base');
-var helpers = require('../util/helpers');
 var userValid = require('./validators/user.valid');
 
 /**
