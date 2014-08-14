@@ -3,7 +3,7 @@
  */
 // var log = require('logg').getLogger('app.ctrl.Homepage');
 
-var ControllerBase = require('./controller-base');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 /**
  * The home page.

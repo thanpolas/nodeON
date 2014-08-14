@@ -6,12 +6,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var appError = require('nodeon-error');
 var MiddlewareBase = require('nodeon-base').MiddlewareBase;
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 var log = require('logg').getLogger('app.midd.Auth');
 
 var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
-var ControllerBase = require('nodeon-base').ControllerBase;
 
 /** @type {Object.<app.midd.Auth} Auth middleware instances. */
 var singletons = {};
