@@ -9,8 +9,7 @@ var util = require('util');
 
 var logg = require('logg');
 var config = require('config');
-
-var file = require('./file');
+var file = require('nodeon-file');
 
 var initialized = false;
 
