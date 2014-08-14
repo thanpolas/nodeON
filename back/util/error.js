@@ -5,21 +5,27 @@
 
 var util = require('util');
 
+var __ = require('lodash');
 var mongoose = require('mongoose');
 
 var appError = module.exports = {};
 
 /**
- * The abstract error which all errors extend.
+ * The Base Error all Errors inherit from.
+ *
  *
  * @param {string|Error=} optMsg the message or an Error Object.
  * @param {Object=} optCtor Calee constructor.
  * @constructor
- * @extends {Error}
+ * @alias Error
  */
-appError.Abstract = function (optMsg, optConstr) {
-  Error.call(this);
-  Error.captureStackTrace(this, optConstr || this);
+appError.BaseError = appError.Error = function(optMsg, optCtor) {
+  var tmp = Error.call(this);
+  tmp.name = this.name = 'AppBaseError';
+
+  Error.captureStackTrace(this, optCtor || this.constructor);
+
+  this.message = tmp.message;
 
   /**
    * If an instance of Error is passed to the arguments it is
@@ -32,72 +38,51 @@ appError.Abstract = function (optMsg, optConstr) {
     this.srcError = optMsg;
   }
 
-  var msg;
-  if (optMsg && optMsg.length) {
+  var msg = 'Error';
+  if (typeof optMsg === 'string' && optMsg.length) {
     msg = optMsg;
-  } else {
-    msg = 'Error';
   }
 
   this.message = msg;
-  this.name = 'Abstract Error';
   this.error = true;
 };
-util.inherits(appError.Abstract, Error);
+util.inherits(appError.BaseError, Error);
 
 /**
  * Last stop for the error object, strip it of internal properties.
  *
  * @return {Object} Sanitized object to use on external API.
  */
-appError.Abstract.prototype.toApi = function() {
-  delete this.srcError;
-  return this;
+appError.BaseError.prototype.toApi = function() {
+  var obj = __.cloneDeep(this);
+  delete obj.srcError;
+  return obj;
 };
-
-
-/**
- * Generic Error.
- *
- * @param {string=} optMsg the message.
- * @constructor
- * @extends {app.error.Abstract}
- */
-appError.Error = function(optMsg) {
-  appError.Error.super_.call(this, optMsg, this.constructor);
-  /** @type {string} */
-  this.name = 'Generic Error';
-  var msg = (optMsg && optMsg.length) ? optMsg  : 'Generic Error';
-  this.message = msg;
-
-};
-util.inherits(appError.Error, appError.Abstract);
-
 
 /**
  * Unknown Error.
  *
  * @param {string|Error=} optMsg the message or an Error Object.
  * @constructor
- * @extends {app.error.Abstract}
+ * @extends {app.error.BaseError}
  */
 appError.Unknown = function(optMsg) {
   var msg = (optMsg && optMsg.length) ? optMsg : 'Unknown Error';
   appError.Unknown.super_.call(this, msg, this.constructor);
-  this.name = 'Unknown Error';
+  this.name = 'AppUnknownError';
 };
-util.inherits(appError.Unknown, appError.Abstract);
+util.inherits(appError.Unknown, appError.BaseError);
 
 /**
  * Database Error.
  *
  * @param {string|Error=} optMsg the message or an Error Object.
  * @constructor
- * @extends {app.error.Abstract}
+ * @extends {app.error.BaseError}
  */
 appError.Database = function (optMsg) {
   appError.Database.super_.call(this, optMsg, this.constructor);
-  this.name = 'Database Error';
+  this.name = 'AppDatabaseError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Database Error';
   this.message = msg;
 
@@ -107,7 +92,7 @@ appError.Database = function (optMsg) {
   this.type = appError.Database.Type.UNKNOWN;
 
 };
-util.inherits(appError.Database, appError.Abstract);
+util.inherits(appError.Database, appError.BaseError);
 
 /**
  * @enum {string} Database error types.
@@ -133,7 +118,7 @@ appError.Database.Type = {
  */
 appError.Validation = function(optMsg) {
   appError.Validation.super_.call(this, optMsg, this.constructor);
-  this.name = 'Validation Error';
+  this.name = 'AppValidationError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Validation Error';
   this.message = msg;
 
@@ -141,7 +126,7 @@ appError.Validation = function(optMsg) {
   this.errors = [];
 
 };
-util.inherits(appError.Validation, appError.Abstract);
+util.inherits(appError.Validation, appError.BaseError);
 
 /**
  * A validation item is a single validation error.
@@ -183,12 +168,12 @@ appError.ValidationItem = function(message, optPath, optType, optValue) {
  *
  * @param {string=} optMsg the message.
  * @constructor
- * @extends {app.error.Abstract}
+ * @extends {app.error.BaseError}
  */
 appError.Authentication = function(optMsg) {
   appError.Authentication.super_.call(this, optMsg, this.constructor);
   /** @type {string} */
-  this.name = 'Authentication Error';
+  this.name = 'AppAuthenticationError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Authentication Error';
   this.message = msg;
 
@@ -196,7 +181,7 @@ appError.Authentication = function(optMsg) {
   /** @type {app.error.Authentication.Type} */
   this.type = appError.Authentication.Type.UNKNOWN;
 };
-util.inherits(appError.Authentication, appError.Abstract);
+util.inherits(appError.Authentication, appError.BaseError);
 
 /**
  * @enum {number} authentication error Types.
@@ -218,11 +203,11 @@ appError.Authentication.Type = {
  * JSON encoding of data failed.
  *
  * @param {Error} ex the JSON exception
- * @extends {app.error.Abstract}
+ * @extends {app.error.BaseError}
  */
 appError.JSON = function (ex) {
   appError.JSON.super_.call(this, (ex + ''), this.constructor);
-  this.name = 'JSON Error';
+  this.name = 'AppJSONError';
   this.JSONexception = ex;
 };
-util.inherits(appError.JSON, appError.Abstract);
+util.inherits(appError.JSON, appError.BaseError);
