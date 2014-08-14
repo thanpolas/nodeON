@@ -4,7 +4,7 @@
  */
 var crude = require('crude');
 
-var ControllerBase = require('./controller-base');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 /**
  * The CRUD controller.

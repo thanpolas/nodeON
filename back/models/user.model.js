@@ -8,9 +8,9 @@ var mongoose = require('mongoose');
 var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.model.User');
 var helpers = require('nodeon-helpers');
+var ModelMongo = require('nodeon-base').ModelMongoBase;
 
 var Model = require('./model-base');
-var ModelMongo = require('./model-mongo-base');
 var userValid = require('./validators/user.valid');
 
 /**

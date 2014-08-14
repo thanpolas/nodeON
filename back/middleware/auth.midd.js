@@ -5,12 +5,12 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var appError = require('nodeon-error');
+var MiddlewareBase = require('nodeon-base').MiddlewareBase;
 
 var log = require('logg').getLogger('app.midd.Auth');
 
 var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
-var Middleware = require('./middleware');
 var ControllerBase = require('../controllers/controller-base');
 
 /** @type {Object.<app.midd.Auth} Auth middleware instances. */
@@ -25,7 +25,7 @@ var singletons = {};
  * @contructor
  * @extends {app.Middleware}
  */
-var Auth = module.exports = Middleware.extend(function (role) {
+var Auth = module.exports = MiddlewareBase.extend(function (role) {
   if (singletons[role]) {
     singletons[role].zit = 1;
     return singletons[role];

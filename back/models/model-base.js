@@ -1,19 +1,15 @@
 /**
  * @fileOverview The base Model Class all models extend from.
  */
-var EventEmitter = require('events').EventEmitter;
-
-var cip = require('cip');
-
-var CeventEmitter = cip.cast(EventEmitter);
+var Model = require('nodeon-base').ModelBase;
 
 /**
  * The base Model Class all models extend from.
  *
- * @extends {events.EventEmitter}
+ * @extends {nodeon-base.ModelBase}
  * @constructor
  */
-var Model = module.exports = CeventEmitter.extend();
+var Model = module.exports = Model.extend();
 
 /**
  * All Collections (tables)
