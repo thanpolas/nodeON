@@ -54,7 +54,6 @@ util.inherits(appError.BaseError, Error);
  * @return {Object} Sanitized object to use on external API.
  */
 appError.BaseError.prototype.toApi = function() {
-
   var obj = __.cloneDeep(this);
   delete obj.srcError;
   return obj;
