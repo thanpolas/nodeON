@@ -8,12 +8,11 @@ var __ = require('lodash');
 var passport = require('passport');
 var appError = require('nodeon-error');
 var log = require('logg').getLogger('app.ctrl.Login');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 var globals = require('../../core/globals');
 var AuthMidd = require('../../middleware/auth.midd');
 var authMidd = new AuthMidd(globals.Roles.WEBSITE);
-
-var ControllerBase = require('../controller-base');
 
 /**
  * The authentication controller.

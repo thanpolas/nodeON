@@ -8,7 +8,7 @@ var log = require('logg').getLogger('app.service.PubSub');
 var cip = require('cip');
 var config = require('config');
 
-var ModelRedis = require('../models/model-redis-base');
+var ModelRedisBase = require('nodeon-base').ModelRedisBase;
 
 var CEventEmitter = cip.cast(EventEmitter);
 // var __ = require('lodash');
@@ -44,7 +44,7 @@ PubSub.prototype.init = function() {
   if (this.hasInit) { return; }
   this.hasInit = true;
 
-  this.redis = new ModelRedis();
+  this.redis = new ModelRedisBase();
 
   if (MULTI) {
     this.redis.sub.on('message', this._onSubMessage.bind(this));

@@ -3,8 +3,8 @@
  */
 var validator = require('validator');
 var log = require('logg').getLogger('app.ctrl.Register');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
-var ControllerBase = require('../controller-base');
 var UserEntity = require('../../entities/user/user.ent');
 
 /**

@@ -3,9 +3,9 @@
  */
 var validator = require('validator');
 var log = require('logg').getLogger('app.ctrl.EditProfile');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 var globals = require('../../core/globals');
-var ControllerBase = require('../controller-base');
 var UserEntity = require('../../entities/user/user.ent');
 var AuthMidd = require('../../middleware/auth.midd');
 var authMidd = new AuthMidd(globals.Roles.WEBSITE);

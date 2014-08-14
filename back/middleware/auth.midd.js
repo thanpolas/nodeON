@@ -11,7 +11,7 @@ var log = require('logg').getLogger('app.midd.Auth');
 
 var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
-var ControllerBase = require('../controllers/controller-base');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 /** @type {Object.<app.midd.Auth} Auth middleware instances. */
 var singletons = {};

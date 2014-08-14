@@ -2,8 +2,8 @@
  * @fileOverview Email verification endpoint.
  */
 var log = require('logg').getLogger('app.ctrl.Verify');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
-var ControllerBase = require('../controller-base');
 var UserEnt = require('../../entities/user/user.ent');
 
 /**

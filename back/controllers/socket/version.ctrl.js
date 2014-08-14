@@ -2,7 +2,7 @@
  * @fileOverview Website Socket 'version' call, returns API version.
  */
 
-var ControllerBase = require('../controller-base');
+var ControllerBase = require('nodeon-base').ControllerBase;
 
 /**
  * The Website Socket 'version' call, returns API version.
