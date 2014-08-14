@@ -85,7 +85,11 @@ Forgot.prototype._resetView = function(req, res) {
   var uid = req.params.uid;
   this.forgotEnt.verifyResetToken(resetToken, uid)
     .then(function(udo) {
-      res.render('user/forgot-reset', {udo: udo});
+      res.render('user/forgot-reset', {
+        udo: udo,
+        resetToken: resetToken,
+        uid: uid,
+      });
     }).catch(function() {
       res.status(401).render('user/forgot-error');
     });
