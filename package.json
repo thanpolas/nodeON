@@ -50,7 +50,8 @@
     "iconv-lite": "^0.4.4",
     "mv": "^2.0.3",
     "js-yaml": "^3.1.0",
-    "nodeon-error": "^0.1.0"
+    "nodeon-error": "^0.1.0",
+    "nodeon-helpers": "^0.1.0"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",
