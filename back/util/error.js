@@ -5,6 +5,7 @@
 
 var util = require('util');
 
+var __ = require('lodash');
 var mongoose = require('mongoose');
 
 var appError = module.exports = {};
@@ -53,8 +54,10 @@ util.inherits(appError.BaseError, Error);
  * @return {Object} Sanitized object to use on external API.
  */
 appError.BaseError.prototype.toApi = function() {
-  delete this.srcError;
-  return this;
+
+  var obj = __.cloneDeep(this);
+  delete obj.srcError;
+  return obj;
 };
 
 /**
@@ -67,7 +70,7 @@ appError.BaseError.prototype.toApi = function() {
 appError.Unknown = function(optMsg) {
   var msg = (optMsg && optMsg.length) ? optMsg : 'Unknown Error';
   appError.Unknown.super_.call(this, msg, this.constructor);
-  this.name = 'Unknown Error';
+  this.name = 'AppUnknownError';
 };
 util.inherits(appError.Unknown, appError.BaseError);
 
@@ -80,7 +83,7 @@ util.inherits(appError.Unknown, appError.BaseError);
  */
 appError.Database = function (optMsg) {
   appError.Database.super_.call(this, optMsg, this.constructor);
-  this.name = 'Database Error';
+  this.name = 'AppDatabaseError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Database Error';
   this.message = msg;
 
@@ -116,7 +119,7 @@ appError.Database.Type = {
  */
 appError.Validation = function(optMsg) {
   appError.Validation.super_.call(this, optMsg, this.constructor);
-  this.name = 'Validation Error';
+  this.name = 'AppValidationError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Validation Error';
   this.message = msg;
 
@@ -171,7 +174,7 @@ appError.ValidationItem = function(message, optPath, optType, optValue) {
 appError.Authentication = function(optMsg) {
   appError.Authentication.super_.call(this, optMsg, this.constructor);
   /** @type {string} */
-  this.name = 'Authentication Error';
+  this.name = 'AppAuthenticationError';
   var msg = (optMsg && optMsg.length) ? optMsg  : 'Authentication Error';
   this.message = msg;
 
@@ -205,7 +208,7 @@ appError.Authentication.Type = {
  */
 appError.JSON = function (ex) {
   appError.JSON.super_.call(this, (ex + ''), this.constructor);
-  this.name = 'JSON Error';
+  this.name = 'AppJSONError';
   this.JSONexception = ex;
 };
 util.inherits(appError.JSON, appError.BaseError);
