@@ -4,7 +4,7 @@
  */
 var __ = require('lodash');
 var cip = require('cip');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var log = require('logg').getLogger('app.ctrl.websocket.main');
 var config = require('config');
 var appError = require('nodeon-error');
@@ -23,7 +23,7 @@ var globals = require('../../core/globals');
 var SockAuth = module.exports = cip.extend(function(socket, namespace) {
   this.socket = socket;
 
-  this.defer = Promise.defer();
+  this.defer = BPromise.defer();
 
   this.decided = false;
 
@@ -38,7 +38,7 @@ var SockAuth = module.exports = cip.extend(function(socket, namespace) {
  *
  * @param {socket.io} socket The socket instance.
  * @param {Function} next Pass control.
- * @return {Promise(socket)} A Promise with the websocket.
+ * @return {BPromise(socket)} A BPromise with the websocket.
  * @static
  */
 SockAuth.challenge = function(socket, next) {
@@ -50,7 +50,7 @@ SockAuth.challenge = function(socket, next) {
 /**
  * Start the after-connection handshake to authenticate the client and user.
  *
- * @return {Promise(socket)} A Promise with the websocket.
+ * @return {BPromise(socket)} A BPromise with the websocket.
  */
 SockAuth.prototype.challenge = function() {
   // challenge the client

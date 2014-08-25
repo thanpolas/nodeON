@@ -5,7 +5,7 @@
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var config = require('config');
 var mongoose = require('mongoose');
 var logg = require('logg');
@@ -76,9 +76,9 @@ Conn.MongoState = {
  *
  * This method should only be called once.
  *
- * @return {Promise} a promise.
+ * @return {BPromise} a promise.
  */
-Conn.prototype.init = Promise.method(function() {
+Conn.prototype.init = BPromise.method(function() {
   log.fine('init() :: Init. _initialized:', this._initialized, 'Hostname:',
     config.mongo.hostname);
 
@@ -97,12 +97,12 @@ Conn.prototype.init = Promise.method(function() {
 /**
  * Initialize all the models.
  *
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
 Conn.prototype._initModels = function() {
   log.finer('_initModels() :: Initializing models...');
-  return Promise.all([
+  return BPromise.all([
     userModel.init(),
   ]);
 };
@@ -110,12 +110,12 @@ Conn.prototype._initModels = function() {
 /**
  * Create a connection with mongo.
  *
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
 Conn.prototype._connectMongo = function() {
   var self = this;
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
 
     log.fine('_connectMongo() :: Init. Hostname:', config.mongo.hostname);
 
@@ -166,10 +166,10 @@ Conn.prototype._connectMongo = function() {
 /**
  * Close connection to Mongo db.
  *
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
 Conn.prototype.closeMongo = function() {
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     log.info('closeMongo() :: Closing mongo connection... readyState:',
       mongoose.connection.readyState);
     mongoose.connection.close(function(err) {
@@ -184,9 +184,9 @@ Conn.prototype.closeMongo = function() {
 /**
  * re-start a mongo connection, will close connection first.
  *
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
-Conn.prototype.openMongo = Promise.method(function() {
+Conn.prototype.openMongo = BPromise.method(function() {
   log.info('openMongo() :: re-Opening mongo connection... readyState:',
     mongoose.connection.readyState);
 

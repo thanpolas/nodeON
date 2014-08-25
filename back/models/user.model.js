@@ -2,7 +2,7 @@
  * @fileOverview The base user model.
  */
 var __ = require('lodash');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var config = require('config');
 var mongoose = require('mongoose');
 var appError = require('nodeon-error');
@@ -73,9 +73,9 @@ User.Schema = {
 /**
  * Initialize the model.
  *
- * @return {Promise} A promise
+ * @return {BPromise} A promise
  */
-User.prototype.init = Promise.method(function() {
+User.prototype.init = BPromise.method(function() {
   log.fine('init() :: initializing User Model...');
 
   this.schema = new mongoose.Schema(User.Schema);
@@ -165,12 +165,12 @@ User.prototype._activate = function(done) {
  *
  * @param {string} password The password we'll test.
  * @this {mongoose.Schema} Mongoose context.
- * @return {Promise} Rejects if no  match.
+ * @return {BPromise} Rejects if no  match.
  * @private
  */
 User.prototype._verifyPassword = function(password) {
   var self = this;
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     helpers.hashVerify(self.password, password, function(isMatch) {
       if (isMatch) {
         resolve();

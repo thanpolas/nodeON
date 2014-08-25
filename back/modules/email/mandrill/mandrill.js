@@ -6,7 +6,7 @@
 var config = require('config');
 var __ = require('lodash');
 var cip = require('cip');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var Mandrill = require('mandrill-api/mandrill');
 var log = require('logg').getLogger('app.email.Mandrill');
 
@@ -28,7 +28,7 @@ Mand.Type = {
 };
 
 Mand.prototype.init = function() {
-  return Promise.resolve();
+  return BPromise.resolve();
 };
 
 /**
@@ -37,11 +37,11 @@ Mand.prototype.init = function() {
  * @param {app.email.Mandrill.Type} type email type.
  * @param {string} recipient The email recipient.
  * @param {Object} tplVars key / value pairs.
- * @return {Promise(Object)} a promise with the response from Mandrill.
+ * @return {BPromise(Object)} a promise with the response from Mandrill.
  */
 Mand.prototype.send = function(type, recipient, tplVars) {
   var self = this;
-  return new Promise(function(resolve) {
+  return new BPromise(function(resolve) {
 
     log.fine('send() :: Sending email to:', recipient, 'type:', type);
 

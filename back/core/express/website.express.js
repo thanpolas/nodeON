@@ -6,7 +6,7 @@ var path = require('path');
 var cip = require('cip');
 var express = require('express');
 var flash = require('connect-flash');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 
 var log = require('logg').getLogger('app.core.express.website');
 
@@ -29,9 +29,9 @@ var WebExpress = module.exports = cip.extendSingleton(function () {
  * Initialize the API express instance.
  *
  * @param {Object} opts Options as defined in app.init().
- * @return {Promise(express)} a promise with the express instance.
+ * @return {BPromise(express)} a promise with the express instance.
  */
-WebExpress.prototype.init = Promise.method(function(opts) {
+WebExpress.prototype.init = BPromise.method(function(opts) {
   log.info('init() :: Initializing webserver...');
 
   this.app.set('views', path.join(__dirname + '/../../../front/templates/'));
@@ -44,7 +44,7 @@ WebExpress.prototype.init = Promise.method(function(opts) {
 
   // Session store
   this.sessionStore = new SessionStore(globals.Roles.WEBSITE);
-  var sessConnectPromise = this.sessionStore.connect();
+  var sessConnectBPromise = this.sessionStore.connect();
   this.app.use(this.sessionStore.use());
 
   // use flashing for passing messages to next page view
@@ -60,8 +60,8 @@ WebExpress.prototype.init = Promise.method(function(opts) {
   // setup view globals
   this.app.locals.glob = globals.viewGlobals;
 
-  return Promise.all([
-    sessConnectPromise,
+  return BPromise.all([
+    sessConnectBPromise,
   ])
   .bind(this)
   .then(function () {

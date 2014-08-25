@@ -4,7 +4,7 @@
 
 var http = require('http');
 
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var log = require('logg').getLogger('app.core.webserver');
 
 var web = module.exports = {};
@@ -25,10 +25,10 @@ web.init = function(app) {
  * Start the webserver.
  *
  * @param {Express} app the Express instance.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
 web.start = function(app) {
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     web.http.on('clientError', function(err) {
       log.warn('start() :: Client Error. Exception:', err);
     });

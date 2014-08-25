@@ -3,7 +3,7 @@
  */
 
 var __ = require('lodash');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var config = require('config');
 var appError = require('nodeon-error');
 var helpers = require('nodeon-helpers');
@@ -95,14 +95,14 @@ User.prototype._createVerifyToken = function (udo) {
  *
  * @param {Object} udo UDO as passed by consumer.
  * @param {Mongoose} udoDoc DB Document.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
 User.prototype._sendVerificationEmail = function(udo, udoDoc) {
   log.fine('_sendVerificationEmail() :: Preparing verification email for:',
     udo.email);
   // var self = this;
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     var email = Email.getInstance();
     var verifyToken = udo.emailConfirmation.key;
 
@@ -120,7 +120,7 @@ User.prototype._sendVerificationEmail = function(udo, udoDoc) {
  *
  * @param {string} verifyToken The verification token.
  * @param {string} uid User Id.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
 User.prototype.verifyToken = function(verifyToken, uid) {
   var self = this;
@@ -142,10 +142,10 @@ User.prototype.verifyToken = function(verifyToken, uid) {
  *
  * @param {Object} params Data from the client.
  * @param {Object} udo The UDO of the user to edit.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
-User.prototype._checkProfilePassword = Promise.method(function(params, udo) {
+User.prototype._checkProfilePassword = BPromise.method(function(params, udo) {
   if (!params.oldPassword || !params.oldPassword.length) {
     return;
   }
@@ -170,10 +170,10 @@ User.prototype._checkProfilePassword = Promise.method(function(params, udo) {
  *
  * @param {Object} params Data from the client.
  * @param {Object} udo The UDO of the user to edit.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
-User.prototype._editProfile = Promise.method(function(params, udo) {
+User.prototype._editProfile = BPromise.method(function(params, udo) {
   if (params.email && params.email.length && params.email !== udo.email) {
     params.isVerified = false;
     params.emailConfirmation = {
@@ -190,10 +190,10 @@ User.prototype._editProfile = Promise.method(function(params, udo) {
  * @param {Object} params Data from the client.
  * @param {Object} udo The UDO of the user to edit.
  * @param {Mongoose.Document} newUdo Mongoose UDO.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
-User.prototype._checkProfileEmail = Promise.method(function(params, udo, newUdo) {
+User.prototype._checkProfileEmail = BPromise.method(function(params, udo, newUdo) {
   if (newUdo.email !== udo.email) {
     return this._sendVerificationEmail(newUdo, newUdo);
   }

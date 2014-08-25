@@ -71,7 +71,7 @@ AppServices.prototype.setup = function(optOptions) {
 /**
  * Triggers after all databases are connected.
  *
- * @return {Promise} a promise.
+ * @return {BPromise} a promise.
  */
 AppServices.prototype.initServices = function() {
   log.info('initServices() :: Init...');

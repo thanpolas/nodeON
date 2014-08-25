@@ -3,7 +3,7 @@
  */
 
 // var __ = require('lodash');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var config = require('config');
 var appError = require('nodeon-error');
 var helpers = require('nodeon-helpers');
@@ -27,9 +27,9 @@ var Forgot = module.exports = UserEnt.extendSingleton();
  * Perform forgot password operation.
  *
  * @param {string} email The user's email.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
-Forgot.prototype.forgot = Promise.method(function(email) {
+Forgot.prototype.forgot = BPromise.method(function(email) {
   var self = this;
   return this.readOne({email: email})
     .then(function(udo) {
@@ -38,7 +38,7 @@ Forgot.prototype.forgot = Promise.method(function(email) {
         error.message = 'The email you entered does not exist in our database.';
         throw error;
       }
-      return new Promise(function(resolve, reject) {
+      return new BPromise(function(resolve, reject) {
         udo.resetPassword.key = helpers.generateRandomString();
         udo.resetPassword.expires = Date.now() + config.users.passwordResetExpires;
         udo.save(function(err) {
@@ -59,14 +59,14 @@ Forgot.prototype.forgot = Promise.method(function(email) {
  * Send forgot password email to the user.
  *
  * @param {Mongoose} udo DB Document.
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  * @private
  */
 Forgot.prototype._sendForgotEmail = function(udo) {
   log.fine('_sendForgotEmail() :: Preparing forgot password email for:',
     udo.email);
   // var self = this;
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     var email = Email.getInstance();
     var verifyToken = udo.resetPassword.key;
 
@@ -86,9 +86,9 @@ Forgot.prototype._sendForgotEmail = function(udo) {
  *
  * @param {string} resetToken The reset token.
  * @param {string} uid The user id.
- * @return {Promise(Object)} A Promise with the UDO.
+ * @return {BPromise(Object)} A BPromise with the UDO.
  */
-Forgot.prototype.verifyResetToken = Promise.method(function(resetToken, uid) {
+Forgot.prototype.verifyResetToken = BPromise.method(function(resetToken, uid) {
   return this.readOne({_id: uid}).then(function(udo) {
     if (!udo) {
       throw new appError.Authentication('User not found');
@@ -112,13 +112,13 @@ Forgot.prototype.verifyResetToken = Promise.method(function(resetToken, uid) {
  * @param {string} resetToken The reset token.
  * @param {string} uid The user id.
  * @param {string} newPassword The new pass.
- * @return {Promise(Object)} A Promise with the UDO.
+ * @return {BPromise(Object)} A BPromise with the UDO.
  */
-Forgot.prototype.resetPassword = Promise.method(function(resetToken, uid,
+Forgot.prototype.resetPassword = BPromise.method(function(resetToken, uid,
   newPassword) {
   return this.verifyResetToken(resetToken, uid)
     .then(function(udo) {
-      return new Promise(function(resolve, reject) {
+      return new BPromise(function(resolve, reject) {
         udo.password = newPassword;
         udo.resetPassword.key = null;
         udo.resetPassword.expires = null;

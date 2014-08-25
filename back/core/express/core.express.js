@@ -3,7 +3,7 @@
  */
 var config = require('config');
 var cip = require('cip');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var express = require('express');
 var vhost = require('vhost');
 var cookieParser = require('cookie-parser');
@@ -42,9 +42,9 @@ var ExpressApp = module.exports = cip.extendSingleton(function() {
  * Kick off the webserver...
  *
  * @param {Object} opts Options as defined in app.init().
- * @return {Promise} a promise.
+ * @return {BPromise} a promise.
  */
-ExpressApp.prototype.init = Promise.method(function(opts) {
+ExpressApp.prototype.init = BPromise.method(function(opts) {
   // initialize webserver
   webserver.init(this.app);
 
@@ -56,7 +56,7 @@ ExpressApp.prototype.init = Promise.method(function(opts) {
     boot.push(this.expressApi.init(opts));
   }
 
-  return Promise.all(boot)
+  return BPromise.all(boot)
   .bind(this)
   .then(function (res) {
     log.fine('init() :: All express instances initialized, moving on with main');

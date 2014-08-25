@@ -3,7 +3,7 @@
  */
 var config = require('config');
 var cip = require('cip');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var log = require('logg').getLogger('app.core.sessionStore');
@@ -48,11 +48,11 @@ var Session = module.exports = cip.extend(function(role) {
 /**
  * Perform a connection to redis.
  *
- * @return {Promise} A promise.
+ * @return {BPromise} A promise.
  */
 Session.prototype.connect = function() {
   var self = this;
-  return new Promise(function(resolve, reject) {
+  return new BPromise(function(resolve, reject) {
     // Sessions stored in redis
     self.redisStore = new RedisStore(self.params.redis);
 
