@@ -146,9 +146,9 @@ module.exports = function (grunt) {
       },
       backend: ['back/**/*.js'],
       frontend: {
-        options: {
-          jshintrc: 'front/static/scripts/.jshintrc',
-        },
+        // options: {
+        //   jshintrc: 'front/static/scripts/.jshintrc',
+        // },
         src: ['front/static/scripts/**/*.js'],
       },
     },
