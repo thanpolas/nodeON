@@ -32,7 +32,6 @@
     "cip": "^0.2.5",
     "feature-toggles": "~1.2.0",
     "lusca": "~1.0.1",
-    "crude": "^0.6.0",
     "when": "^3.4.5",
     "socket.io": "^1.1.0",
     "express": "^4.8.8",
