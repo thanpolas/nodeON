@@ -1,4 +1,4 @@
-/*
+/**
  * APP
  * Your amazing app
  * http://www.app.app
@@ -13,12 +13,10 @@
 var util = require('util');
 
 var BPromise = require('bluebird');
-
 var log = require('logg').getLogger('app.boot');
 
 var globals = require('./core/globals');
 var AppServices = require('./app-services');
-
 var logger = require('./util/logger');
 
 /**
