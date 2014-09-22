@@ -144,10 +144,16 @@ Auth.prototype._localAuth = function(email, password, done) {
  *   @param {boolean} socket If this is a socket middleware.
  */
 Auth.prototype.requiresAuth = function(opts) {
-  log.finer('requiresAuth() :: Init. Resource:', opts.resource);
-  if (!opts.resource) {
+  var resource = '';
+  if (typeof opts === 'string') {
+    resource = opts;
+  } else {
+    resource = opts.resource;
+  }
+  if (!resource) {
     throw new Error('No resource defined for requiresAuth() middleware');
   }
+  log.finer('requiresAuth() :: Init. Resource:', resource);
 
   var udo = {};
 
