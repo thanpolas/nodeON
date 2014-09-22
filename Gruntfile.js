@@ -2,7 +2,7 @@
 
 var globals = require('./back/core/globals');
 
-var Email = require('./back/modules/email');
+var Email = require('./back/services/email');
 var emailTemplate = require('./tasks/publish-email-templates.js');
 
 module.exports = function (grunt) {
