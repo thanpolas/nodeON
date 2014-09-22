@@ -29,8 +29,23 @@ logger.init = function() {
 
   logger.setLevel();
 
-  if (!config.logger.console) {
-    logg.removeConsole();
+
+  // intercept log messages before they reach the console
+  logg.removeConsole();
+  logg.rootLogger.registerWatcher(logger.interceptLogMessages);
+
+  if (config.logger.console) {
+    logg.addConsole();
+  }
+
+  // figure out log folder
+  var home = helpers.getUserHome();
+
+  _filename = path.join(home, config.path.mainAppFolder,
+    config.path.mainDataFolder, config.path.logsFolder, config.logger.filename);
+
+  if (config.logger.saveToFile) {
+    console.log('Logs will be saved to:', _filename);
   }
 
   // hook on logger
@@ -104,3 +119,33 @@ logger._saveToFile = function(message) {
   fs.appendFile(_filename, message);
 };
 
+/**
+ * Intercepts and reformats log messages if they contain as instance of Error.
+ *
+ * @param {Object} logRecord The Log Record.
+ */
+logger.interceptLogMessages = function(logRecord) {
+  var errorStacks = [];
+  var foundErrors = false;
+  logRecord.rawArgs.forEach(function (arg, index) {
+    if (logger.isError(arg)) {
+      errorStacks.push(arg.stack);
+      logRecord.rawArgs[index] = arg.message;
+      foundErrors = true;
+    }
+  });
+
+  if (foundErrors) {
+    var log = logg.getLogger(logRecord.name);
+    errorStacks.forEach(function (stack) {
+      log.finest('Error Stack for:', logRecord.rawArgs[0], ':', stack);
+    });
+  }
+
+  logRecord.message = logRecord.getFormattedMessage();
+};
+
+// Special treatment for objects that may look like errors.
+logger.isError = function (o) {
+  return o && typeof o === 'object' && (o instanceof Error || o.message && o.stack);
+};
