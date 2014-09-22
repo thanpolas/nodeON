@@ -3,7 +3,6 @@
  */
 
 // Nodejs libs.
-var path = require('path');
 var EventEmitter = require('events').EventEmitter;
 var fs = require('fs');
 var util = require('util');
@@ -11,14 +10,10 @@ var util = require('util');
 var logg = require('logg');
 var config = require('config');
 var file = require('nodeon-file');
-var helpers = require('nodeon-helpers');
 
 var initialized = false;
 
 var logger = module.exports = new EventEmitter();
-
-// setup local variables
-var _filename;
 
 /**
  * Initialize
@@ -38,14 +33,8 @@ logger.init = function() {
     logg.addConsole();
   }
 
-  // figure out log folder
-  var home = helpers.getUserHome();
-
-  _filename = path.join(home, config.path.mainAppFolder,
-    config.path.mainDataFolder, config.path.logsFolder, config.logger.filename);
-
   if (config.logger.saveToFile) {
-    console.log('Logs will be saved to:', _filename);
+    console.log('Logs will be saved to:', config.logger.filename);
   }
 
   // hook on logger
@@ -107,16 +96,16 @@ logger._handleLog = function(logRecord) {
  * @private
  */
 logger._saveToFile = function(message) {
-  if (!file.isFile(_filename)) {
+  if (!file.isFile(config.logger.filename)) {
     // try to create it...
     try {
-      file.write(_filename, '');
+      file.write(config.logger.filename, '');
     } catch(ex) {
-      console.error('\n\n********************\nFailed to write to log file! File: ', _filename, '\n\n');
+      console.error('\n\n********************\nFailed to write to log file! File: ', config.logger.filename, '\n\n');
       return;
     }
   }
-  fs.appendFile(_filename, message);
+  fs.appendFile(config.logger.filename, message);
 };
 
 /**

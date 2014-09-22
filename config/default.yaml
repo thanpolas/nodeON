@@ -27,6 +27,7 @@ logger:
   level: 100
   syslog: false
   file: false
+  saveToFile: false
   console: true
   filename: "./logs/app.log"
 
