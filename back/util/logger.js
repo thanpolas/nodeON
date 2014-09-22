@@ -3,6 +3,7 @@
  */
 
 // Nodejs libs.
+var path = require('path');
 var EventEmitter = require('events').EventEmitter;
 var fs = require('fs');
 var util = require('util');
@@ -10,15 +11,14 @@ var util = require('util');
 var logg = require('logg');
 var config = require('config');
 var file = require('nodeon-file');
+var helpers = require('nodeon-helpers');
 
 var initialized = false;
 
 var logger = module.exports = new EventEmitter();
 
 // setup local variables
-var _fileLog = config.logger.file;
-var _filename = config.logger.filename;
-var _logLevel = config.logger.level;
+var _filename;
 
 /**
  * Initialize
@@ -64,7 +64,7 @@ logger.init = function() {
  *
  */
 logger.setLevel = function() {
-  logg.rootLogger.setLogLevel(_logLevel);
+  logg.rootLogger.setLogLevel(config.logger.level);
 };
 
 /**
@@ -85,7 +85,7 @@ logger.setLevel = function() {
 logger._handleLog = function(logRecord) {
 
   // log level check.
-  if (_logLevel > logRecord.level) {
+  if (config.logger.level > logRecord.level) {
     return;
   }
 
@@ -94,7 +94,7 @@ logger._handleLog = function(logRecord) {
 
   var message = logg.formatRecord(logRecord, true);
 
-  if (_fileLog) {
+  if (config.logger.file) {
     logger._saveToFile(message);
   }
 
