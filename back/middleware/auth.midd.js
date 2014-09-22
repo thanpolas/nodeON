@@ -175,9 +175,14 @@ Auth.prototype.requiresAuth = function(opts) {
       err.message = 'You are not authenticated';
       err.type = appError.Authentication.Type.SESSION;
       var ctrl = new ControllerBase();
-      ctrl.addFlashError(req, err);
-      res.redirect(loginRoute);
-      return next(err.message);
+      if (req.is('json')) {
+        res.status(401).json(err.toApi());
+      } else {
+        ctrl.addFlashError(req, err);
+        res.redirect(loginRoute);
+        return next(err.message);
+      }
+
     }
     udo = req.user || {};
     var ownUid = udo.id;
