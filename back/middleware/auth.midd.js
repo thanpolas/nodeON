@@ -210,6 +210,13 @@ Auth.prototype.requiresAuth = function(opts) {
     resolveAuth(socket.udo.id, onFail, next);
   }
 
+  /**
+   * The main authentication resolver decoupled by transport (web/websocket).
+   *
+   * @param {string} ownUid The user id.
+   * @param {Function} onFail On Fail callback.
+   * @param {Function} next next callback.
+   */
   function resolveAuth(ownUid, onFail, next) {
 
     if (!ownUid) {
