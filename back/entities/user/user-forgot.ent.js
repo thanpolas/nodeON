@@ -11,7 +11,7 @@ var helpers = require('nodeon-helpers');
 var log = require('logg').getLogger('app.ent.UserForgot');
 
 var UserEnt = require('./user.ent');
-var Email = require('../../modules/email');
+var Email = require('../../services/email');
 
 /**
  * The User Forgot Pass entity.

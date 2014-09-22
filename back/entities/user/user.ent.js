@@ -13,7 +13,7 @@ var log = require('logg').getLogger('app.ent.User');
 
 var UserModel = require('../../models/user.model');
 var userModel = UserModel.getInstance();
-var Email = require('../../modules/email');
+var Email = require('../../services/email');
 
 /**
  * The User entity.
