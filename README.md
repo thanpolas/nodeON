@@ -1,6 +1,6 @@
 # nodeON
 
-> A Node.js Web Application Skelleton
+> A Node.js Web Application Skeleton
 
 [![Build Status](https://secure.travis-ci.org/thanpolas/nodeON.png?branch=master)](http://travis-ci.org/thanpolas/nodeON)
 
@@ -31,7 +31,7 @@ Once the project is cloned you need to install the dependent npm and bower modul
 npm install && bower install
 ```
 
-## Shell Controll
+## Shell Control
 
 * `grunt` Boot up the application for development workflow, it will:
   * Launch the databases (Mongo & Redis).
