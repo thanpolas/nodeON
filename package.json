@@ -72,6 +72,7 @@
     "load-grunt-tasks": "~0.6.0",
     "grunt-release": "~0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "socket.io": "^1.1.0"
+    "socket.io": "^1.1.0",
+    "socket.io-client": "^1.1.0"
   }
 }
