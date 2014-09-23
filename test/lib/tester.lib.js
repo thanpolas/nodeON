@@ -4,6 +4,10 @@
  */
 var app = require('../..');
 
+// When on testing enable bluebird's Long Stack Traces
+var Promise = require('bluebird');
+Promise.longStackTraces();
+
 // var logger = require('../../backend/util/logger');
 // var db = require('../../backend/core/database').getInstance();
 
