@@ -2,14 +2,15 @@
  * @fileOverview Main testing helper lib, exporting fixtures, helper functions
  *   etc. All UNIT tests must require it.
  */
-var app = require('../..');
+// manually define the NODE_ENV environment variable
+process.env.NODE_ENV = 'testing';
 
 // When on testing enable bluebird's Long Stack Traces
 var Promise = require('bluebird');
 Promise.longStackTraces();
 
-// var logger = require('../../backend/util/logger');
-// var db = require('../../backend/core/database').getInstance();
+// The application.
+var app = require('../..');
 
 var tester = module.exports = {};
 
