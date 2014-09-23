@@ -1,0 +1,36 @@
+webserver:
+  port: 3000
+  url: "http://localhost:3000"
+
+hostname:
+  api: "api.localhost"
+  website: "localhost"
+
+mongo:
+  hostname: localhost
+  database: appTest
+  # Attempt to reconnect interval in ms.
+  reconnectTime: 500
+
+redis:
+  namespace: "appTest:"
+  main:
+    host: "localhost"
+    port: 6379
+  sessionWebsite:
+    # https://github.com/visionmedia/connect-redis#options
+    host: "localhost"
+    port: 6379
+    prefix: "appSessionWebTest:"
+  sessionApi:
+    host: "localhost"
+    port: 6379
+    prefix: "appSessionApiTest:"
+  kansas:
+    port: 6379
+    host: "localhost"
+    pass: ""
+  idify:
+    port: 6379
+    host: "localhost"
+    pass: ""
