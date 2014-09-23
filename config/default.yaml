@@ -34,7 +34,6 @@ logger:
 mongo:
   hostname: localhost
   database: app
-  testDatabase: apptest
   # Attempt to reconnect interval in ms.
   reconnectTime: 500
 
