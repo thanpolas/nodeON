@@ -60,6 +60,9 @@ WebExpress.prototype.init = BPromise.method(function(opts) {
   // setup view globals
   this.app.locals.glob = globals.viewGlobals;
 
+  // pretty print for jade when on development
+  this.app.locals.pretty = globals.isDev;
+
   return BPromise.all([
     sessConnectBPromise,
   ])
