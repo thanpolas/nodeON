@@ -56,6 +56,9 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
     boot.push(this.expressApi.init(opts));
   }
 
+  // pretty print for jade when on development
+  this.app.locals.pretty = globals.isDev;
+
   return BPromise.all(boot)
   .bind(this)
   .then(function (res) {
