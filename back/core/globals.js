@@ -69,44 +69,15 @@ globals.getEnvironment = function() {
 };
 
 /**
- * Matches the environment to a role.
- *
- * @param {app.core.globals.Environments=} optEnv optionally define an environment.
- * @return {app.core.globals.Roles} The current role.
- */
-globals.getRole = function(optEnv) {
-  var role = null;
-
-  switch(optEnv || globals.getEnvironment()) {
-  case globals.Environments.DEVELOPMENT:
-    role = globals.Roles.WEB;
-    break;
-  case globals.Environments.DEV_API:
-    role = globals.Roles.API;
-    break;
-  default:
-    role = globals.Roles.WEB;
-    break;
-  }
-
-  return role;
-};
-
-/**
  * The current environment canonicalized based on supported envs.
  * @type {app.core.globals.Environments}
  */
 globals.env = globals.getEnvironment();
 
-globals.role = globals.getRole(globals.env);
-
 /** @type {boolean} If we are on development environment */
 globals.isDev = [
   globals.Environments.DEVELOPMENT,
 ].indexOf(globals.env) >= 0;
-
-/** @type {boolean} If the server is running in API mode */
-globals.isApi = globals.role === globals.Roles.API;
 
 /** @type {boolean} Determines if we are on heroku. */
 globals.isHeroku = false;
