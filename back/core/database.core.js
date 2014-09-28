@@ -80,7 +80,7 @@ Conn.MongoState = {
  */
 Conn.prototype.init = BPromise.method(function() {
   log.fine('init() :: Init. _initialized:', this._initialized, 'Hostname:',
-    config.mongo.hostname);
+    config.mongo.hostname, ':: Database:', config.mongo.database);
 
   if (this._initialized) { return; }
   this._initialized = true;
@@ -117,8 +117,6 @@ Conn.prototype._connectMongo = function() {
   var self = this;
   return new BPromise(function(resolve, reject) {
 
-    log.fine('_connectMongo() :: Init. Hostname:', config.mongo.hostname);
-
     // force clear reconn timers
     clearTimeout(self._mongoReconnTimer);
     self._mongoReconnTimer = null;
@@ -140,6 +138,7 @@ Conn.prototype._connectMongo = function() {
       }
     };
 
+    log.fine('_connectMongo() :: Connecting using url:', mongoUri);
     mongoose.connect(mongoUri, mongoOpts);
     var db = self.db = mongoose.connection.db;
 
