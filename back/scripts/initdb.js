@@ -6,7 +6,7 @@ var Promise = require('bluebird');
 
 var log = require('logg').getLogger('app.scripts.initdb');
 
-var UserEntity = require('../back/entities/user/user.ent');
+var UserEntity = require('../entities/user/user.ent');
 
 var initdb = module.exports = {};
 
