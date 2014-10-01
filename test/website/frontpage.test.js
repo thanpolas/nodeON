@@ -3,6 +3,7 @@
  */
 var config = require('config');
 // var sinon = require('sinon');
+var req = require('supertest');
 var chai = require('chai');
 var expect = chai.expect;
 // var __ = require('lodash');
@@ -28,7 +29,12 @@ describe('Frontpage', function() {
         done();
       });
   });
-
+  it('Can access the site from 127.0.0.1', function(done) {
+    var web = new Web('127.0.0.1:3000');
+    this.req = web.req;
+    this.req.get('/')
+      .expect(200, done);
+  });
 
   if (config.usevhosts) {
     it('Will get a 200 on the api frontpage', function(done) {

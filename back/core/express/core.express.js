@@ -92,6 +92,9 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
 
     this.app.use(vhost(config.hostname.website, appWebserver));
 
+    // ultimate fallback if no vhost triggers, use main web app again:
+    this.app.use(appWebserver);
+
     // development only
     if (globals.isDev) {
       this.app.use(errorhandler());
