@@ -29,7 +29,7 @@ describe('Frontpage', function() {
         done();
       });
   });
-  it.only('Can access the site from 127.0.0.1', function(done) {
+  it('Can access the site from 127.0.0.1', function(done) {
     var web = new Web('127.0.0.1:3000');
     this.req = web.req;
     this.req.get('/')
