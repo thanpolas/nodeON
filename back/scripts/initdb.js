@@ -4,7 +4,7 @@
 
 var Promise = require('bluebird');
 
-var log = require('logg').getLogger('app.tasks.initdb');
+var log = require('logg').getLogger('app.scripts.initdb');
 
 var UserEntity = require('../back/entities/user/user.ent');
 

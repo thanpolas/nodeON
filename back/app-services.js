@@ -14,7 +14,7 @@ require('./util/validator');
 require('./core/feature-toggle.core');
 
 var Email = require('./services/email');
-var initdb = require('../tasks/initdb.task');
+var initdb = require('./scripts/initdb');
 var expressApp = require('./core/express/core.express').getInstance();
 var database = require('./core/database.core').getInstance();
 
