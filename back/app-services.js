@@ -56,7 +56,7 @@ AppServices.prototype.setup = function(optOptions) {
 
     // Run initdb
     // ENV: NOINITDB
-    initDb: true,
+    initdb: true,
 
     // Stub email facilities
     // Env: APP_STUBMAIL
