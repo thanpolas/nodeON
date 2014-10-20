@@ -90,9 +90,7 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
       this.app.use(vhost(config.hostname.api, appApi));
     }
 
-    this.app.use(vhost(config.hostname.website, appWebserver));
-
-    // ultimate fallback if no vhost triggers, use main web app again:
+    // ultimate fallback if no vhost triggers, use main web app
     this.app.use(appWebserver);
 
     // development only
