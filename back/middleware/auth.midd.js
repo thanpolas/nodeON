@@ -134,9 +134,7 @@ Auth.prototype._localAuth = function(email, password, done) {
  * @param {Object} opts An optional hash of options.
  *   @param {string} resource REQUIRED Free text to describe the resource that requires
  *       proper credentials, will be used for logging purposes.
- *   @param ownUserField {string} By default when "ownUser" is enabled the field
- *       to compare from the UDO is the "id", set this option to define
- *       another one.
+ *   @param {boolean} isAdmin Set to true to only allow Admin users.
  *   @param {boolean} noAccess Do not allow anyone to enter.
  *   @param {boolean} socket If this is a socket middleware.
  */
@@ -161,6 +159,7 @@ Auth.prototype.requiresAuth = function(opts) {
       ':: Reason:', reason,
       ':: Resource:', opts.resource,
       ':: uid:', udo.id,
+      ':: isAdmin:', opts.isAdmin,
       ':: email:', udo.email
     );
   }
@@ -227,6 +226,13 @@ Auth.prototype.requiresAuth = function(opts) {
 
     if (opts.noAccess) {
       return onFail('no access');
+    }
+
+    if (opts.isAdmin) {
+      if (!udo.isAdmin) {
+        onFail('No Access');
+        return;
+      }
     }
 
     next();
