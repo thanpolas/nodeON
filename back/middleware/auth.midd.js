@@ -134,9 +134,6 @@ Auth.prototype._localAuth = function(email, password, done) {
  * @param {Object} opts An optional hash of options.
  *   @param {string} resource REQUIRED Free text to describe the resource that requires
  *       proper credentials, will be used for logging purposes.
- *   @param {boolean} ownUser Set to true to check if the user is the owner of the
- *       resource. This check will compare the value of req.params.id so the
- *       incoming route needs to follow the /path/:id scheme.
  *   @param ownUserField {string} By default when "ownUser" is enabled the field
  *       to compare from the UDO is the "id", set this option to define
  *       another one.
@@ -230,20 +227,6 @@ Auth.prototype.requiresAuth = function(opts) {
 
     if (opts.noAccess) {
       return onFail('no access');
-    }
-
-    if (opts.ownUser) {
-      var resourceOwnerId = ownUid;
-
-      if (!resourceOwnerId) {
-        return onFail('no ownUid');
-      }
-
-      var field = opts.ownUserField || 'id';
-
-      if (resourceOwnerId !== udo[field]) {
-        return onFail('not owner');
-      }
     }
 
     next();

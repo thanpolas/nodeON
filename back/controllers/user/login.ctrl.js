@@ -23,7 +23,6 @@ var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 var Login = module.exports = ControllerBase.extendSingleton(function(){
   var auth = authMidd.requiresAuth({
     resource:'logout',
-    ownUser: true,
   });
 
   // Add the request handling middleware controllers

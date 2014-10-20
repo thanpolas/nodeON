@@ -19,7 +19,6 @@ var authMidd = new AuthMidd(globals.Roles.WEBSITE);
 var Profile = module.exports = ControllerBase.extendSingleton(function(){
   var auth = authMidd.requiresAuth({
     resource:'profile',
-    ownUser: true,
   });
   this.use.push(auth);
   this.use.push(this._getProfile.bind(this));
