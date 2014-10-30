@@ -12,6 +12,7 @@ var log = require('logg').getLogger('app.midd.Auth');
 
 var UserModel = require('../models/user.model');
 var userModel = UserModel.getInstance();
+var globals = require('../core/globals');
 
 /** @type {Object.<app.midd.Auth} Auth middleware instances. */
 var singletons = {};
@@ -26,6 +27,9 @@ var singletons = {};
  * @extends {app.Middleware}
  */
 var Auth = module.exports = MiddlewareBase.extend(function (role) {
+  if (!role) {
+    role = globals.Roles.WEBSITE;
+  }
   if (singletons[role]) {
     singletons[role].zit = 1;
     return singletons[role];
