@@ -41,7 +41,7 @@ app.boot = null;
  * @param {Object=} optOpts init params.
  * @return {BPromise} A dissaster.
  */
-app.init = function(optOpts) {
+app.init = BPromise.method(function(optOpts) {
   if (initialized) { return BPromise.resolve(); }
   initialized = true;
 
@@ -71,7 +71,7 @@ app.init = function(optOpts) {
       log.error('Error on boot:', err);
       process.exit(-1);
     });
-};
+});
 
 /**
  * Catch-all for all unhandled exceptions
