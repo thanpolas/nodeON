@@ -42,7 +42,7 @@ redis:
   main:
     host: "localhost"
     port: 6379
-  sessionWebsite:
+  sessionWeb:
     # https://github.com/visionmedia/connect-redis#options
     host: "localhost"
     port: 6379
