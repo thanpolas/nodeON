@@ -47,6 +47,7 @@
     "nodeon-error": "^0.1.0",
     "nodeon-helpers": "^0.1.0",
     "nodeon-file": "^0.1.0",
+    "socket.io": "^1.1.0",
     "nodeon-base": "^0.1.3"
   },
   "devDependencies": {
@@ -72,7 +73,6 @@
     "load-grunt-tasks": "~0.6.0",
     "grunt-release": "~0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "socket.io": "^1.1.0",
     "socket.io-client": "^1.1.0"
   }
 }
