@@ -69,7 +69,7 @@ app.init = BPromise.method(function(optOpts) {
   return app.boot.initServices()
     .catch(function(err){
       log.error('Error on boot:', err);
-      process.exit(-1);
+      app.die(-1);
     });
 });
 
@@ -80,10 +80,27 @@ app.init = BPromise.method(function(optOpts) {
  */
 app.onNodeFail = function(err) {
   log.error('onNodeFail() :: Unhandled Exception. Error:', util.inspect(err), err);
-  process.exit(1);
+  app.die(1);
 };
+
+/**
+ * It's time to die...
+ *
+ * @param {number=} optExitCode optionally define an exit code.
+ */
+app.die = function(optExitCode) {
+  var exitCode = 1;
+  if (typeof optExitCode === 'number') {
+    exitCode = optExitCode;
+  }
+  setTimeout(function() {
+    process.exit(exitCode);
+  }, 1000);
+};
+
 
 // ignition
 if (globals.isStandAlone) {
   app.init();
 }
+
