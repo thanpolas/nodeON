@@ -175,7 +175,7 @@ Auth.prototype.requiresAuth = function(opts) {
       err.message = 'You are not authenticated';
       err.type = appError.Authentication.Type.SESSION;
       var ctrl = new ControllerBase();
-      if (req.is('json')) {
+      if (req.headers['accept'] && req.headers['accept'].match(/json/)) {
         res.status(401).json(err.toApi());
       } else {
         ctrl.addFlashError(req, err);
