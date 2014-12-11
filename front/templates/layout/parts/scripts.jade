@@ -36,7 +36,7 @@ script(type="text/javascript").
 //- script(src='/components/angular/angular.js')
 //- script(src='components/angular-resource/angular-resource.js')
 
-if glob.env == "development"
+if glob.isDev
   script.
     var DEV = true;
 else
