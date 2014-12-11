@@ -2,6 +2,7 @@
  * @fileOverview Master Express Error Handler.
  */
 var appError = require('nodeon-error');
+var helpers = require('nodeon-helpers');
 
 var log = require('logg').getLogger('app.midd.errorHandler');
 
@@ -38,10 +39,9 @@ err.handle = function (err, req, res, next) {
   log.finest('handle() :: Raw error object:', err);
 
   // figure out what the client accepts
-  if (req.headers['accept'] && req.headers['accept'].match(/json/)) {
+  if (helpers.isRequestJson(req)) {
     res.json(error);
   } else {
     res.render('error/500', {error: error});
   }
-
 };
