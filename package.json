@@ -47,7 +47,6 @@
     "nodeon-error": "^0.1.0",
     "nodeon-helpers": "^0.1.0",
     "nodeon-file": "^0.1.0",
-    "socket.io": "^1.1.0",
     "nodeon-base": "^0.1.3"
   },
   "devDependencies": {
