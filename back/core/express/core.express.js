@@ -8,7 +8,8 @@ var express = require('express');
 var vhost = require('vhost');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var errorhandler = require('errorhandler');
+var nodeonExpressError = require('nodeon-express-error');
+
 
 var webserver = require('../webserver.core');
 var SocketServer = require('../websocketServer.core');
@@ -94,10 +95,8 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
     // ultimate fallback if no vhost triggers, use main web app
     this.app.use(appWebserver);
 
-    // development only
-    if (globals.isDev) {
-      this.app.use(errorhandler());
-    }
+    // nodeON Express Error Handler
+    this.app.use(nodeonExpressError);
 
     return webserver.start(this.app);
   });
