@@ -47,8 +47,8 @@
     "nodeon-error": "^0.1.2",
     "nodeon-helpers": "^0.1.5",
     "nodeon-file": "^0.1.6",
-    "socket.io": "^1.2.1",
-    "nodeon-base": "^0.1.9"
+    "nodeon-base": "^0.1.9",
+    "nodeon-express-error": "0.0.2"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",
