@@ -96,7 +96,7 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
     this.app.use(appWebserver);
 
     // nodeON Express Error Handler
-    this.app.use(nodeonExpressError());
+    this.app.use(nodeonExpressError);
 
     return webserver.start(this.app);
   });
