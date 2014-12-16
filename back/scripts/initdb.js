@@ -17,10 +17,8 @@ var initdb = module.exports = {};
  */
 initdb.start = function() {
   log.fine('start() :: Starting DB Population...');
-  return new Promise(function(resolve, reject) {
-    initdb._createAdminUser()
-      .then(resolve, reject);
-  });
+
+  return initdb._createAdminUser();
 };
 
 /**
