@@ -18,6 +18,7 @@ var Email = require('./services/email');
 var initdb = require('./scripts/initdb');
 var expressApp = require('./core/express/core.express').getInstance();
 var database = require('./core/database.core').getInstance();
+var globals = require('./core/globals');
 
 /**
  * Boot the services of the application.
@@ -57,7 +58,7 @@ AppServices.prototype.setup = function(optOptions) {
 
     // Run initdb
     // ENV: NOINITDB
-    initdb: true,
+    initdb: globals.isDev,
 
     // Stub email facilities
     // Env: APP_STUBMAIL
