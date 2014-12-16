@@ -90,6 +90,7 @@ ExpressApp.prototype.init = BPromise.method(function(opts) {
     if (config.usevhosts) {
       socketServer.listen(globals.WebsocketNamespace.API);
       this.app.use(vhost(config.hostname.api, appApi));
+      log.finer('init() :: Initialized vhost for hostname:', config.hostname.api);
     }
 
     // ultimate fallback if no vhost triggers, use main web app
