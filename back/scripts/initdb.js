@@ -27,19 +27,19 @@ initdb.start = function() {
  * @return {Promise}
  * @private
  */
-initdb._createAdminUser = function() {
-  return new Promise(function(resolve, reject) {
-    var userEnt = UserEntity.getInstance();
-    var adminUdo = {
-      email: 'bofh@awesomeapp.com',
-      firstName: 'Admin',
-      lastName: 'User',
-      password: 'asdfgh',
-      isAdmin: true,
-      policy: 'admin',
-    };
-    return userEnt.delete({email: adminUdo.email}).then(function() {
-      return userEnt.create(adminUdo).then(resolve, reject);
+initdb._createAdminUser = Promise.method(function() {
+  var userEnt = UserEntity.getInstance();
+  var adminUdo = {
+    email: 'bofh@awesomeapp.com',
+    firstName: 'Admin',
+    lastName: 'User',
+    password: 'asdfgh',
+    isAdmin: true,
+    policy: 'admin',
+  };
+
+  return userEnt.delete({email: adminUdo.email})
+    .then(function() {
+      return userEnt.create(adminUdo);
     });
-  });
-};
+});
