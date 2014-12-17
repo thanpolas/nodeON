@@ -23,6 +23,7 @@ globals.Environments = {
   DEV_API: 'dev_api',
   HEROKU: 'heroku',
   HEROKUDEV: 'heroku_dev',
+  TESTING: 'testing',
 };
 
 /**
