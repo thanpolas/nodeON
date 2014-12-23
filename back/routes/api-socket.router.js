@@ -5,7 +5,6 @@
 // var log = require('logg').getLogger('app.router.socket.api');
 var SocketVersionApi = require('../controllers/socket/api-version.ctrl');
 var socketPubsubCtrl = require('../controllers/socket/socket-pubsub.ctrl').getInstance();
-var psutil = require('../services/pubsub-util.service');
 
 var router = module.exports = {};
 
@@ -26,16 +25,7 @@ router.init = function() {
  */
 router.addRoutes = function(socket) {
   socket.on('version', socketVersionApi.get.bind(socketVersionApi, socket));
-
+  socket.on('registerPubsub', socketPubsubCtrl.registerAll.bind(
+    socketPubsubCtrl, socket));
   return socket;
-};
-
-/**
- * Register the incoming socket to pubsub channels
- *
- * @param {socketio.Socket} socket The socket.io socket object.
- * @return {socketio.Socket} Return the socket.
- */
-router.registerPubsub = function (socket) {
-  socketPubsubCtrl.register(psutil.Channel.DUMMY, socket);
 };
