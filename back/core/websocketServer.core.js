@@ -5,6 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var cip = require('cip');
 var socketio = require('socket.io');
+var socketRedis = require('socket.io-redis');
 var config = require('config');
 var log = require('logg').getLogger('app.core.Socket');
 
@@ -52,6 +53,8 @@ Sock.prototype.init = function(http) {
     // WebSocketMain.swf etc.
     'browser client': true,
   });
+
+  this.io.adapter(socketRedis(config.redis.websocket));
 };
 
 /**
