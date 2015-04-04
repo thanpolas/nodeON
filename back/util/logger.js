@@ -47,7 +47,6 @@ logger.init = function() {
 
 };
 
-
 /**
  * set the minimum logging level to logg.
  *
@@ -110,7 +109,7 @@ logger._saveToFile = function(message) {
 };
 
 /**
- * Intercepts and reformats log messages if they contain as instance of Error.
+ * Intercepts and reformats log messages if they contain an instance of Error.
  *
  * @param {Object} logRecord The Log Record.
  */
