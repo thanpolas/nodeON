@@ -60,8 +60,6 @@ logger.init = function() {
       nslogger.setLogLevel(exception.level);
     });
   });
-
-
 };
 
 /**
@@ -103,7 +101,6 @@ logger._handleLog = function(logRecord) {
   if (config.logger.file) {
     logger._saveToFile(message);
   }
-
 };
 
 /**
