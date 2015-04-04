@@ -45,6 +45,23 @@ logger.init = function() {
     console.error('Logger failed:', util.inspect(ex));
   }
 
+  //
+  // set logging exceptions
+  //
+  var log = logg.getLogger('cc.util.logger');
+
+  if (!Array.isArray(config.logger.exceptions)) {
+    log.fine('No logging exceptions found');
+    return;
+  }
+  config.logger.exceptions.forEach(function(exception) {
+    exception.namespaces.forEach(function (nsObj) {
+      var nslogger = logg.getLogger(nsObj.ns);
+      nslogger.setLogLevel(exception.level);
+    });
+  });
+
+
 };
 
 /**
