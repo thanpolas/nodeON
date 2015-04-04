@@ -53,7 +53,8 @@ logger.init = function() {
  *
  */
 logger.setLevel = function() {
-  logg.rootLogger.setLogLevel(config.logger.level);
+  var logger = logg.getLogger(config.logger.prefix);
+  logger.setLogLevel(config.logger.level);
 };
 
 /**
