@@ -30,6 +30,11 @@ logger:
   saveToFile: false
   console: true
   filename: "./logs/app.log"
+  prefix: "app"
+  exceptions:
+    - level: 400
+      namespaces:
+        - ns: "app.demo.purposes.CHANGE.CHANGE"
 
 mongo:
   hostname: localhost
